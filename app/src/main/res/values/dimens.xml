@@ -1,0 +1,15 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="get_photo_text_size">25sp</dimen>
+    <dimen name="container_get_photo_padding_left">10dp</dimen>
+    <dimen name="container_get_photo_padding_right">10dp</dimen>
+    <dimen name="splash_status_text_size">15sp</dimen>
+    <dimen name="splash_progressbar_height">20dp</dimen>
+    <dimen name="splash_progressbar_width">20dp</dimen>
+    <dimen name="welcome_dialog_padding">6dp</dimen>
+    <dimen name="welcome_message_text_size">15dp</dimen>
+
+</resources>

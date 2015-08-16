@@ -1,0 +1,8 @@
+<resources>
+
+    <dimen name="get_photo_text_size">45sp</dimen>
+    <dimen name="splash_status_text_size">15sp</dimen>
+    <dimen name="splash_progressbar_height">20dp</dimen>
+    <dimen name="splash_progressbar_width">20dp</dimen>
+
+</resources>

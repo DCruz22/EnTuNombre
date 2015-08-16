@@ -1,0 +1,53 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity$DummySectionFragment" >
+
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true">
+
+        <RelativeLayout android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="6dp"
+                        android:id="@+id/btnContainer">
+
+            <Button android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Compartir"
+                    android:id="@+id/open"
+                    android:visibility="gone"/>
+
+            <Button android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hacer otra foto"
+                    android:id="@+id/doAgain"
+                    android:layout_toRightOf="@+id/open"
+                    android:paddingLeft="5dp"
+                    android:visibility="gone"/>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/ivMerge"
+            android:contentDescription="merged images"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_below="@+id/btnContainer"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="7dp"/>
+
+    </RelativeLayout>
+
+    <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pbGeneratePicture"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            style="?android:attr/progressBarStyleLarge"/>
+
+</RelativeLayout>
