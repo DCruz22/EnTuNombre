@@ -7,10 +7,14 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Toast;
+
 import com.dulcerefugio.app.entunombre.R;
 import com.dulcerefugio.app.entunombre.activities.fragments.BuildPictureFragment.BuildPictureListeners;
 import com.dulcerefugio.app.entunombre.activities.fragments.VideoListFragment;
@@ -23,7 +27,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
+
 import com.dulcerefugio.app.entunombre.util.Util;
+import com.github.florent37.materialviewpager.MaterialViewPager;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -33,9 +39,8 @@ import java.io.File;
 
 @EActivity(R.layout.a_main)
 public class MainActivity extends Base implements
-		ActionBar.TabListener,
-		BuildPictureListeners,
-        VideoListFragment.VideoListListeners{
+        BuildPictureListeners,
+        VideoListFragment.VideoListListeners {
 
     //=============================CONSTANTS======================================
     public static final java.lang.String VIDEO_URL_PLAY = "URL_VIDEO_PLAY";
@@ -46,7 +51,10 @@ public class MainActivity extends Base implements
     //=============================FIELDS======================================
     private SectionsPagerAdapter mSectionsPagerAdapter;
     @ViewById(R.id.pager)
-	public ViewPager mViewPager;
+    public MaterialViewPager mViewPager;
+    @ViewById(R.id.drawer_layout)
+    public DrawerLayout mDrawer;
+    private ActionBarDrawerToggle mDrawerToggle;
     private static DialogFragment welcomeDialog;
     private static File imageFile;
     private static String randomNumber = "";
@@ -55,14 +63,14 @@ public class MainActivity extends Base implements
 
     //=============================OVERRIDEN METHODS======================================
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	}
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     protected boolean needToolbar() {
-        return true;
+        return false;
     }
 
     @Override
@@ -71,7 +79,7 @@ public class MainActivity extends Base implements
 
         welcomeDialog = welcomeDialog == null ? welcomeDialog = new WelcomeDialogFragment() : welcomeDialog;
 
-        if(!welcomeDialog.isAdded() && !Preferences.getInstance().isWelcomeDialogShown()) {
+        if (!welcomeDialog.isAdded() && !Preferences.getInstance().isWelcomeDialogShown()) {
             Preferences.getInstance().setWelcomeDialogShown(true);
             welcomeDialog.show(getSupportFragmentManager(), "welcome_message");
         }
@@ -89,38 +97,20 @@ public class MainActivity extends Base implements
     }
 
     @Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		return true;
-	}
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        return true;
+    }
 
-	@Override
-	public void onTabSelected(ActionBar.Tab tab,
-			FragmentTransaction fragmentTransaction) {
-		// When the given tab is selected, switch to the corresponding page in
-		// the ViewPager.
-		mViewPager.setCurrentItem(tab.getPosition());
-	}
-
-	@Override
-	public void onTabUnselected(ActionBar.Tab tab,
-			FragmentTransaction fragmentTransaction) {
-	}
-
-	@Override
-	public void onTabReselected(ActionBar.Tab tab,
-			FragmentTransaction fragmentTransaction) {
-	}
-
-	@Override
-	public void OnGeneratePictureClick() {
-		initCamera();
-	}
+    @Override
+    public void OnGeneratePictureClick() {
+        initCamera();
+    }
 
     @Override
     public void onVideoPlayback(String videoId) {
         checkInternetConnection();
-        if(Util.isNetworkAvailable(this)) {
+        if (Util.isNetworkAvailable(this)) {
             final Intent i = new Intent(this, VideoPlayerActivity.class);
             Bundle mBundle = new Bundle();
             mBundle.putString(VIDEO_URL_PLAY, videoId);
@@ -132,41 +122,31 @@ public class MainActivity extends Base implements
 
     //=============================METHODS======================================
     @AfterViews
-    public void initialize(){
-        mToolBar.setTitle(R.string.app_name);
-        // Set up the action bar.
-        final ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null)
-            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+    public void initialize() {
+        Toolbar toolbar = mViewPager.getToolbar();
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
 
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setDisplayShowTitleEnabled(true);
+            actionBar.setDisplayUseLogoEnabled(false);
+            actionBar.setHomeButtonEnabled(true);
+        }
+
+        mToolBar.setTitle(R.string.app_name);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, 0, 0);
+        mDrawer.setDrawerListener(mDrawerToggle);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the app.
         mSectionsPagerAdapter = new SectionsPagerAdapter(
                 getSupportFragmentManager(), this);
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        // When swiping between different sections, select the corresponding
-        // tab. We can also use ActionBar.Tab#select() to do this if we have
-        // a reference to the Tab.
-        mViewPager
-                .setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-                    @Override
-                    public void onPageSelected(int position) {
-                        if(actionBar != null)
-                            actionBar.setSelectedNavigationItem(position);
-                    }
-                });
-
-        // For each of the sections in the app, add a tab to the action bar.
-        for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
-            if(actionBar != null)
-                actionBar.addTab(actionBar.newTab()
-                        .setText(mSectionsPagerAdapter.getPageTitle(i))
-                        .setTabListener(this));
-        }
-
+        mViewPager.getViewPager().setAdapter(mSectionsPagerAdapter);
+        mViewPager.getViewPager().setOffscreenPageLimit(mViewPager.getViewPager().getAdapter().getCount());
+        mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
         //Camera configuration
         saveFolderName = BitmapProcessor.getSavePath();
         Log.d(TAG, saveFolderName);
@@ -177,12 +157,12 @@ public class MainActivity extends Base implements
         imageFile = new File(cameraPhotoImagePath);
     }
 
-    private void initCamera(){
+    private void initCamera() {
         try {
             startActivityForResult(new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
                             .putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile)),
                     CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-        }catch(ActivityNotFoundException anfe){
+        } catch (ActivityNotFoundException anfe) {
             //display an error message
             String errorMessage = "Whoops - No es posible acceder a la camara!";
             Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);

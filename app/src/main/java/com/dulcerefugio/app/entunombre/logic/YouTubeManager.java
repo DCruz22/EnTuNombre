@@ -67,6 +67,7 @@ public class YouTubeManager {
             // Set your developer key from the Google Developers Console for
             // non-authenticated requests. See:
             // https://console.developers.google.com/
+            Log.d("",YOUTUBE_API_KEY);
             search.setKey(YOUTUBE_API_KEY);
             search.setQ(queryTerm);
 

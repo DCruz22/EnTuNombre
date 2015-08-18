@@ -66,6 +66,8 @@ public class AuthActivity extends FragmentActivity implements SplashScreenFragme
             protected Void doInBackground(Void... params) {
                 if (Util.isNetworkAvailable(AuthActivity.this)) {
                     List<YoutubeVideo> videoList = ym.getVideosFromYoutubeChannel("", YouTubeManager.CHANNEL_ID);
+                    Log.d("",(mDaoSession == null)+"");
+                    Log.d("",(mDaoSession.getYoutubeVideoDao() == null)+"");
                     mDaoSession.getYoutubeVideoDao().insertOrReplaceInTx(videoList);
                 }
                 return null;

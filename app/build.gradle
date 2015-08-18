@@ -35,11 +35,14 @@ dependencies {
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.2'
     compile 'com.edmodo:cropper:1.0.1'
     compile 'de.greenrobot:greendao:1.3.7'
-    compile 'com.github.fernandodev.androidproperties:androidproperties:+'
     compile 'com.orhanobut:logger:1.11'
+    compile 'com.github.fernandodev.androidproperties:androidproperties:1.0.0'
     compile 'com.desarrollodroide:fragmenttransactionextended:1'
-    apt "org.androidannotations:androidannotations:+"
-    compile "org.androidannotations:androidannotations-api:+"
+    apt "org.androidannotations:androidannotations:3.3.2"
+    compile "org.androidannotations:androidannotations-api:3.3.2"
+    compile ('com.github.florent37:materialviewpager:1.1.0@aar'){
+        transitive = true
+    }
     compile files('libs/lib-simplesharedpreferences.jar')
     compile files('libs/YouTubeAndroidPlayerApi.jar')
 }
