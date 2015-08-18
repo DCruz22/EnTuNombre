@@ -25,8 +25,13 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import com.dulcerefugio.app.entunombre.util.Util;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
+
 import java.io.File;
 
+@EActivity(R.layout.a_main)
 public class MainActivity extends Base implements
 		ActionBar.TabListener,
 		BuildPictureListeners,
@@ -40,7 +45,8 @@ public class MainActivity extends Base implements
 
     //=============================FIELDS======================================
     private SectionsPagerAdapter mSectionsPagerAdapter;
-	private ViewPager mViewPager;
+    @ViewById(R.id.pager)
+	public ViewPager mViewPager;
     private static DialogFragment welcomeDialog;
     private static File imageFile;
     private static String randomNumber = "";
@@ -52,10 +58,12 @@ public class MainActivity extends Base implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.a_main);
-
-        initialize();
 	}
+
+    @Override
+    protected boolean needToolbar() {
+        return true;
+    }
 
     @Override
     protected void onResume() {
@@ -123,8 +131,9 @@ public class MainActivity extends Base implements
     }
 
     //=============================METHODS======================================
-
-    private void initialize(){
+    @AfterViews
+    public void initialize(){
+        mToolBar.setTitle(R.string.app_name);
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         if(actionBar != null)
@@ -136,7 +145,6 @@ public class MainActivity extends Base implements
                 getSupportFragmentManager(), this);
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         // When swiping between different sections, select the corresponding

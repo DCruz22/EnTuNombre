@@ -88,6 +88,12 @@ public class EditPicture extends Fragment
 
     @Override
     public void onRecyclerItemClick(View view, int position) {
+        Uri uri = Uri.fromFile(new File(mPicturePath));
+        try {
+            mPictureBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         mListener.onFrameSelected(mPictureBitmap, mAdapter.getItem(position));
     }
 

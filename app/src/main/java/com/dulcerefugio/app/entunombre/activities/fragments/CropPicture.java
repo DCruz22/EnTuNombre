@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import com.dulcerefugio.app.entunombre.R;
 import com.dulcerefugio.app.entunombre.logic.BitmapProcessor;
 import com.edmodo.cropper.CropImageView;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -35,9 +34,6 @@ public class CropPicture extends Fragment {
     //                      CONSTANTS
     //======================================================
     private static final int DEFAULT_ASPECT_RATIO_VALUES = 20;
-    private static final int ROTATE_NINETY_DEGREES = 20;
-    private static final String ASPECT_RATIO_X = "ASPECT_RATIO_X";
-    private static final String ASPECT_RATIO_Y = "ASPECT_RATIO_Y";
     public static final String PICTURE_PATH_EXTRA = "PICTURE_PATH_EXTRA";
 
     //======================================================
@@ -45,7 +41,6 @@ public class CropPicture extends Fragment {
     //======================================================
     private Context mContext;
     private onCropPictureListener mListener;
-    private ImageLoader mImageLoader;
     @InstanceState
     public int mAspectRatioX = DEFAULT_ASPECT_RATIO_VALUES;
     @InstanceState

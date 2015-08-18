@@ -81,7 +81,7 @@ public class AuthActivity extends FragmentActivity implements SplashScreenFragme
 
     private void callStartApplication() {
         Log.d(TAG, "callStartApplication");
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, MainActivity_.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
