@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!--Customize the coloer palette-->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
@@ -23,7 +22,13 @@
         <item name="android:navigationBarColor" tools:targetApi="21">@color/navigationBarColor</item>
         <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="21">true</item>
     </style>
+    <style name="AppTheme" parent="AppBaseTheme">
+    </style>
 
+    <style name="AppTheme.Main" parent="AppBaseTheme">
+        <item name="homeAsUpIndicator">@drawable/ic_drawer</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_drawer</item>
+    </style>
     <style name="AppTheme.ActionBarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
         <!-- White arrow -->
         <item name="colorControlNormal">@android:color/white</item>

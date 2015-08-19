@@ -74,7 +74,6 @@ public class CropPicture extends Fragment {
         super.onAttach(activity);
         try {
             mListener = (onCropPictureListener) activity;
-
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement onCropPictureListener");
@@ -87,9 +86,10 @@ public class CropPicture extends Fragment {
 
     @AfterViews
     public void initialize() {
-
         //Initialize frame bitmap
-        mFrame = BitmapProcessor.getInstance(mContext).decodeSampledBitmapFromResource(getResources(), R.drawable.frame, 300, 400);
+        mFrame = BitmapProcessor
+                .getInstance(mContext)
+                .decodeSampledBitmapFromResource(getResources(), R.drawable.frame, 300, 400);
         mCropImageView.setFixedAspectRatio(true);
 
         // Sets initial aspect ratio to 10/10, for demonstration purposes

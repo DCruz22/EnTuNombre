@@ -3,6 +3,7 @@ package com.dulcerefugio.app.entunombre.activities;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.UiThread;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
@@ -16,6 +17,7 @@ import com.dulcerefugio.app.entunombre.data.dao.GeneratedImages;
 import com.dulcerefugio.app.entunombre.logic.BitmapProcessor;
 import com.orhanobut.logger.Logger;
 
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.FragmentByTag;
@@ -45,6 +47,7 @@ EditPicture.onEditPictureListener{
 
     @FragmentByTag(EDIT_PICTURE_FRAGMENT)
     EditPicture mEditPicture;
+    private Bitmap mLastResult;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,7 +75,6 @@ EditPicture.onEditPictureListener{
 
     private void showEditFragment(){
         mEditPicture = EditPicture_.builder().mPicturePath(mPicturePath).build();
-        FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.a_cropper_fl_container, mEditPicture, EDIT_PICTURE_FRAGMENT);
         fragmentTransaction.commit();
@@ -100,32 +102,40 @@ EditPicture.onEditPictureListener{
         mBitmapProcessor.processImage(new BitmapProcessor.OnImageProcess() {
             @Override
             public Bitmap onBackgroundProcess() {
-                Logger.d(croppedImage.getWidth() + " pic WIDTH");
-                Logger.d(croppedImage.getHeight() + " pic HEIGHT");
-                Logger.d(frame.getWidth() + " fr WIDTH");
-                Logger.d(frame.getHeight() + " fr HEIGHT");
-                Bitmap result = mBitmapProcessor.mergeImages(croppedImage, frame);
-                File finalImage = mBitmapProcessor.storeImage(result);
-                Logger.d(finalImage.getAbsolutePath());
-
-                //persisting picture path
-                GeneratedImages generatedImage = new GeneratedImages();
-                generatedImage.setPath(finalImage.getAbsolutePath());
-                generatedImage.setDate(new Date().toString());
-                EnTuNombre.getInstance()
-                        .getDaoSession()
-                        .getGeneratedImagesDao()
-                        .insertOrReplaceInTx(generatedImage);
-
-                return result;
+                return mLastResult = mBitmapProcessor.mergeImages(croppedImage, frame);
             }
 
             @Override
             public void onPostExecute(Bitmap bitmap) {
-                if(mEditPicture!=null)
+                if (mEditPicture != null)
                     mEditPicture.showFramedImage(bitmap);
                 System.gc();
             }
         });
+    }
+
+    @Background
+    @Override
+    public void onFinishEditing(File takenPicture) {
+        File finalImage = mBitmapProcessor.storeImage(mLastResult);
+        Logger.d(finalImage.getAbsolutePath());
+
+        //persisting picture path
+        GeneratedImages generatedImage = new GeneratedImages();
+        generatedImage.setPath(finalImage.getAbsolutePath());
+        generatedImage.setDate(new Date().toString());
+        EnTuNombre.getInstance()
+                .getDaoSession()
+                .getGeneratedImagesDao()
+                .insertOrReplaceInTx(generatedImage);
+        Logger.d(takenPicture.getPath() + " : " + takenPicture.exists());
+        Logger.d(takenPicture.delete() + "");
+        mBitmapProcessor.deleteLastPhotoTaken();
+        finishActivity();
+    }
+
+    @UiThread
+    public void finishActivity(){
+        finish();
     }
 }

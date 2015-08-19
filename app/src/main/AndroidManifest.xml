@@ -30,7 +30,7 @@
 
         <activity
             android:name="com.dulcerefugio.app.entunombre.activities.MainActivity_"
-            android:theme="@style/AppTheme"
+            android:theme="@style/AppTheme.Main"
             android:screenOrientation="portrait">
         </activity>
         <activity

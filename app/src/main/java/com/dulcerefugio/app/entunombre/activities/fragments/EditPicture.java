@@ -5,16 +5,23 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.dulcerefugio.app.entunombre.R;
 import com.dulcerefugio.app.entunombre.activities.fragments.listeners.RecyclerItemClickListener;
 import com.dulcerefugio.app.entunombre.ui.adapters.PictureFramesAdapter;
+import com.orhanobut.logger.Logger;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -48,6 +55,12 @@ public class EditPicture extends Fragment
     private Bitmap mPictureBitmap;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
@@ -59,6 +72,20 @@ public class EditPicture extends Fragment
         }
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_a_cropper, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_send:
+                mListener.onFinishEditing(new File(mPicturePath));
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     @AfterViews
     public void init() {
         if (mPicturePath != null) {
@@ -103,5 +130,6 @@ public class EditPicture extends Fragment
 
     public interface onEditPictureListener{
         void onFrameSelected(Bitmap croppedImage, final int frame);
+        void onFinishEditing(File takenPicture);
     }
 }

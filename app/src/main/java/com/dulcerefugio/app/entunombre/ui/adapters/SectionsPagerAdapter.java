@@ -11,8 +11,9 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
 
 import com.dulcerefugio.app.entunombre.R;
-import com.dulcerefugio.app.entunombre.activities.fragments.BuildPictureFragment;
-import com.dulcerefugio.app.entunombre.activities.fragments.VideoListFragment;
+import com.dulcerefugio.app.entunombre.activities.fragments.PictureListFragment;
+import com.dulcerefugio.app.entunombre.activities.fragments.PictureListFragment_;
+import com.dulcerefugio.app.entunombre.activities.fragments.VideoListFragment_;
 
 /**
  * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -39,30 +40,16 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
 		switch(tabFragment){
 			case BUILD_PICTURE:
-				fragment = new BuildPictureFragment();
-				args = new Bundle();
-				args.putInt(BuildPictureFragment.ARG_SECTION_NUMBER, position + 1);
-				fragment.setArguments(args);
-				
-				return fragment;
-				
+				return PictureListFragment_.builder().build();
 			case VIDEO_LIST:
-                fragment = new VideoListFragment();
-                args = new Bundle();
-                args.putInt(VideoListFragment.ARG_SECTION_NUMBER, position + 1);
-                fragment.setArguments(args);
-
-				return fragment;
+				return VideoListFragment_.builder().build();
             case ABOUT_US:
-
-                fragment = new BuildPictureFragment();
+                fragment = new PictureListFragment();
                 args = new Bundle();
-                args.putInt(BuildPictureFragment.ARG_SECTION_NUMBER, position + 1);
+                args.putInt(PictureListFragment.ARG_SECTION_NUMBER, position + 1);
                 fragment.setArguments(args);
-
                 return fragment;
 		}
-		
 		return null;
 	}
 

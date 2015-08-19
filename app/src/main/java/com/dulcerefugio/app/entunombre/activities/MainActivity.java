@@ -12,7 +12,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.dulcerefugio.app.entunombre.R;
-import com.dulcerefugio.app.entunombre.activities.fragments.BuildPictureFragment.BuildPictureListeners;
+import com.dulcerefugio.app.entunombre.activities.fragments.PictureListFragment.PictureListListeners;
 import com.dulcerefugio.app.entunombre.activities.fragments.VideoListFragment;
 import com.dulcerefugio.app.entunombre.activities.fragments.dialog.WelcomeDialogFragment;
 import com.dulcerefugio.app.entunombre.logic.BitmapProcessor;
@@ -36,7 +36,7 @@ import java.io.File;
 
 @EActivity(R.layout.a_main)
 public class MainActivity extends Base implements
-        BuildPictureListeners,
+        PictureListListeners,
         VideoListFragment.VideoListListeners {
 
     //=============================CONSTANTS======================================
@@ -55,6 +55,8 @@ public class MainActivity extends Base implements
     private static String randomNumber = "";
     public static String saveFolderName;
     static String cameraPhotoImagePath = "";
+    @ViewById(R.id.drawer_layout)
+    public DrawerLayout mDrawer;
 
     //=============================OVERRIDEN METHODS======================================
 
@@ -85,6 +87,7 @@ public class MainActivity extends Base implements
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+                Logger.d(imageFile.getPath());
                 //Opening Cropper Activity
                 CropperActivity_.intent(this).mPicturePath(imageFile.getPath()).start();
             }
@@ -124,16 +127,16 @@ public class MainActivity extends Base implements
             setSupportActionBar(toolbar);
 
             ActionBar actionBar = getSupportActionBar();
-            actionBar.setDisplayHomeAsUpEnabled(false);
-            //actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
             actionBar.setDisplayShowTitleEnabled(true);
             actionBar.setDisplayUseLogoEnabled(false);
-            //actionBar.setHomeButtonEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
             actionBar.setTitle("");
         }
 
-        //mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, 0, 0);
-        //mDrawer.setDrawerListener(mDrawerToggle);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, 0, 0);
+        mDrawer.setDrawerListener(mDrawerToggle);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the app.
         mSectionsPagerAdapter = new SectionsPagerAdapter(
@@ -168,7 +171,6 @@ public class MainActivity extends Base implements
         });
         // Set up the ViewPager with the sections adapter.
         mViewPager.getViewPager().setAdapter(mSectionsPagerAdapter);
-
         mViewPager.getViewPager().setOffscreenPageLimit(mViewPager.getViewPager().getAdapter().getCount());
         mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
         //Camera configuration
@@ -182,6 +184,8 @@ public class MainActivity extends Base implements
     }
 
     private void initCamera() {
+
+        Logger.d("f  " + imageFile);
         try {
             startActivityForResult(new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
                             .putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile)),
@@ -192,6 +196,5 @@ public class MainActivity extends Base implements
             Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);
             toast.show();
         }
-        Log.d(TAG, "f  " + imageFile);
     }
 }

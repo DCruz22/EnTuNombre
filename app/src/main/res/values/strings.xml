@@ -13,5 +13,6 @@
     <string name="welcome_message_text">Recuerda, debes tomarte la foto con el dispositivo en Portrait (modo
         vertical) para que se pueda generar correctamente (Si es una selfie con la camara frontal mucho mejor). Disfruta de la app ;)
     </string>
+    <string name="action_send">send</string>
 
 </resources>

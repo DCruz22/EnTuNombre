@@ -6,6 +6,7 @@ import java.util.Date;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -13,6 +14,7 @@ import android.graphics.Paint;
 import android.graphics.Bitmap.Config;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import com.dulcerefugio.app.entunombre.EnTuNombre;
@@ -200,6 +202,34 @@ public class BitmapProcessor {
         return inSampleSize;
     }
 
+    public void deleteLastPhotoTaken() {
+
+        String[] projection = new String[] {
+                MediaStore.Images.ImageColumns._ID,
+                MediaStore.Images.ImageColumns.DATA,
+                MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME,
+                MediaStore.Images.ImageColumns.DATE_TAKEN,
+                MediaStore.Images.ImageColumns.MIME_TYPE };
+
+        final Cursor cursor = EnTuNombre.context.getContentResolver().query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection,
+                null,null, MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC");
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+
+            int column_index_data =
+                    cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+            String image_path = cursor.getString(column_index_data);
+
+            File file = new File(image_path);
+            if (file.exists()) {
+                file.delete();
+            }
+            cursor.close();
+        }
+    }
     public interface OnImageProcess {
         Bitmap onBackgroundProcess();
 
