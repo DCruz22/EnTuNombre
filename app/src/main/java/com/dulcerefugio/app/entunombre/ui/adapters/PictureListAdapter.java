@@ -14,6 +14,7 @@ import com.dulcerefugio.app.entunombre.EnTuNombre;
 import com.dulcerefugio.app.entunombre.R;
 import com.dulcerefugio.app.entunombre.data.dao.GeneratedImages;
 import com.dulcerefugio.app.entunombre.logic.AsyncTaskEx;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,12 +29,14 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
     //                      FIELDS
     //======================================================
     private List<GeneratedImages> mImages;
+    private ImageLoader mImageLoader;
 
     //======================================================
     //                    CONSTRUCTORS
     //======================================================
     public PictureListAdapter(List<GeneratedImages> mPictures) {
         mImages = mPictures;
+        this.mImageLoader = ImageLoader.getInstance();
     }
 
     //======================================================
@@ -54,25 +57,7 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
         final GeneratedImages generatedImage = mImages.get(position);
         if(generatedImage != null){
             holder.tvTitle.setText(generatedImage.getPath());
-            new AsyncTaskEx<Void, Void, Bitmap>(){
-                @Override
-                protected Bitmap doInBackground(Void... params) {
-                    Bitmap bitmap = null;
-                    try {
-                        bitmap = MediaStore.Images.Media.getBitmap(EnTuNombre.context.getContentResolver(), Uri.fromFile(new File(generatedImage.getPath())));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    return bitmap;
-                }
-
-                @Override
-                protected void onPostExecute(Bitmap bitmap) {
-                    super.onPostExecute(bitmap);
-                    if(bitmap != null)
-                        holder.imageView.setImageBitmap(bitmap);
-                }
-            }.execute();
+            mImageLoader.displayImage(Uri.decode(Uri.fromFile(new File(generatedImage.getPath())).toString()), holder.imageView);
         }
     }
 
