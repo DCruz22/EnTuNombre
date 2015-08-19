@@ -1,45 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="7dp">
 
-    <ImageView
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/ivVideoThumbnail"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:id="@+id/ivVideoThumbnail"
-            android:src="@drawable/no_image"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            />
+            android:src="@drawable/no_image" />
 
-    <RelativeLayout android:id="@+id/containerVideoDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="18dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_toRightOf="@+id/ivVideoThumbnail">
+        <RelativeLayout
+            android:id="@+id/containerVideoDescription"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="18dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@+id/ivVideoThumbnail">
 
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Title Here"
+            <TextView
                 android:id="@+id/tvTitle"
-                android:textStyle="bold"
-                android:textSize="14sp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"/>
-        <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:text="There's no description available"
-                android:id="@+id/tvDescription"
-                android:layout_below="@+id/tvTitle"
-                android:layout_alignLeft="@+id/tvTitle"
-                android:layout_alignStart="@+id/tvTitle"/>
-    </RelativeLayout>
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="Title Here"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-</RelativeLayout>
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/tvTitle"
+                android:layout_alignStart="@+id/tvTitle"
+                android:layout_below="@+id/tvTitle"
+                android:text="There's no description available"
+                android:textSize="12sp" />
+        </RelativeLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

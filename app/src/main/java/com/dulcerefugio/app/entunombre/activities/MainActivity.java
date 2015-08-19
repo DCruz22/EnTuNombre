@@ -1,16 +1,12 @@
 package com.dulcerefugio.app.entunombre.activities;
 
-import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
-import android.content.DialogInterface;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Toast;
@@ -25,11 +21,12 @@ import com.dulcerefugio.app.entunombre.ui.adapters.SectionsPagerAdapter;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.view.Menu;
 
 import com.dulcerefugio.app.entunombre.util.Util;
 import com.github.florent37.materialviewpager.MaterialViewPager;
+import com.github.florent37.materialviewpager.header.HeaderDesign;
+import com.orhanobut.logger.Logger;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -50,10 +47,8 @@ public class MainActivity extends Base implements
 
     //=============================FIELDS======================================
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    @ViewById(R.id.pager)
+    @ViewById(R.id.materialViewPager)
     public MaterialViewPager mViewPager;
-    @ViewById(R.id.drawer_layout)
-    public DrawerLayout mDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
     private static DialogFragment welcomeDialog;
     private static File imageFile;
@@ -125,26 +120,55 @@ public class MainActivity extends Base implements
     public void initialize() {
         Toolbar toolbar = mViewPager.getToolbar();
         if (toolbar != null) {
+            Logger.d("is vp toolbar");
             setSupportActionBar(toolbar);
 
             ActionBar actionBar = getSupportActionBar();
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(false);
+            //actionBar.setDisplayShowHomeEnabled(true);
             actionBar.setDisplayShowTitleEnabled(true);
             actionBar.setDisplayUseLogoEnabled(false);
-            actionBar.setHomeButtonEnabled(true);
+            //actionBar.setHomeButtonEnabled(true);
+            actionBar.setTitle("");
         }
 
-        mToolBar.setTitle(R.string.app_name);
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, 0, 0);
-        mDrawer.setDrawerListener(mDrawerToggle);
+        //mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, 0, 0);
+        //mDrawer.setDrawerListener(mDrawerToggle);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the app.
         mSectionsPagerAdapter = new SectionsPagerAdapter(
                 getSupportFragmentManager(), this);
 
+        mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
+            @Override
+            public HeaderDesign getHeaderDesign(int page) {
+                switch (page) {
+                    case 0:
+                        return HeaderDesign.fromColorResAndUrl(
+                                R.color.blue,
+                                "http://cdn1.tnwcdn.com/wp-content/blogs.dir/1/files/2014/06/wallpaper_51.jpg");
+                    case 1:
+                        return HeaderDesign.fromColorResAndUrl(
+                                R.color.green,
+                                "https://fs01.androidpit.info/a/63/0e/android-l-wallpapers-630ea6-h900.jpg");
+                    case 2:
+                        return HeaderDesign.fromColorResAndUrl(
+                                R.color.cyan,
+                                "http://www.droid-life.com/wp-content/uploads/2014/10/lollipop-wallpapers10.jpg");
+                    case 3:
+                        return HeaderDesign.fromColorResAndUrl(
+                                R.color.red,
+                                "http://www.tothemobile.com/wp-content/uploads/2014/07/original.jpg");
+                }
+
+                //execute others actions if needed (ex : modify your header logo)
+
+                return null;
+            }
+        });
         // Set up the ViewPager with the sections adapter.
         mViewPager.getViewPager().setAdapter(mSectionsPagerAdapter);
+
         mViewPager.getViewPager().setOffscreenPageLimit(mViewPager.getViewPager().getAdapter().getCount());
         mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
         //Camera configuration

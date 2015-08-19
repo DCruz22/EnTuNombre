@@ -21,6 +21,10 @@ import com.dulcerefugio.app.entunombre.activities.fragments.listeners.RecyclerIt
 import com.dulcerefugio.app.entunombre.data.dao.YoutubeVideo;
 import com.dulcerefugio.app.entunombre.ui.adapters.RecyclerViewDividerItemDecorator;
 import com.dulcerefugio.app.entunombre.ui.adapters.VideosAdapter;
+import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
+import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
+
+import java.util.List;
 
 public class VideoListFragment extends Base
 implements RecyclerItemClickListener.OnItemClickListener{
@@ -38,10 +42,11 @@ implements RecyclerItemClickListener.OnItemClickListener{
     //==================================================================================
     private Context mContext;
     private VideoListListeners mCallbacks;
-    private VideosAdapter mAdapter;
+    private RecyclerView.Adapter mAdapter;
     private ViewGroup mContainer;
     private LayoutInflater mLayoutInflater;
     private RecyclerView mRecyclerView;
+    private List<YoutubeVideo> mYoutubeVideos;
 
 
     //==================================================================================
@@ -79,6 +84,7 @@ implements RecyclerItemClickListener.OnItemClickListener{
         super.onViewCreated(view, savedInstanceState);
 
         mRecyclerView.setAdapter(mAdapter);
+        MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
     }
 
     //4th
@@ -89,7 +95,7 @@ implements RecyclerItemClickListener.OnItemClickListener{
 
     @Override
     public void onRecyclerItemClick(View view, int position) {
-        YoutubeVideo youtubeVideo = mAdapter.getItem(position);
+        YoutubeVideo youtubeVideo = mYoutubeVideos.get(position);
         mCallbacks.onVideoPlayback(youtubeVideo.getVideo_id());
     }
 
@@ -109,7 +115,8 @@ implements RecyclerItemClickListener.OnItemClickListener{
     public void initialize(ViewGroup container, LayoutInflater inflater) {
         this.mContainer = container;
         this.mLayoutInflater = inflater;
-        mAdapter = new VideosAdapter(EnTuNombre.getInstance().getDaoSession().getYoutubeVideoDao().loadAll());
+        mYoutubeVideos = EnTuNombre.getInstance().getDaoSession().getYoutubeVideoDao().loadAll();
+        mAdapter = new RecyclerViewMaterialAdapter(new VideosAdapter(mYoutubeVideos));
         Log.d("VLF", EnTuNombre.getInstance().getDaoSession().getYoutubeVideoDao().loadAll().size() + "");
     }
 
@@ -120,7 +127,6 @@ implements RecyclerItemClickListener.OnItemClickListener{
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.addItemDecoration(new RecyclerViewDividerItemDecorator(getActivity()));
         RecyclerItemClickListener listener = new RecyclerItemClickListener(getActivity());
         listener.addOnItemClickListener(this);
         mRecyclerView.addOnItemTouchListener(listener);

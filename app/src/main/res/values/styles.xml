@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="EnTuNombreTheme.Base" parent="Theme.AppCompat.Light.NoActionBar"/>
-    <style name="EnTuNombreTheme" parent="EnTuNombreTheme.Base">
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!--Customize the coloer palette-->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>

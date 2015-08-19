@@ -40,6 +40,7 @@ dependencies {
     compile 'com.desarrollodroide:fragmenttransactionextended:1'
     apt "org.androidannotations:androidannotations:3.3.2"
     compile "org.androidannotations:androidannotations-api:3.3.2"
+    compile 'com.android.support:design:22.2.1'
     compile ('com.github.florent37:materialviewpager:1.1.0@aar'){
         transitive = true
     }
