@@ -14,5 +14,7 @@
         vertical) para que se pueda generar correctamente (Si es una selfie con la camara frontal mucho mejor). Disfruta de la app ;)
     </string>
     <string name="action_send">send</string>
+    <string name="please_wait">Por favor, espere...</string>
+    <string name="must_select_frame">Debe seleccionar un marco de la lista</string>
 
 </resources>

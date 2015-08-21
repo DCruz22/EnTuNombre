@@ -54,6 +54,7 @@ public class CropPicture extends Fragment {
     @ViewById(R.id.f_cropper_iv_crop)
     public ImageView mIvCrop;
     private Bitmap mFrame;
+    private boolean mIsImageCrop;
 
     //======================================================
     //                    CONSTRUCTORS
@@ -92,14 +93,16 @@ public class CropPicture extends Fragment {
                 .decodeSampledBitmapFromResource(getResources(), R.drawable.frame, 300, 400);
         mCropImageView.setFixedAspectRatio(true);
 
-        // Sets initial aspect ratio to 10/10, for demonstration purposes
         mCropImageView.setAspectRatio(DEFAULT_ASPECT_RATIO_VALUES, DEFAULT_ASPECT_RATIO_VALUES);
 
         mIvCrop.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mListener.onCropImage(mCropImageView.getCroppedImage(), mFrame);
+                        if (!mIsImageCrop) {
+                            mIsImageCrop = true;
+                            mListener.onCropImage(mCropImageView.getCroppedImage(), mFrame);
+                        }
                     }
                 });
         mIvCancel.setOnClickListener(

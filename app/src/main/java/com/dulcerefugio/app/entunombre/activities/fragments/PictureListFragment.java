@@ -10,6 +10,7 @@ import com.dulcerefugio.app.entunombre.EnTuNombre;
 import com.dulcerefugio.app.entunombre.R;
 import com.dulcerefugio.app.entunombre.activities.fragments.listeners.RecyclerItemClickListener;
 import com.dulcerefugio.app.entunombre.data.dao.GeneratedImages;
+import com.dulcerefugio.app.entunombre.data.dao.GeneratedImagesDao;
 import com.dulcerefugio.app.entunombre.ui.adapters.PictureListAdapter;
 import com.dulcerefugio.app.entunombre.ui.adapters.VideosAdapter;
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
@@ -26,7 +27,7 @@ import java.util.List;
 
 @EFragment(R.layout.f_picture_list)
 public class PictureListFragment extends Fragment
-        implements RecyclerItemClickListener.OnItemClickListener{
+        implements RecyclerItemClickListener.OnItemClickListener {
 
     public static final String ARG_SECTION_NUMBER = "1234000";
     private PictureListListeners mListener;
@@ -67,7 +68,12 @@ public class PictureListFragment extends Fragment
     @AfterViews
     public void initialize() {
         Logger.d("0");
-        mPictures = EnTuNombre.getInstance().getDaoSession().getGeneratedImagesDao().loadAll();
+        mPictures = EnTuNombre.getInstance()
+                .getDaoSession()
+                .getGeneratedImagesDao()
+                .queryBuilder()
+                .orderDesc(GeneratedImagesDao.Properties.Id)
+                .list();
         mAdapter = new RecyclerViewMaterialAdapter(new PictureListAdapter(mPictures));
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.VERTICAL, false);
@@ -80,7 +86,7 @@ public class PictureListFragment extends Fragment
     }
 
     @Click(R.id.materialButton)
-    public void onPictureButton(){
+    public void onPictureButton() {
         mListener.OnGeneratePictureClick();
     }
 

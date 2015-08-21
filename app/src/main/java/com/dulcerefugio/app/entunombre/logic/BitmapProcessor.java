@@ -60,7 +60,7 @@ public class BitmapProcessor {
     public File storeImage(final Bitmap image) {
         File pictureFile = getOutputMediaFile();
         if (pictureFile == null) {
-            Log.d("", "Error creatin9g media file, check storage permissions: ");
+            Log.d("", "Error creating media file, check storage permissions: ");
             return null;
         }
         try {

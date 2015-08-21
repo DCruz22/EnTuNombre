@@ -2,9 +2,11 @@ package com.dulcerefugio.app.entunombre.activities;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.UiThread;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 
 import com.dulcerefugio.app.entunombre.EnTuNombre;
@@ -13,8 +15,10 @@ import com.dulcerefugio.app.entunombre.activities.fragments.CropPicture;
 import com.dulcerefugio.app.entunombre.activities.fragments.CropPicture_;
 import com.dulcerefugio.app.entunombre.activities.fragments.EditPicture;
 import com.dulcerefugio.app.entunombre.activities.fragments.EditPicture_;
+import com.dulcerefugio.app.entunombre.activities.fragments.dialog.AppMessage;
 import com.dulcerefugio.app.entunombre.data.dao.GeneratedImages;
 import com.dulcerefugio.app.entunombre.logic.BitmapProcessor;
+import com.dulcerefugio.app.entunombre.util.Util;
 import com.orhanobut.logger.Logger;
 
 import org.androidannotations.annotations.Background;
@@ -23,6 +27,7 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.FragmentByTag;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 
 /**
@@ -31,11 +36,13 @@ import java.util.Date;
 @EActivity(R.layout.a_cropper)
 public class CropperActivity extends Base
         implements CropPicture.onCropPictureListener,
-EditPicture.onEditPictureListener{
+        EditPicture.onEditPictureListener {
 
     public static final String PICTURE_PATH_EXTRA = "PICTURE_PATH_EXTRA";
     private static final String CROP_PICTURE_FRAGMENT = "CropPictureTag";
     private static final String EDIT_PICTURE_FRAGMENT = "EditPictureTag";
+    private static final String FRAME_WAIT_DIALOG = "FRAME_WAIT_DIALOG";
+    private static final String MUST_SELECT_FRAME_DIALOG="mAppMessageMustSelectFrame";
 
     //fields
     @Extra(PICTURE_PATH_EXTRA)
@@ -48,6 +55,11 @@ EditPicture.onEditPictureListener{
     @FragmentByTag(EDIT_PICTURE_FRAGMENT)
     EditPicture mEditPicture;
     private Bitmap mLastResult;
+    private DialogFragment mAppMessageWait;
+    private boolean mSelectingFrame;
+    private boolean mIsFrameSelected;
+    private DialogFragment mAppMessageMustSelectFrame;
+    private String mCroppedPicturePath;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,15 +78,18 @@ EditPicture.onEditPictureListener{
         showCropFragment();
     }
 
-    private void showCropFragment(){
+    private void showCropFragment() {
         mCropPicture = CropPicture_.builder().mPicturePath(mPicturePath).build();
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.a_cropper_fl_container, mCropPicture, CROP_PICTURE_FRAGMENT);
         fragmentTransaction.commit();
     }
 
-    private void showEditFragment(){
-        mEditPicture = EditPicture_.builder().mPicturePath(mPicturePath).build();
+    @UiThread
+    private void showEditFragment() {
+        if(mAppMessageWait!=null)
+            mAppMessageWait.dismiss();
+        mEditPicture = EditPicture_.builder().mPicturePath(mCroppedPicturePath).build();
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.a_cropper_fl_container, mEditPicture, EDIT_PICTURE_FRAGMENT);
         fragmentTransaction.commit();
@@ -86,7 +101,11 @@ EditPicture.onEditPictureListener{
     }
 
     @Override
+    @Background
     public void onCropImage(final Bitmap croppedImage, final Bitmap frame) {
+        onShowWaitDialog();
+        File file = mBitmapProcessor.storeImage(croppedImage);
+        mCroppedPicturePath = file.getPath();
         showEditFragment();
     }
 
@@ -95,47 +114,80 @@ EditPicture.onEditPictureListener{
         finish();
     }
 
+    @UiThread
     @Override
-    public void onFrameSelected(final Bitmap croppedImage, final int _frame) {
-        final Bitmap frame = BitmapFactory.decodeResource(getResources(),
-                _frame);
-        mBitmapProcessor.processImage(new BitmapProcessor.OnImageProcess() {
-            @Override
-            public Bitmap onBackgroundProcess() {
-                return mLastResult = mBitmapProcessor.mergeImages(croppedImage, frame);
-            }
+    public void onShowWaitDialog() {
+        if(mAppMessageWait == null)
+            mAppMessageWait = Util.getAppMessageDialog(AppMessage.MessageType.PLEASE_WAIT, false);
 
-            @Override
-            public void onPostExecute(Bitmap bitmap) {
-                if (mEditPicture != null)
-                    mEditPicture.showFramedImage(bitmap);
-                System.gc();
-            }
-        });
+        mAppMessageWait.show(mFragmentManager, FRAME_WAIT_DIALOG);
+    }
+
+    @Override
+    public void onFrameSelected(final String picturePath, final int _frame) {
+        if(!mSelectingFrame) {
+            mSelectingFrame = true;
+
+            mBitmapProcessor.processImage(new BitmapProcessor.OnImageProcess() {
+                @Override
+                public Bitmap onBackgroundProcess() {
+                    Uri uri = Uri.fromFile(new File(picturePath));
+                    Bitmap croppedImage = null;
+                    try {
+                        croppedImage = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    final Bitmap frame = BitmapFactory.decodeResource(getResources(), _frame);
+
+                    return mLastResult = mBitmapProcessor.mergeImages(croppedImage, frame);
+                }
+
+                @Override
+                public void onPostExecute(Bitmap bitmap) {
+                    if (mEditPicture != null)
+                        mEditPicture.showFramedImage(bitmap);
+                    System.gc();
+                    mSelectingFrame = false;
+                    mIsFrameSelected = true;
+                    if(mAppMessageWait != null)
+                        mAppMessageWait.dismiss();
+                }
+            });
+        }
     }
 
     @Background
     @Override
-    public void onFinishEditing(File takenPicture) {
-        File finalImage = mBitmapProcessor.storeImage(mLastResult);
-        Logger.d(finalImage.getAbsolutePath());
+    public void onFinishEditing() {
+        if(mIsFrameSelected) {
+            File takenPicture = new File(mPicturePath);
+            onShowWaitDialog();
+            File finalImage = mBitmapProcessor.storeImage(mLastResult);
+            Logger.d(finalImage.getAbsolutePath());
 
-        //persisting picture path
-        GeneratedImages generatedImage = new GeneratedImages();
-        generatedImage.setPath(finalImage.getAbsolutePath());
-        generatedImage.setDate(new Date().toString());
-        EnTuNombre.getInstance()
-                .getDaoSession()
-                .getGeneratedImagesDao()
-                .insertOrReplaceInTx(generatedImage);
-        Logger.d(takenPicture.getPath() + " : " + takenPicture.exists());
-        Logger.d(takenPicture.delete() + "");
-        mBitmapProcessor.deleteLastPhotoTaken();
-        finishActivity();
+            //persisting picture path
+            GeneratedImages generatedImage = new GeneratedImages();
+            generatedImage.setPath(finalImage.getAbsolutePath());
+            generatedImage.setDate(Util.parseDateString(new Date()));
+            EnTuNombre.getInstance()
+                    .getDaoSession()
+                    .getGeneratedImagesDao()
+                    .insertOrReplaceInTx(generatedImage);
+            Logger.d(takenPicture.getPath() + " : " + takenPicture.exists());
+            Logger.d(takenPicture.delete() + "");
+            mBitmapProcessor.deleteLastPhotoTaken();
+            finishActivity();
+        }else{
+            if(mAppMessageMustSelectFrame == null)
+                mAppMessageMustSelectFrame = Util.getAppMessageDialog(AppMessage.MessageType.MUST_SELECT_FRAME, false);
+
+            mAppMessageMustSelectFrame.show(mFragmentManager, MUST_SELECT_FRAME_DIALOG);
+        }
     }
 
     @UiThread
-    public void finishActivity(){
+    public void finishActivity() {
         finish();
     }
 }

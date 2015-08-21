@@ -1,20 +1,21 @@
 package com.dulcerefugio.app.entunombre.util;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
 
 import com.dulcerefugio.app.entunombre.EnTuNombre;
-import com.dulcerefugio.app.entunombre.logic.BitmapProcessor;
+import com.dulcerefugio.app.entunombre.activities.fragments.dialog.AppMessage;
 
-import java.io.File;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Created by eperez on 10/13/14.
@@ -41,5 +42,32 @@ public class Util {
     public static String nextSessionId() {
         SecureRandom random = new SecureRandom();
         return new BigInteger(130, random).toString(32);
+    }
+
+    public static DialogFragment getAppMessageDialog(AppMessage.MessageType messageType, boolean cancelable){
+        Bundle args = new Bundle();
+        args.putParcelable(AppMessage.cBUNDLE_ARG_MESSAGE_TYPE, messageType);
+        DialogFragment dialog = new AppMessage();
+        dialog.setArguments(args);
+        dialog.setCancelable(cancelable);
+
+        return dialog;
+    }
+
+    public static String parseDateString(Date date){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:dd");
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        return sdf.format(date);
+    }
+
+    public static Date parseStringToDate(String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:dd");
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        try {
+            return sdf.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

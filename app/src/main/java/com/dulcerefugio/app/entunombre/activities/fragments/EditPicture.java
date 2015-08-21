@@ -81,7 +81,7 @@ public class EditPicture extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_send:
-                mListener.onFinishEditing(new File(mPicturePath));
+                mListener.onFinishEditing();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -115,13 +115,8 @@ public class EditPicture extends Fragment
 
     @Override
     public void onRecyclerItemClick(View view, int position) {
-        Uri uri = Uri.fromFile(new File(mPicturePath));
-        try {
-            mPictureBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        mListener.onFrameSelected(mPictureBitmap, mAdapter.getItem(position));
+        mListener.onShowWaitDialog();
+        mListener.onFrameSelected(mPicturePath, mAdapter.getItem(position));
     }
 
     public void showFramedImage(Bitmap bitmap){
@@ -129,7 +124,8 @@ public class EditPicture extends Fragment
     }
 
     public interface onEditPictureListener{
-        void onFrameSelected(Bitmap croppedImage, final int frame);
-        void onFinishEditing(File takenPicture);
+        void onShowWaitDialog();
+        void onFrameSelected(String croppedImage, final int frame);
+        void onFinishEditing();
     }
 }
