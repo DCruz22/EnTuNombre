@@ -60,13 +60,19 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
             holder.tvTitle.setText(path[path.length-1]);
             Date date = Util.parseStringToDate(generatedImage.getDate());
             holder.tvDate.setText(new PrettyTime().format(date == null ? new Date() : date));
-            mImageLoader.displayImage(Uri.decode(Uri.fromFile(new File(generatedImage.getPath())).toString()), holder.imageView);
+            mImageLoader.displayImage(Uri.decode(
+                    Uri.fromFile(new File(generatedImage.getPath())).toString()), holder.imageView);
         }
     }
 
     @Override
     public int getItemCount() {
         return mImages.size();
+    }
+
+    public void addItemToTop(GeneratedImages generatedImage) {
+        mImages.add(0,generatedImage);
+        notifyDataSetChanged();
     }
     //======================================================
     //                      METHODS

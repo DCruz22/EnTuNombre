@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.dulcerefugio.app.entunombre.R;
 import com.dulcerefugio.app.entunombre.activities.fragments.PictureListFragment.PictureListListeners;
+import com.dulcerefugio.app.entunombre.activities.fragments.PictureListFragment_;
 import com.dulcerefugio.app.entunombre.activities.fragments.VideoListFragment;
 import com.dulcerefugio.app.entunombre.activities.fragments.dialog.WelcomeDialogFragment;
 import com.dulcerefugio.app.entunombre.logic.BitmapProcessor;
@@ -44,6 +46,7 @@ public class MainActivity extends Base implements
     private static final int PLAY_YOUTUBE_VIDEO = 1123;
     private static final String TAG = "MAIN_ACTIVITY";
     protected static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 820;
+    private static final int CROPPER_ACTIVITY_RESULT_CODE = 153;
 
     //=============================FIELDS======================================
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -86,10 +89,20 @@ public class MainActivity extends Base implements
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-                Logger.d(imageFile.getPath());
-                //Opening Cropper Activity
-                CropperActivity_.intent(this).mPicturePath(imageFile.getPath()).start();
+
+            switch (requestCode){
+                case CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE:
+                    Logger.d(imageFile.getPath());
+                    //Opening Cropper Activity
+                    CropperActivity_.intent(this).mPicturePath(imageFile.getPath()).startForResult(CROPPER_ACTIVITY_RESULT_CODE);
+                    break;
+                case CROPPER_ACTIVITY_RESULT_CODE:
+                    long generatedImageID = data.getLongExtra(CropperActivity.GENERATED_IMAGE_ID, 0);
+                    Logger.d(generatedImageID+"");
+                    PictureListFragment_ fragment = (PictureListFragment_)mSectionsPagerAdapter.getItem(0);
+                    fragment.addItemToTop(generatedImageID);
+                    Logger.d((fragment == null)+"");
+                    break;
             }
         }
     }

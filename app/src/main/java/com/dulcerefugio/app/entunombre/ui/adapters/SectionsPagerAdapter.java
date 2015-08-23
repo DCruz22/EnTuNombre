@@ -14,6 +14,7 @@ import com.dulcerefugio.app.entunombre.R;
 import com.dulcerefugio.app.entunombre.activities.fragments.PictureListFragment;
 import com.dulcerefugio.app.entunombre.activities.fragments.PictureListFragment_;
 import com.dulcerefugio.app.entunombre.activities.fragments.VideoListFragment_;
+import com.orhanobut.logger.Logger;
 
 /**
  * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -23,34 +24,37 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
 	private final int TABS_NUMBER=2;
 	private Context mContext;
+	private Fragment[] fragments;
 	
 	public SectionsPagerAdapter(FragmentManager fm, Context context) {
 		super(fm);
 		mContext = context;
+		fragments = new Fragment[TABS_NUMBER];
 	}
 
 	@Override
 	public Fragment getItem(int position) {
-
-        Log.d("POSITION",position+"");
+        Logger.d(position + "");
 		TabFragments tabFragment = TabFragments.values()[position];
+        Fragment fragment = fragments[position];
+        Logger.d(tabFragment.name() + "");
 
-        Fragment fragment = null;
-        Bundle args = null;
+		if(fragment != null)
+			return fragment;
 
 		switch(tabFragment){
 			case BUILD_PICTURE:
-				return PictureListFragment_.builder().build();
+				fragments[position] = PictureListFragment_.builder().build();
+                break;
 			case VIDEO_LIST:
-				return VideoListFragment_.builder().build();
+				fragments[position] = VideoListFragment_.builder().build();
+                break;
             case ABOUT_US:
-                fragment = new PictureListFragment();
-                args = new Bundle();
-                args.putInt(PictureListFragment.ARG_SECTION_NUMBER, position + 1);
-                fragment.setArguments(args);
-                return fragment;
+                fragments[position] = PictureListFragment_.builder().build();
+                break;
 		}
-		return null;
+
+        return fragments[position];
 	}
 
 	@Override

@@ -35,6 +35,7 @@ public class PictureListFragment extends Fragment
     @ViewById(R.id.f_picture_list_rv_pictures)
     public RecyclerView mRecyclerView;
     private List<GeneratedImages> mPictures;
+    private PictureListAdapter mPictureListAdapter;
 
     public PictureListFragment() {
     }
@@ -65,6 +66,16 @@ public class PictureListFragment extends Fragment
 
     }
 
+    public void addItemToTop(long generatedImageID){
+        GeneratedImages generatedImage = EnTuNombre
+                .getInstance()
+                .getDaoSession()
+                .getGeneratedImagesDao()
+                .load(generatedImageID);
+        mPictureListAdapter.addItemToTop(generatedImage);
+        mAdapter.notifyDataSetChanged();
+    }
+
     @AfterViews
     public void initialize() {
         Logger.d("0");
@@ -74,7 +85,8 @@ public class PictureListFragment extends Fragment
                 .queryBuilder()
                 .orderDesc(GeneratedImagesDao.Properties.Id)
                 .list();
-        mAdapter = new RecyclerViewMaterialAdapter(new PictureListAdapter(mPictures));
+        mPictureListAdapter = new PictureListAdapter(mPictures);
+        mAdapter = new RecyclerViewMaterialAdapter(mPictureListAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);

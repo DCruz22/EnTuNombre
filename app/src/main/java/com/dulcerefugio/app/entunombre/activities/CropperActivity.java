@@ -1,5 +1,6 @@
 package com.dulcerefugio.app.entunombre.activities;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -43,6 +44,7 @@ public class CropperActivity extends Base
     private static final String EDIT_PICTURE_FRAGMENT = "EditPictureTag";
     private static final String FRAME_WAIT_DIALOG = "FRAME_WAIT_DIALOG";
     private static final String MUST_SELECT_FRAME_DIALOG="mAppMessageMustSelectFrame";
+    public static final String GENERATED_IMAGE_ID = "GENERATED_IMAGE_ID";
 
     //fields
     @Extra(PICTURE_PATH_EXTRA)
@@ -177,7 +179,7 @@ public class CropperActivity extends Base
             Logger.d(takenPicture.getPath() + " : " + takenPicture.exists());
             Logger.d(takenPicture.delete() + "");
             mBitmapProcessor.deleteLastPhotoTaken();
-            finishActivity();
+            finishActivity(generatedImage.getId());
         }else{
             if(mAppMessageMustSelectFrame == null)
                 mAppMessageMustSelectFrame = Util.getAppMessageDialog(AppMessage.MessageType.MUST_SELECT_FRAME, false);
@@ -187,7 +189,10 @@ public class CropperActivity extends Base
     }
 
     @UiThread
-    public void finishActivity() {
+    public void finishActivity(Long id) {
+        Intent i = new Intent();
+        i.putExtra(GENERATED_IMAGE_ID, id);
+        setResult(RESULT_OK, i);
         finish();
     }
 }
