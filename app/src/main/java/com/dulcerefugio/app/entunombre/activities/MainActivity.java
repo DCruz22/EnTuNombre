@@ -12,11 +12,13 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.dulcerefugio.app.entunombre.EnTuNombre;
 import com.dulcerefugio.app.entunombre.R;
 import com.dulcerefugio.app.entunombre.activities.fragments.PictureListFragment.PictureListListeners;
 import com.dulcerefugio.app.entunombre.activities.fragments.PictureListFragment_;
 import com.dulcerefugio.app.entunombre.activities.fragments.VideoListFragment;
 import com.dulcerefugio.app.entunombre.activities.fragments.dialog.WelcomeDialogFragment;
+import com.dulcerefugio.app.entunombre.data.dao.GeneratedImages;
 import com.dulcerefugio.app.entunombre.logic.BitmapProcessor;
 import com.dulcerefugio.app.entunombre.logic.Preferences;
 import com.dulcerefugio.app.entunombre.ui.adapters.SectionsPagerAdapter;
@@ -98,10 +100,16 @@ public class MainActivity extends Base implements
                     break;
                 case CROPPER_ACTIVITY_RESULT_CODE:
                     long generatedImageID = data.getLongExtra(CropperActivity.GENERATED_IMAGE_ID, 0);
+                    GeneratedImages generatedImage = EnTuNombre
+                            .getInstance()
+                            .getDaoSession()
+                            .getGeneratedImagesDao()
+                            .load(generatedImageID);
                     Logger.d(generatedImageID+"");
                     PictureListFragment_ fragment = (PictureListFragment_)mSectionsPagerAdapter.getItem(0);
-                    fragment.addItemToTop(generatedImageID);
+                    fragment.addItem(generatedImage,0);
                     Logger.d((fragment == null)+"");
+                    openShareIntent(generatedImage.getPath());
                     break;
             }
         }
@@ -199,5 +207,12 @@ public class MainActivity extends Base implements
             Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);
             toast.show();
         }
+    }
+
+    private void openShareIntent(String imageUri){
+        Intent share = new Intent(Intent.ACTION_SEND);
+        share.setType("image/jpeg");
+        share.putExtra(Intent.EXTRA_STREAM,Uri.fromFile(new File(imageUri)));
+        startActivity(Intent.createChooser(share, "Share Image"));
     }
 }

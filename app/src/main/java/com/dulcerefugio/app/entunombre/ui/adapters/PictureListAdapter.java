@@ -70,8 +70,8 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
         return mImages.size();
     }
 
-    public void addItemToTop(GeneratedImages generatedImage) {
-        mImages.add(0,generatedImage);
+    public void addItem(GeneratedImages generatedImage, int position) {
+        mImages.add(position,generatedImage);
         notifyDataSetChanged();
     }
     //======================================================

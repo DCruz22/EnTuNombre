@@ -66,7 +66,7 @@ public class GeneratePictureActivity extends Activity {
         initialize();
 
         //if(!mImageIsGenerated) {
-            initCamera();
+            //initCamera();
         //}
         /*else {
             if (result != null) {
@@ -146,7 +146,7 @@ public class GeneratePictureActivity extends Activity {
                 .getAbsolutePath()
                 + "/entunombre";
 
-        randomNumber = String.valueOf(nextSessionId());
+        //randomNumber = String.valueOf(nextSessionId());
         //cropRandomNumber = String.valueOf(nextSessionId());
         cameraPhotoImagePath = saveFolderName + "/" + randomNumber + ".jpg";
         //cameraCropImagePath = saveFolderName + "/" + cropRandomNumber + ".jpg";
@@ -159,7 +159,7 @@ public class GeneratePictureActivity extends Activity {
         if (!wallpaperDirectory.exists())
             wallpaperDirectory.mkdirs();
 
-        Log.d(TAG, " str_Camera_Photo_ImagePath  " + cameraPhotoImagePath);
+        //Log.d(TAG, " str_Camera_Photo_ImagePath  " + cameraPhotoImagePath);
 
         mImageResult.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,7 +173,7 @@ public class GeneratePictureActivity extends Activity {
             }
         });
 
-        /*btnShare= (Button) findViewById(R.id.open);
+        btnShare= (Button) findViewById(R.id.open);
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -182,7 +182,7 @@ public class GeneratePictureActivity extends Activity {
                 //share.putExtra(Intent.EXTRA_STREAM,Uri.fromFile(finalImage));
                 startActivity(Intent.createChooser(share, "Share Image"));
             }
-        });*/
+        });
 
         /*btnAgain= (Button) findViewById(R.id.doAgain);
         btnAgain.setOnClickListener(new View.OnClickListener() {
@@ -194,87 +194,5 @@ public class GeneratePictureActivity extends Activity {
             }
         });*/
 	}
-
-    // used to create randon numbers
-    public String nextSessionId() {
-        SecureRandom random = new SecureRandom();
-        return new BigInteger(130, random).toString(32);
-    }
-
-    private void initCamera(){
-        try {
-            startActivityForResult(new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
-                                    .putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile)),
-                                    CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-        }catch(ActivityNotFoundException anfe){
-                //display an error message
-                String errorMessage = "Whoops - No es posible acceder a la camara!";
-                Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        Log.d(TAG, "f  " + imageFile);
-    }
-
-    /*private void performCrop(){
-        try {
-            //call the standard crop action intent (the user device may not support it)
-            Intent cropIntent = new Intent("com.android.camera.action.CROP");
-
-            //indicate image type and Uri
-            cropIntent.setDataAndType(picUri, "image/*");
-
-            //set crop properties
-            cropIntent.putExtra("crop", "true");
-
-
-            //Setting the URI where the file will be stored
-            cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cropImageFile));
-
-            //Setting outputFormat Bitmap.CompressFormat.JPEG
-            cropIntent.putExtra("scale",true);
-            cropIntent.putExtra("scaleUpIfNeeded",true);
-            cropIntent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-
-            //start the activity - we handle returning in onActivityResult
-            startActivityForResult(cropIntent, PIC_CROP);
-        }
-        catch(ActivityNotFoundException anfe){
-            //display an error message
-            String errorMessage = "Whoops - your device doesn't support the crop action!";
-            Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);
-            toast.show();
-        }
-    }*/
-		
-	/*private void processImage(){
-        new AsyncTask<Void, Void, Bitmap>(){
-
-            @Override
-            protected Bitmap doInBackground(Void... params) {
-                Log.d(TAG,picture.getWidth()+" pic WIDTH");
-                Log.d(TAG,picture.getHeight()+" pic HEIGHT");
-                Log.d(TAG,frame.getWidth()+" fr WIDTH");
-                Log.d(TAG,frame.getHeight()+" fr HEIGHT");
-               result = mBitmapProcessor.mergeImages(picture, frame);
-               finalImage = mBitmapProcessor.storeImage(result);
-                Log.d(TAG, finalImage.getAbsolutePath());
-               return result;
-            }
-
-            @Override
-            protected void onPostExecute(Bitmap bitmap) {
-                super.onPostExecute(bitmap);
-
-                mImageResult.setImageBitmap(bitmap);
-                mImageResult.setVisibility(View.VISIBLE);
-                mProgressBar.setVisibility(View.GONE);
-                mImageIsGenerated = true;
-                btnShare.setVisibility(View.VISIBLE);
-                btnAgain.setVisibility(View.VISIBLE);
-
-                System.gc();
-            }
-        }.execute();
-	}*/
 
 }

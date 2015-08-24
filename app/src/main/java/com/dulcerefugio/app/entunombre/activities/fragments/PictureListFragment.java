@@ -66,13 +66,8 @@ public class PictureListFragment extends Fragment
 
     }
 
-    public void addItemToTop(long generatedImageID){
-        GeneratedImages generatedImage = EnTuNombre
-                .getInstance()
-                .getDaoSession()
-                .getGeneratedImagesDao()
-                .load(generatedImageID);
-        mPictureListAdapter.addItemToTop(generatedImage);
+    public void addItem(GeneratedImages generatedImage, int position){
+        mPictureListAdapter.addItem(generatedImage, position);
         mAdapter.notifyDataSetChanged();
     }
 
