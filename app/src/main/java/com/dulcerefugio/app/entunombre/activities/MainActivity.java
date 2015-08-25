@@ -122,8 +122,13 @@ public class MainActivity extends Base implements
     }
 
     @Override
-    public void OnGeneratePictureClick() {
+    public void onGeneratePictureClick() {
         initCamera();
+    }
+
+    @Override
+    public void onPictureShare(String imageUri) {
+        openShareIntent(imageUri);
     }
 
     @Override

@@ -29,13 +29,15 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
     //======================================================
     private List<GeneratedImages> mImages;
     private ImageLoader mImageLoader;
+    private OnPictureListAdapter mListener;
 
     //======================================================
     //                    CONSTRUCTORS
     //======================================================
-    public PictureListAdapter(List<GeneratedImages> mPictures) {
+    public PictureListAdapter(List<GeneratedImages> mPictures, OnPictureListAdapter listener) {
         mImages = mPictures;
         this.mImageLoader = ImageLoader.getInstance();
+        mListener = listener;
     }
 
     //======================================================
@@ -48,8 +50,9 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
         ImageView imageView = (ImageView) itemView.findViewById(R.id.f_picture_list_iv_picture);
         TextView tvTitle = (TextView) itemView.findViewById(R.id.f_picture_list_tv_name);
         TextView tvDate = (TextView) itemView.findViewById(R.id.f_picture_list_tv_date);
+        View shareContainer = itemView.findViewById(R.id.row_picture_share);
 
-        return new ViewHolder(itemView, imageView, tvTitle, tvDate);
+        return new ViewHolder(itemView, imageView, tvTitle, tvDate, shareContainer);
     }
 
     @Override
@@ -57,11 +60,17 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
         final GeneratedImages generatedImage = mImages.get(position);
         if(generatedImage != null){
             String[] path = generatedImage.getPath().split("/");
-            holder.tvTitle.setText(path[path.length-1]);
+            holder.tvTitle.setText(path[path.length-1].replace(".jpg", ""));
             Date date = Util.parseStringToDate(generatedImage.getDate());
             holder.tvDate.setText(new PrettyTime().format(date == null ? new Date() : date));
             mImageLoader.displayImage(Uri.decode(
                     Uri.fromFile(new File(generatedImage.getPath())).toString()), holder.imageView);
+            holder.vShareContainer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mListener.onPictureShare(generatedImage.getPath());
+                }
+            });
         }
     }
 
@@ -85,13 +94,19 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
         public ImageView imageView;
         public TextView tvTitle;
         public TextView tvDate;
+        public View vShareContainer;
 
-        public ViewHolder(View itemView, ImageView imageView, TextView tvTitle, TextView tvDate) {
+        public ViewHolder(View itemView, ImageView imageView, TextView tvTitle, TextView tvDate, View shareContainer) {
             super(itemView);
             this.imageView = imageView;
             this.tvTitle = tvTitle;
             this.tvDate = tvDate;
+            this.vShareContainer = shareContainer;
         }
+    }
+
+    public interface OnPictureListAdapter{
+        void onPictureShare(String imageUri);
     }
 
     //======================================================

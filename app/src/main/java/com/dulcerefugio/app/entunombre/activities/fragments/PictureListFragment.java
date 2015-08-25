@@ -12,10 +12,8 @@ import com.dulcerefugio.app.entunombre.activities.fragments.listeners.RecyclerIt
 import com.dulcerefugio.app.entunombre.data.dao.GeneratedImages;
 import com.dulcerefugio.app.entunombre.data.dao.GeneratedImagesDao;
 import com.dulcerefugio.app.entunombre.ui.adapters.PictureListAdapter;
-import com.dulcerefugio.app.entunombre.ui.adapters.VideosAdapter;
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.orhanobut.logger.Logger;
 
 import org.androidannotations.annotations.AfterViews;
@@ -80,7 +78,12 @@ public class PictureListFragment extends Fragment
                 .queryBuilder()
                 .orderDesc(GeneratedImagesDao.Properties.Id)
                 .list();
-        mPictureListAdapter = new PictureListAdapter(mPictures);
+        mPictureListAdapter = new PictureListAdapter(mPictures, new PictureListAdapter.OnPictureListAdapter() {
+            @Override
+            public void onPictureShare(String imageUri) {
+                mListener.onPictureShare(imageUri);
+            }
+        });
         mAdapter = new RecyclerViewMaterialAdapter(mPictureListAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.VERTICAL, false);
@@ -94,10 +97,11 @@ public class PictureListFragment extends Fragment
 
     @Click(R.id.materialButton)
     public void onPictureButton() {
-        mListener.OnGeneratePictureClick();
+        mListener.onGeneratePictureClick();
     }
 
     public interface PictureListListeners {
-        void OnGeneratePictureClick();
+        void onGeneratePictureClick();
+        void onPictureShare(String imageUri);
     }
 }
