@@ -61,11 +61,15 @@ public class PictureListFragment extends Fragment
 
     @Override
     public void onRecyclerItemClick(View view, int position) {
-
+        Logger.d(view.toString());
+        Logger.d(view.getId()+"");
+        if(mPictures.size() > 0)
+            mListener.onCardSelected(mPictures.get(position - 1));
     }
 
     public void addItem(GeneratedImages generatedImage, int position){
-        mPictureListAdapter.addItem(generatedImage, position);
+        mPictures.add(position, generatedImage);
+        //mPictureListAdapter.addItem(generatedImage, position);
         mAdapter.notifyDataSetChanged();
     }
 
@@ -103,5 +107,6 @@ public class PictureListFragment extends Fragment
     public interface PictureListListeners {
         void onGeneratePictureClick();
         void onPictureShare(String imageUri);
+        void onCardSelected(GeneratedImages generatedImages);
     }
 }

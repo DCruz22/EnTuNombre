@@ -17,6 +17,7 @@ import com.dulcerefugio.app.entunombre.R;
 import com.dulcerefugio.app.entunombre.activities.fragments.PictureListFragment.PictureListListeners;
 import com.dulcerefugio.app.entunombre.activities.fragments.PictureListFragment_;
 import com.dulcerefugio.app.entunombre.activities.fragments.VideoListFragment;
+import com.dulcerefugio.app.entunombre.activities.fragments.dialog.AppMessageDialog;
 import com.dulcerefugio.app.entunombre.activities.fragments.dialog.WelcomeDialogFragment;
 import com.dulcerefugio.app.entunombre.data.dao.GeneratedImages;
 import com.dulcerefugio.app.entunombre.logic.BitmapProcessor;
@@ -49,6 +50,7 @@ public class MainActivity extends Base implements
     private static final String TAG = "MAIN_ACTIVITY";
     protected static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 820;
     private static final int CROPPER_ACTIVITY_RESULT_CODE = 153;
+    private static final String PICTURE_PREVIEW_DIALOG = "PICTURE_PREVIEW_DIALOG";
 
     //=============================FIELDS======================================
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -62,6 +64,7 @@ public class MainActivity extends Base implements
     static String cameraPhotoImagePath = "";
     @ViewById(R.id.drawer_layout)
     public DrawerLayout mDrawer;
+    private DialogFragment mAppMessageImagePreview;
 
     //=============================OVERRIDEN METHODS======================================
 
@@ -129,6 +132,15 @@ public class MainActivity extends Base implements
     @Override
     public void onPictureShare(String imageUri) {
         openShareIntent(imageUri);
+    }
+
+    @Override
+    public void onCardSelected(GeneratedImages generatedImages) {
+
+        if(mAppMessageImagePreview == null)
+            mAppMessageImagePreview = Util.getAppMessageDialog(AppMessageDialog.MessageType.IMAGE_PREVIEW, generatedImages.getPath(), false);
+
+        mAppMessageImagePreview.show(mFragmentManager, PICTURE_PREVIEW_DIALOG);
     }
 
     @Override

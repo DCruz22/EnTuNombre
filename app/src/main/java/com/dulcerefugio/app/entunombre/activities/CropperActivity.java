@@ -16,7 +16,7 @@ import com.dulcerefugio.app.entunombre.activities.fragments.CropPicture;
 import com.dulcerefugio.app.entunombre.activities.fragments.CropPicture_;
 import com.dulcerefugio.app.entunombre.activities.fragments.EditPicture;
 import com.dulcerefugio.app.entunombre.activities.fragments.EditPicture_;
-import com.dulcerefugio.app.entunombre.activities.fragments.dialog.AppMessage;
+import com.dulcerefugio.app.entunombre.activities.fragments.dialog.AppMessageDialog;
 import com.dulcerefugio.app.entunombre.data.dao.GeneratedImages;
 import com.dulcerefugio.app.entunombre.logic.BitmapProcessor;
 import com.dulcerefugio.app.entunombre.util.Util;
@@ -120,7 +120,7 @@ public class CropperActivity extends Base
     @Override
     public void onShowWaitDialog() {
         if(mAppMessageWait == null)
-            mAppMessageWait = Util.getAppMessageDialog(AppMessage.MessageType.PLEASE_WAIT, false);
+            mAppMessageWait = Util.getAppMessageDialog(AppMessageDialog.MessageType.PLEASE_WAIT, null, false);
 
         mAppMessageWait.show(mFragmentManager, FRAME_WAIT_DIALOG);
     }
@@ -182,7 +182,7 @@ public class CropperActivity extends Base
             finishActivity(generatedImage.getId());
         }else{
             if(mAppMessageMustSelectFrame == null)
-                mAppMessageMustSelectFrame = Util.getAppMessageDialog(AppMessage.MessageType.MUST_SELECT_FRAME, false);
+                mAppMessageMustSelectFrame = Util.getAppMessageDialog(AppMessageDialog.MessageType.MUST_SELECT_FRAME, null, false);
 
             mAppMessageMustSelectFrame.show(mFragmentManager, MUST_SELECT_FRAME_DIALOG);
         }

@@ -68,7 +68,7 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
             holder.tvDate.setText(new PrettyTime().format(date == null ? new Date() : date));
             mImageLoader.displayImage(Uri.decode(
                     Uri.fromFile(new File(generatedImage.getPath())).toString()), holder.imageView);
-            holder.vShareContainer.setOnTouchListener(new View.OnTouchListener() {
+            holder.mBtnShare.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
                     Logger.d("0");
@@ -99,14 +99,14 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
         public ImageView imageView;
         public TextView tvTitle;
         public TextView tvDate;
-        public CustomShareButton vShareContainer;
+        public CustomShareButton mBtnShare;
 
         public ViewHolder(View itemView, ImageView imageView, TextView tvTitle, TextView tvDate, CustomShareButton shareContainer) {
             super(itemView);
             this.imageView = imageView;
             this.tvTitle = tvTitle;
             this.tvDate = tvDate;
-            this.vShareContainer = shareContainer;
+            this.mBtnShare = shareContainer;
         }
     }
 
