@@ -218,6 +218,6 @@ public class MainActivity extends Base implements
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("image/jpeg");
         share.putExtra(Intent.EXTRA_STREAM,Uri.fromFile(new File(imageUri)));
-        startActivity(Intent.createChooser(share, "Share Image"));
+        startActivity(Intent.createChooser(share, "Compartir Imagen"));
     }
 }

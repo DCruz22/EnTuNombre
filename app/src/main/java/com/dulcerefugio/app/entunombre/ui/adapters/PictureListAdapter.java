@@ -3,6 +3,7 @@ package com.dulcerefugio.app.entunombre.ui.adapters;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -10,8 +11,10 @@ import android.widget.TextView;
 
 import com.dulcerefugio.app.entunombre.R;
 import com.dulcerefugio.app.entunombre.data.dao.GeneratedImages;
+import com.dulcerefugio.app.entunombre.ui.widgets.CustomShareButton;
 import com.dulcerefugio.app.entunombre.util.Util;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.orhanobut.logger.Logger;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
@@ -50,7 +53,7 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
         ImageView imageView = (ImageView) itemView.findViewById(R.id.f_picture_list_iv_picture);
         TextView tvTitle = (TextView) itemView.findViewById(R.id.f_picture_list_tv_name);
         TextView tvDate = (TextView) itemView.findViewById(R.id.f_picture_list_tv_date);
-        View shareContainer = itemView.findViewById(R.id.row_picture_share);
+        CustomShareButton shareContainer = (CustomShareButton) itemView.findViewById(R.id.row_picture_share);
 
         return new ViewHolder(itemView, imageView, tvTitle, tvDate, shareContainer);
     }
@@ -65,10 +68,12 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
             holder.tvDate.setText(new PrettyTime().format(date == null ? new Date() : date));
             mImageLoader.displayImage(Uri.decode(
                     Uri.fromFile(new File(generatedImage.getPath())).toString()), holder.imageView);
-            holder.vShareContainer.setOnClickListener(new View.OnClickListener() {
+            holder.vShareContainer.setOnTouchListener(new View.OnTouchListener() {
                 @Override
-                public void onClick(View view) {
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    Logger.d("0");
                     mListener.onPictureShare(generatedImage.getPath());
+                    return false;
                 }
             });
         }
@@ -94,9 +99,9 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
         public ImageView imageView;
         public TextView tvTitle;
         public TextView tvDate;
-        public View vShareContainer;
+        public CustomShareButton vShareContainer;
 
-        public ViewHolder(View itemView, ImageView imageView, TextView tvTitle, TextView tvDate, View shareContainer) {
+        public ViewHolder(View itemView, ImageView imageView, TextView tvTitle, TextView tvDate, CustomShareButton shareContainer) {
             super(itemView);
             this.imageView = imageView;
             this.tvTitle = tvTitle;

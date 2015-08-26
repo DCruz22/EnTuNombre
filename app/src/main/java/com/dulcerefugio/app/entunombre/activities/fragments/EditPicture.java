@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.dulcerefugio.app.entunombre.R;
 import com.dulcerefugio.app.entunombre.activities.fragments.listeners.RecyclerItemClickListener;
+import com.dulcerefugio.app.entunombre.data.pojos.PictureFrame;
 import com.dulcerefugio.app.entunombre.ui.adapters.PictureFramesAdapter;
 import com.orhanobut.logger.Logger;
 
@@ -96,13 +97,13 @@ public class EditPicture extends Fragment
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            List<Integer> drawables = new ArrayList<>();
-            drawables.add(R.drawable.frame);
-            drawables.add(R.drawable.frame);
-            drawables.add(R.drawable.frame);
-            drawables.add(R.drawable.frame);
-            drawables.add(R.drawable.frame);
-            mAdapter = new PictureFramesAdapter(drawables);
+            List<PictureFrame> pictureFrames = new ArrayList<>();
+            pictureFrames.add(new PictureFrame(R.drawable.frame_show, R.drawable.frame, "Frame1"));
+            pictureFrames.add(new PictureFrame(R.drawable.frame_show, R.drawable.frame, "Frame1"));
+            pictureFrames.add(new PictureFrame(R.drawable.frame_show, R.drawable.frame, "Frame1"));
+            pictureFrames.add(new PictureFrame(R.drawable.frame_show, R.drawable.frame, "Frame1"));
+            pictureFrames.add(new PictureFrame(R.drawable.frame_show, R.drawable.frame, "Frame1"));
+            mAdapter = new PictureFramesAdapter(pictureFrames);
             LinearLayoutManager layoutManager
                     = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
             mRecyclerFrames.setLayoutManager(layoutManager);
