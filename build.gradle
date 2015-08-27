@@ -16,7 +16,9 @@ allprojects {
         mavenCentral()
         mavenLocal()
         maven {
-            url 'https://github.com/tvbarthel/maven/raw/master/'
+            url {
+                'https://github.com/tvbarthel/maven/raw/master/'; 'https://jitpack.io'
+            }
         }
     }
 }

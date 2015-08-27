@@ -73,8 +73,6 @@ public abstract class Base extends AppCompatActivity {
                             checkInternetConnection();
                         }
                     }).show();
-        }else{
-            Toast.makeText(this, "No se pudo establecer una conexion", Toast.LENGTH_LONG).show();
         }
     }
 

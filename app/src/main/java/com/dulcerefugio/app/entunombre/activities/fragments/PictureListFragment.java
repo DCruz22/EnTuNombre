@@ -12,6 +12,7 @@ import com.dulcerefugio.app.entunombre.activities.fragments.listeners.RecyclerIt
 import com.dulcerefugio.app.entunombre.data.dao.GeneratedImages;
 import com.dulcerefugio.app.entunombre.data.dao.GeneratedImagesDao;
 import com.dulcerefugio.app.entunombre.ui.adapters.PictureListAdapter;
+import com.dulcerefugio.app.entunombre.ui.widgets.MaterialButton;
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 import com.orhanobut.logger.Logger;
@@ -34,6 +35,8 @@ public class PictureListFragment extends Fragment
     public RecyclerView mRecyclerView;
     private List<GeneratedImages> mPictures;
     private PictureListAdapter mPictureListAdapter;
+    @ViewById(R.id.materialButton)
+    public MaterialButton mMaterialButton;
 
     public PictureListFragment() {
     }
@@ -61,10 +64,6 @@ public class PictureListFragment extends Fragment
 
     @Override
     public void onRecyclerItemClick(View view, int position) {
-        Logger.d(view.toString());
-        Logger.d(view.getId()+"");
-        if(mPictures.size() > 0)
-            mListener.onCardSelected(mPictures.get(position - 1));
     }
 
     public void addItem(GeneratedImages generatedImage, int position){
@@ -87,6 +86,11 @@ public class PictureListFragment extends Fragment
             public void onPictureShare(String imageUri) {
                 mListener.onPictureShare(imageUri);
             }
+
+            @Override
+            public void onImageSelected(GeneratedImages generatedImages) {
+                mListener.onCardSelected(generatedImages);
+            }
         });
         mAdapter = new RecyclerViewMaterialAdapter(mPictureListAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),
@@ -97,6 +101,7 @@ public class PictureListFragment extends Fragment
         mRecyclerView.addOnItemTouchListener(listener);
         mRecyclerView.setAdapter(mAdapter);
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
+        mListener.onPictureListLoaded(getView());
     }
 
     @Click(R.id.materialButton)
@@ -108,5 +113,6 @@ public class PictureListFragment extends Fragment
         void onGeneratePictureClick();
         void onPictureShare(String imageUri);
         void onCardSelected(GeneratedImages generatedImages);
+        void onPictureListLoaded(View view);
     }
 }

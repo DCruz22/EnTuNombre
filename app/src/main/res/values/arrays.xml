@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="main_drawer_options">
+        <item>Hacer imagen</item>
+        <item>Información</item>
+        <item>Salir</item>
+    </string-array>
+</resources>

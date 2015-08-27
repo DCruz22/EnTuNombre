@@ -16,5 +16,9 @@
     <string name="action_send">send</string>
     <string name="please_wait">Por favor, espere...</string>
     <string name="must_select_frame">Debe seleccionar un marco de la lista</string>
+    <string name="picture_added_snackbar">Su imagen ha sido creada correctamente.</string>
+    <string name="about">#EnTuNombre es un concierto juvenil que nace en el año 2013 en el seno del ministerio juvenil Generación que OBDC del Centro de Adoración Dulce Refugio.</string>
+    <string name="entendido">Aceptar</string>
+    <string name="create_image_showcase">Para crear una imagen debe hacer click en el botón con la cámara en la parte inferior derecha.</string>
 
 </resources>

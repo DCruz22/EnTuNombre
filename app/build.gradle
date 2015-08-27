@@ -45,6 +45,7 @@ dependencies {
     compile 'com.afollestad:material-dialogs:0.7.4.1'
     compile 'fr.tvbarthel.blurdialogfragment:lib:2.1.2'
     compile 'org.ocpsoft.prettytime:prettytime:3.2.7.Final'
+    compile 'com.github.deano2390:MaterialShowcaseView:1.0.5@aar'
     compile ('com.github.florent37:materialviewpager:1.1.0@aar'){
         transitive = true
     }

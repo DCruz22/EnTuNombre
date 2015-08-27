@@ -11,7 +11,7 @@
         />
 
     <com.dulcerefugio.app.entunombre.ui.widgets.CustomShareButton
-        android:id="@+id/row_picture_share"
+        android:id="@+id/dialog_preview_csb_picture_share"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

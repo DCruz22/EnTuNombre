@@ -2,12 +2,9 @@ package com.dulcerefugio.app.entunombre.activities.fragments;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,17 +13,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.dulcerefugio.app.entunombre.R;
 import com.dulcerefugio.app.entunombre.activities.fragments.listeners.RecyclerItemClickListener;
 import com.dulcerefugio.app.entunombre.data.pojos.PictureFrame;
 import com.dulcerefugio.app.entunombre.ui.adapters.PictureFramesAdapter;
-import com.orhanobut.logger.Logger;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.ViewById;
 

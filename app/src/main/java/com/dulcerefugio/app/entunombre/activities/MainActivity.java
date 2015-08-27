@@ -3,17 +3,24 @@ package com.dulcerefugio.app.entunombre.activities;
 import android.content.ActivityNotFoundException;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.dulcerefugio.app.entunombre.EnTuNombre;
 import com.dulcerefugio.app.entunombre.R;
+import com.dulcerefugio.app.entunombre.activities.fragments.PictureListFragment;
 import com.dulcerefugio.app.entunombre.activities.fragments.PictureListFragment.PictureListListeners;
 import com.dulcerefugio.app.entunombre.activities.fragments.PictureListFragment_;
 import com.dulcerefugio.app.entunombre.activities.fragments.VideoListFragment;
@@ -39,10 +46,13 @@ import org.androidannotations.annotations.ViewById;
 
 import java.io.File;
 
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+
 @EActivity(R.layout.a_main)
 public class MainActivity extends Base implements
         PictureListListeners,
-        VideoListFragment.VideoListListeners {
+        VideoListFragment.VideoListListeners,
+        AppMessageDialog.OnAppMessageDialogListener {
 
     //=============================CONSTANTS======================================
     public static final java.lang.String VIDEO_URL_PLAY = "URL_VIDEO_PLAY";
@@ -51,20 +61,27 @@ public class MainActivity extends Base implements
     protected static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 820;
     private static final int CROPPER_ACTIVITY_RESULT_CODE = 153;
     private static final String PICTURE_PREVIEW_DIALOG = "PICTURE_PREVIEW_DIALOG";
+    private static final String APP_ABOUT_DIALOG = "APP_ABOUT_DIALOG";
+    private static final String SHOWCASE_ID = "1234cx.";
 
     //=============================FIELDS======================================
     private SectionsPagerAdapter mSectionsPagerAdapter;
     @ViewById(R.id.materialViewPager)
     public MaterialViewPager mViewPager;
     private ActionBarDrawerToggle mDrawerToggle;
-    private static DialogFragment welcomeDialog;
     private static File imageFile;
     private static String randomNumber = "";
     public static String saveFolderName;
     static String cameraPhotoImagePath = "";
     @ViewById(R.id.drawer_layout)
-    public DrawerLayout mDrawer;
+    public DrawerLayout mDrawerLayout;
     private DialogFragment mAppMessageImagePreview;
+    private String[] mDrawerOptions;
+    @ViewById(R.id.drawer_lv_items)
+    public ListView mDrawerList;
+    @ViewById(R.id.left_drawer)
+    public View mDrawer;
+    private DialogFragment mAppMessageAbout;
 
     //=============================OVERRIDEN METHODS======================================
 
@@ -79,23 +96,11 @@ public class MainActivity extends Base implements
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-        welcomeDialog = welcomeDialog == null ? welcomeDialog = new WelcomeDialogFragment() : welcomeDialog;
-
-        if (!welcomeDialog.isAdded() && !Preferences.getInstance().isWelcomeDialogShown()) {
-            Preferences.getInstance().setWelcomeDialogShown(true);
-            welcomeDialog.show(getSupportFragmentManager(), "welcome_message");
-        }
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
 
-            switch (requestCode){
+            switch (requestCode) {
                 case CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE:
                     Logger.d(imageFile.getPath());
                     //Opening Cropper Activity
@@ -108,11 +113,13 @@ public class MainActivity extends Base implements
                             .getDaoSession()
                             .getGeneratedImagesDao()
                             .load(generatedImageID);
-                    Logger.d(generatedImageID+"");
-                    PictureListFragment_ fragment = (PictureListFragment_)mSectionsPagerAdapter.getItem(0);
-                    fragment.addItem(generatedImage,0);
-                    Logger.d((fragment == null)+"");
+                    Logger.d(generatedImageID + "");
+                    PictureListFragment_ fragment = (PictureListFragment_) mSectionsPagerAdapter.getItem(0);
+                    fragment.addItem(generatedImage, 0);
+                    Logger.d((fragment == null) + "");
                     openShareIntent(generatedImage.getPath());
+                    Snackbar.make(findViewById(android.R.id.content), R.string.picture_added_snackbar, Snackbar.LENGTH_LONG)
+                            .show();
                     break;
             }
         }
@@ -122,6 +129,18 @@ public class MainActivity extends Base implements
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(mDrawer);
+                break;
+
+        }
+        ;
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -136,11 +155,20 @@ public class MainActivity extends Base implements
 
     @Override
     public void onCardSelected(GeneratedImages generatedImages) {
-
-        if(mAppMessageImagePreview == null)
+        if (mAppMessageImagePreview == null)
             mAppMessageImagePreview = Util.getAppMessageDialog(AppMessageDialog.MessageType.IMAGE_PREVIEW, generatedImages.getPath(), false);
 
         mAppMessageImagePreview.show(mFragmentManager, PICTURE_PREVIEW_DIALOG);
+    }
+
+    @Override
+    public void onPictureListLoaded(View view) {
+        new MaterialShowcaseView.Builder(this)
+                .setTarget(view.findViewById(R.id.materialButton))
+                .setDismissText(R.string.entendido)
+                .setContentText(R.string.create_image_showcase)
+                .singleUse(SHOWCASE_ID)
+                .show();
     }
 
     @Override
@@ -173,8 +201,33 @@ public class MainActivity extends Base implements
             actionBar.setTitle("");
         }
 
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, 0, 0);
-        mDrawer.setDrawerListener(mDrawerToggle);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, 0, 0);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerOptions = getResources().getStringArray(R.array.main_drawer_options);
+        mDrawerList.setAdapter(new ArrayAdapter<>(this,
+                R.layout.drawer_list_item, mDrawerOptions));
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                mDrawerLayout.closeDrawer(Gravity.LEFT);
+                switch (position) {
+                    case 0: //make an image
+                        onGeneratePictureClick();
+                        break;
+                    case 1: // About
+                        if (mAppMessageAbout == null)
+                            mAppMessageAbout = Util.getAppMessageDialog(AppMessageDialog.MessageType.ABOUT,
+                                    null,
+                                    true);
+
+                        mAppMessageAbout.show(mFragmentManager, APP_ABOUT_DIALOG);
+                        break;
+                    case 2: //Exit
+                        finish();
+                        break;
+                }
+            }
+        });
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the app.
         mSectionsPagerAdapter = new SectionsPagerAdapter(
@@ -226,10 +279,15 @@ public class MainActivity extends Base implements
         }
     }
 
-    private void openShareIntent(String imageUri){
+    private void openShareIntent(String imageUri) {
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("image/jpeg");
-        share.putExtra(Intent.EXTRA_STREAM,Uri.fromFile(new File(imageUri)));
+        share.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageUri)));
         startActivity(Intent.createChooser(share, "Compartir Imagen"));
+    }
+
+    @Override
+    public void onPreviewDialogShare(String imageUri) {
+        openShareIntent(imageUri);
     }
 }

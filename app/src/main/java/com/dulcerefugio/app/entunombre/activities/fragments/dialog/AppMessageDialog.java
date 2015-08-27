@@ -10,10 +10,13 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.dulcerefugio.app.entunombre.R;
+import com.dulcerefugio.app.entunombre.ui.widgets.CustomShareButton;
+import com.orhanobut.logger.Logger;
 
 import java.io.File;
 
@@ -54,18 +57,6 @@ public class AppMessageDialog extends DialogFragment {
         super.onCreate(savedInstanceState);
         mBlurDialogEngine = new BlurDialogEngine(getActivity());
     }
-
-
-    /*@Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = ((OnAppMessageDialogListener)activity);
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnAppMessageDialogListener");
-        }
-    }*/
 
     @NonNull
     @Override
@@ -112,6 +103,8 @@ public class AppMessageDialog extends DialogFragment {
         if(messageTypeInt.getResource() != 0)
             message = getString(messageTypeInt.getResource());
 
+        Logger.d(message);
+
         MaterialDialog.Builder builder = getBuilder(messageTypeInt, title, message);
         mDialog = builder.build();
 
@@ -119,6 +112,14 @@ public class AppMessageDialog extends DialogFragment {
             ImageView imageView = (ImageView)mDialog.getCustomView().findViewById(R.id.dialog_preview_iv_image);
             imageView.setImageURI(Uri.fromFile(new File(imageUri)));
 
+            CustomShareButton csb = (CustomShareButton)mDialog.getCustomView().findViewById(R.id.dialog_preview_csb_picture_share);
+            csb.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ((OnAppMessageDialogListener)getActivity()).onPreviewDialogShare(imageUri);
+                    AppMessageDialog.this.dismiss();
+                }
+            });
         }
     }
 
@@ -127,6 +128,7 @@ public class AppMessageDialog extends DialogFragment {
                 .Builder(getActivity())
                 .title(title)
                 .titleColorRes(android.R.color.darker_gray)
+                .contentColorRes(android.R.color.black)
                 .backgroundColorRes(android.R.color.white);
 
         if(message.length() > 0)
@@ -148,13 +150,14 @@ public class AppMessageDialog extends DialogFragment {
     //INNER CLASSES
     //========================================================
     public interface OnAppMessageDialogListener {
-        void getImagePreviewBitmap(String imageUri);
+        void onPreviewDialogShare(String ImageUri);
     }
 
     public enum MessageType implements Parcelable {
         PLEASE_WAIT(R.string.please_wait, true, false),
         MUST_SELECT_FRAME(R.string.must_select_frame, false, true),
-        IMAGE_PREVIEW(0, false, true);
+        IMAGE_PREVIEW(0, false, true),
+        ABOUT(R.string.about, false, true);
 
         private final boolean progressBarNeeded;
         private final boolean positiveTextNeeded;

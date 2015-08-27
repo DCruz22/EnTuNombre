@@ -59,11 +59,11 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
     }
 
     @Override
-    public void onBindViewHolder(final PictureListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final PictureListAdapter.ViewHolder holder, final int position) {
         final GeneratedImages generatedImage = mImages.get(position);
-        if(generatedImage != null){
+        if (generatedImage != null) {
             String[] path = generatedImage.getPath().split("/");
-            holder.tvTitle.setText(path[path.length-1].replace(".jpg", ""));
+            holder.tvTitle.setText(path[path.length - 1].replace(".jpg", ""));
             Date date = Util.parseStringToDate(generatedImage.getDate());
             holder.tvDate.setText(new PrettyTime().format(date == null ? new Date() : date));
             mImageLoader.displayImage(Uri.decode(
@@ -76,6 +76,13 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
                     return false;
                 }
             });
+            holder.imageView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    mListener.onImageSelected(mImages.get(position));
+                    return false;
+                }
+            });
         }
     }
 
@@ -85,7 +92,7 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
     }
 
     public void addItem(GeneratedImages generatedImage, int position) {
-        mImages.add(position,generatedImage);
+        mImages.add(position, generatedImage);
         notifyDataSetChanged();
     }
     //======================================================
@@ -110,8 +117,10 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
         }
     }
 
-    public interface OnPictureListAdapter{
+    public interface OnPictureListAdapter {
         void onPictureShare(String imageUri);
+
+        void onImageSelected(GeneratedImages generatedImages);
     }
 
     //======================================================
