@@ -4,5 +4,5 @@
     android:layout_width="wrap_content"
     android:layout_height="@dimen/materialviewpager_logoHeight"
     android:text="#EnTuNombre"
-    android:textSize="30sp"
+    android:textSize="@dimen/header_logo_textsize"
     android:textColor="@android:color/white"/>

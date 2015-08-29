@@ -17,8 +17,8 @@
             android:padding="5dp">
 
             <RelativeLayout
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="@dimen/row_picture_img_width_height"
+                android:layout_height="@dimen/row_picture_img_width_height"
                 android:layout_gravity="center">
 
                 <ImageView
@@ -48,14 +48,14 @@
                     android:id="@+id/f_picture_list_tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/row_picture_tv_name_textsize"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/f_picture_list_tv_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/row_picture_tv_date_textsize" />
             </LinearLayout>
         </LinearLayout>
 

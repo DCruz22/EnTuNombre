@@ -11,5 +11,19 @@
     <dimen name="splash_progressbar_width">20dp</dimen>
     <dimen name="welcome_dialog_padding">6dp</dimen>
     <dimen name="welcome_message_text_size">15dp</dimen>
+    <dimen name="row_picture_img_width_height">100dp</dimen>
+    <dimen name="header_logo_textsize">30sp</dimen>
+    <dimen name="row_picture_tv_name_textsize">14sp</dimen>
+    <dimen name="row_picture_tv_date_textsize">12sp</dimen>
+    <dimen name="custom_share_button_tv_textsize">12sp</dimen>
+    <dimen name="custom_share_button_iv_width_height">35dp</dimen>
+    <dimen name="a_main_material_button_width_height">70dp</dimen>
+    <dimen name="row_video_iv_width_height">100dp</dimen>
+    <dimen name="row_video_tv_name_textsize">14sp</dimen>
+    <dimen name="row_video_tv_description_textsize">12sp</dimen>
+    <dimen name="row_video_child_margin_top">8dp</dimen>
+    <dimen name="row_frame_iv_width_height">90dp</dimen>
+    <dimen name="row_frame_tv_name_textsize">13sp</dimen>
+    <dimen name="dialog_preview_iv_width_height">200dp</dimen>
 
 </resources>

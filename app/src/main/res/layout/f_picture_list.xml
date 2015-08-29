@@ -9,9 +9,9 @@
         android:layout_height="match_parent"/>
     <com.dulcerefugio.app.entunombre.ui.widgets.MaterialButton
         android:id="@+id/materialButton"
-        android:layout_width="70dp"
+        android:layout_width="@dimen/a_main_material_button_width_height"
+        android:layout_height="@dimen/a_main_material_button_width_height"
         android:elevation="4dp"
-        android:layout_height="70dp"
         android:src="@drawable/ic_camera_alt_white_24dp"
         android:layout_gravity="right|end|bottom"
         custom:colorm="@color/accent"

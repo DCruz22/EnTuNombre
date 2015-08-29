@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/row_frame_iv_frame"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        android:layout_width="@dimen/row_frame_iv_width_height"
+        android:layout_height="@dimen/row_frame_iv_width_height"
         android:scaleType="centerCrop"
         android:src="@drawable/frame_show"/>
     <TextView
@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:text="Frame1"
         android:textColor="@android:color/white"
-        android:textSize="13dp"
+        android:textSize="@dimen/row_frame_tv_name_textsize"
         android:textStyle="bold"
         android:textAlignment="center"
         android:layout_gravity="center_horizontal"
