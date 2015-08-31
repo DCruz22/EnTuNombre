@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.annotation.UiThread;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.MenuItem;
 
 import com.dulcerefugio.app.entunombre.EnTuNombre;
 import com.dulcerefugio.app.entunombre.R;
@@ -37,14 +38,15 @@ import java.util.Date;
 @EActivity(R.layout.a_cropper)
 public class CropperActivity extends Base
         implements CropPicture.onCropPictureListener,
-        EditPicture.onEditPictureListener {
+        EditPicture.onEditPictureListener,
+        AppMessageDialog.OnAppMessageDialogListener {
 
     public static final String PICTURE_PATH_EXTRA = "PICTURE_PATH_EXTRA";
     private static final String CROP_PICTURE_FRAGMENT = "CropPictureTag";
     private static final String EDIT_PICTURE_FRAGMENT = "EditPictureTag";
-    private static final String FRAME_WAIT_DIALOG = "FRAME_WAIT_DIALOG";
-    private static final String MUST_SELECT_FRAME_DIALOG="mAppMessageMustSelectFrame";
+    private static final String MUST_SELECT_FRAME_DIALOG = "mAppMessageMustSelectFrame";
     public static final String GENERATED_IMAGE_ID = "GENERATED_IMAGE_ID";
+    private static final String ASK_EXIT_DIALOG = "ASK_EXIT_DIALOG";
 
     //fields
     @Extra(PICTURE_PATH_EXTRA)
@@ -57,7 +59,6 @@ public class CropperActivity extends Base
     @FragmentByTag(EDIT_PICTURE_FRAGMENT)
     EditPicture mEditPicture;
     private Bitmap mLastResult;
-    private DialogFragment mAppMessageWait;
     private boolean mSelectingFrame;
     private boolean mIsFrameSelected;
     private DialogFragment mAppMessageMustSelectFrame;
@@ -66,9 +67,25 @@ public class CropperActivity extends Base
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mBitmapProcessor = BitmapProcessor.getInstance(this);
+        showCropFragment();
+    }
 
-        initialize();
-        showUI();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Logger.d("0");
+                Util.getAppMessageDialog(AppMessageDialog.MessageType.ASK_TO_EXIT, "", true)
+                        .show(mFragmentManager, ASK_EXIT_DIALOG);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected boolean isDisplayHomeAsUpEnabled() {
+        return true;
     }
 
     @Override
@@ -76,8 +93,9 @@ public class CropperActivity extends Base
         return true;
     }
 
-    private void showUI() {
-        showCropFragment();
+    @Override
+    public void onShowWaitDialog() {
+        showWaitDialog();
     }
 
     private void showCropFragment() {
@@ -89,17 +107,11 @@ public class CropperActivity extends Base
 
     @UiThread
     private void showEditFragment() {
-        if(mAppMessageWait!=null)
-            mAppMessageWait.dismiss();
+        dismissWaitDialog();
         mEditPicture = EditPicture_.builder().mPicturePath(mCroppedPicturePath).build();
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.a_cropper_fl_container, mEditPicture, EDIT_PICTURE_FRAGMENT);
         fragmentTransaction.commit();
-    }
-
-    private void initialize() {
-        // Initialize components of the app
-        mBitmapProcessor = BitmapProcessor.getInstance(this);
     }
 
     @Override
@@ -113,23 +125,13 @@ public class CropperActivity extends Base
 
     @Override
     public void onCropCancel() {
-        finish();
-    }
-
-    @UiThread
-    @Override
-    public void onShowWaitDialog() {
-        if(mAppMessageWait == null)
-            mAppMessageWait = Util.getAppMessageDialog(AppMessageDialog.MessageType.PLEASE_WAIT, null, false);
-
-        mAppMessageWait.show(mFragmentManager, FRAME_WAIT_DIALOG);
+        finishActivity(0L, RESULT_CANCELED);
     }
 
     @Override
     public void onFrameSelected(final String picturePath, final int _frame) {
-        if(!mSelectingFrame) {
+        if (!mSelectingFrame) {
             mSelectingFrame = true;
-
             mBitmapProcessor.processImage(new BitmapProcessor.OnImageProcess() {
                 @Override
                 public Bitmap onBackgroundProcess() {
@@ -152,8 +154,7 @@ public class CropperActivity extends Base
                     System.gc();
                     mSelectingFrame = false;
                     mIsFrameSelected = true;
-                    if(mAppMessageWait != null)
-                        mAppMessageWait.dismiss();
+                    dismissWaitDialog();
                 }
             });
         }
@@ -162,11 +163,10 @@ public class CropperActivity extends Base
     @Background
     @Override
     public void onFinishEditing() {
-        if(mIsFrameSelected) {
-            File takenPicture = new File(mPicturePath);
+        Logger.d("0");
+        if (mIsFrameSelected) {
             onShowWaitDialog();
             File finalImage = mBitmapProcessor.storeImage(mLastResult);
-            Logger.d(finalImage.getAbsolutePath());
 
             //persisting picture path
             GeneratedImages generatedImage = new GeneratedImages();
@@ -176,12 +176,9 @@ public class CropperActivity extends Base
                     .getDaoSession()
                     .getGeneratedImagesDao()
                     .insertOrReplaceInTx(generatedImage);
-            Logger.d(takenPicture.getPath() + " : " + takenPicture.exists());
-            Logger.d(takenPicture.delete() + "");
-            mBitmapProcessor.deleteLastPhotoTaken();
-            finishActivity(generatedImage.getId());
-        }else{
-            if(mAppMessageMustSelectFrame == null)
+            finishActivity(generatedImage.getId(), RESULT_OK);
+        } else {
+            if (mAppMessageMustSelectFrame == null)
                 mAppMessageMustSelectFrame = Util.getAppMessageDialog(AppMessageDialog.MessageType.MUST_SELECT_FRAME, null, false);
 
             mAppMessageMustSelectFrame.show(mFragmentManager, MUST_SELECT_FRAME_DIALOG);
@@ -189,10 +186,35 @@ public class CropperActivity extends Base
     }
 
     @UiThread
-    public void finishActivity(Long id) {
-        Intent i = new Intent();
-        i.putExtra(GENERATED_IMAGE_ID, id);
-        setResult(RESULT_OK, i);
+    public void finishActivity(Long id, int result) {
+        Logger.d("0");
+        deleteLastPicture();
+        switch(result){
+            case RESULT_OK:
+                Intent i = new Intent();
+                i.putExtra(GENERATED_IMAGE_ID, id);
+                setResult(RESULT_OK, i);
+                break;
+            case RESULT_CANCELED:
+                setResult(result,new Intent());
+        }
+
         finish();
+    }
+
+    @Override
+    public void onPreviewDialogShare(String ImageUri) {
+
+    }
+
+    @Override
+    public void onPositiveButton() {
+        Logger.d("0");
+        finishActivity(0L, RESULT_CANCELED);
+    }
+
+    @Background
+    public void deleteLastPicture() {
+        mBitmapProcessor.deleteLastPhotoTaken();
     }
 }

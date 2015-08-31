@@ -91,6 +91,11 @@ public class MainActivity extends Base implements
     }
 
     @Override
+    protected boolean isDisplayHomeAsUpEnabled() {
+        return true;
+    }
+
+    @Override
     protected boolean needToolbar() {
         return false;
     }
@@ -99,7 +104,6 @@ public class MainActivity extends Base implements
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-
             switch (requestCode) {
                 case CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE:
                     Logger.d(imageFile.getPath());
@@ -113,12 +117,12 @@ public class MainActivity extends Base implements
                             .getDaoSession()
                             .getGeneratedImagesDao()
                             .load(generatedImageID);
-                    Logger.d(generatedImageID + "");
                     PictureListFragment_ fragment = (PictureListFragment_) mSectionsPagerAdapter.getItem(0);
                     fragment.addItem(generatedImage, 0);
-                    Logger.d((fragment == null) + "");
                     openShareIntent(generatedImage.getPath());
-                    Snackbar.make(findViewById(android.R.id.content), R.string.picture_added_snackbar, Snackbar.LENGTH_LONG)
+                    Snackbar.make(findViewById(android.R.id.content),
+                            R.string.picture_added_snackbar,
+                            Snackbar.LENGTH_LONG)
                             .show();
                     break;
             }
@@ -139,7 +143,6 @@ public class MainActivity extends Base implements
                 break;
 
         }
-        ;
         return super.onOptionsItemSelected(item);
     }
 
@@ -191,14 +194,6 @@ public class MainActivity extends Base implements
         if (toolbar != null) {
             Logger.d("is vp toolbar");
             setSupportActionBar(toolbar);
-
-            ActionBar actionBar = getSupportActionBar();
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setDisplayShowHomeEnabled(true);
-            actionBar.setDisplayShowTitleEnabled(true);
-            actionBar.setDisplayUseLogoEnabled(false);
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setTitle("");
         }
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, 0, 0);
@@ -265,7 +260,6 @@ public class MainActivity extends Base implements
     }
 
     private void initCamera() {
-
         Logger.d("f  " + imageFile);
         try {
             startActivityForResult(new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
@@ -289,5 +283,10 @@ public class MainActivity extends Base implements
     @Override
     public void onPreviewDialogShare(String imageUri) {
         openShareIntent(imageUri);
+    }
+
+    @Override
+    public void onPositiveButton() {
+        finish();
     }
 }

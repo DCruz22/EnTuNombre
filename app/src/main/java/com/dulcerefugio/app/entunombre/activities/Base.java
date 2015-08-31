@@ -3,12 +3,15 @@ package com.dulcerefugio.app.entunombre.activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.UiThread;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.dulcerefugio.app.entunombre.R;
+import com.dulcerefugio.app.entunombre.activities.fragments.dialog.AppMessageDialog;
 import com.dulcerefugio.app.entunombre.util.Util;
 import com.orhanobut.logger.Logger;
 
@@ -28,6 +31,8 @@ public abstract class Base extends AppCompatActivity {
     @ViewById(R.id.toolbar)
     protected Toolbar mToolBar;
     protected FragmentManager mFragmentManager;
+    private DialogFragment mAppMessageWait;
+    private static final String FRAME_WAIT_DIALOG = "FRAME_WAIT_DIALOG";
     //======================================================
     //                    CONSTRUCTORS
     //======================================================
@@ -55,11 +60,28 @@ public abstract class Base extends AppCompatActivity {
                 setSupportActionBar(mToolBar);
 
                 if (getSupportActionBar() != null) {
-                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(isDisplayHomeAsUpEnabled());
                 }
             }
         }
     }
+
+    @UiThread
+    protected void showWaitDialog() {
+        if (mAppMessageWait == null)
+            mAppMessageWait = Util.getAppMessageDialog(AppMessageDialog.MessageType.PLEASE_WAIT, null, false);
+
+        mAppMessageWait.show(mFragmentManager, FRAME_WAIT_DIALOG);
+    }
+
+    @UiThread
+    protected void dismissWaitDialog(){
+        if (mAppMessageWait != null)
+            mAppMessageWait.dismiss();
+    }
+
+
+    protected abstract boolean isDisplayHomeAsUpEnabled();
 
     protected void checkInternetConnection() {
         if(!Util.isNetworkAvailable(this)){

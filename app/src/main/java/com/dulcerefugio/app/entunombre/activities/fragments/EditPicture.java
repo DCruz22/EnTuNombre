@@ -18,6 +18,7 @@ import com.dulcerefugio.app.entunombre.R;
 import com.dulcerefugio.app.entunombre.activities.fragments.listeners.RecyclerItemClickListener;
 import com.dulcerefugio.app.entunombre.data.pojos.PictureFrame;
 import com.dulcerefugio.app.entunombre.ui.adapters.PictureFramesAdapter;
+import com.orhanobut.logger.Logger;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -74,8 +75,10 @@ public class EditPicture extends Fragment
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Logger.d("0");
         switch (item.getItemId()) {
             case R.id.action_send:
+                Logger.d("0");
                 mListener.onFinishEditing();
                 return true;
         }

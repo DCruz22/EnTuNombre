@@ -1,6 +1,5 @@
 package com.dulcerefugio.app.entunombre.activities.fragments.dialog;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.net.Uri;
@@ -123,8 +122,8 @@ public class AppMessageDialog extends DialogFragment {
         }
     }
 
-    private MaterialDialog.Builder getBuilder(MessageType messageTypeInt, String title, String message) {
-        MaterialDialog.Builder builder = new MaterialDialog
+    private MaterialDialog.Builder getBuilder(final MessageType messageTypeInt, String title, String message) {
+        final MaterialDialog.Builder builder = new MaterialDialog
                 .Builder(getActivity())
                 .title(title)
                 .titleColorRes(android.R.color.darker_gray)
@@ -134,12 +133,37 @@ public class AppMessageDialog extends DialogFragment {
         if(message.length() > 0)
             builder.content(message);
 
-        if (messageTypeInt.positiveTextNeeded) {
-            builder.positiveText(android.R.string.ok);
-        }
-        if(messageTypeInt.progressBarNeeded){
+        if(messageTypeInt.progressBarNeeded)
             builder.progress(true, 0);
+
+        if(messageTypeInt.negativeTextNeeded)
+            builder.negativeText(android.R.string.no);
+
+        if (messageTypeInt.positiveTextNeeded) {
+            if(messageTypeInt == MessageType.ASK_TO_EXIT) {
+                builder.positiveText(android.R.string.yes);
+            }else{
+                builder.positiveText(android.R.string.ok);
+            }
+
+            builder.callback(new MaterialDialog.ButtonCallback() {
+                @Override
+                public void onPositive(MaterialDialog dialog) {
+                    super.onPositive(dialog);
+                    if(messageTypeInt == MessageType.ASK_TO_EXIT) {
+                        ((OnAppMessageDialogListener)getActivity()).onPositiveButton();
+                        AppMessageDialog.this.dismiss();
+                    }
+                }
+
+                @Override
+                public void onNegative(MaterialDialog dialog) {
+                    super.onNegative(dialog);
+                    AppMessageDialog.this.dismiss();
+                }
+            });
         }
+
         if(messageTypeInt == MessageType.IMAGE_PREVIEW){
             builder.customView(R.layout.dialog_preview_image, true);
         }
@@ -151,23 +175,27 @@ public class AppMessageDialog extends DialogFragment {
     //========================================================
     public interface OnAppMessageDialogListener {
         void onPreviewDialogShare(String ImageUri);
+        void onPositiveButton();
     }
 
     public enum MessageType implements Parcelable {
-        PLEASE_WAIT(R.string.please_wait, true, false),
-        MUST_SELECT_FRAME(R.string.must_select_frame, false, true),
-        IMAGE_PREVIEW(0, false, true),
-        ABOUT(R.string.about, false, true);
+        PLEASE_WAIT(R.string.please_wait, true, false, false),
+        MUST_SELECT_FRAME(R.string.must_select_frame, false, true, false),
+        IMAGE_PREVIEW(0, false, true, false),
+        ABOUT(R.string.about, false, true, false),
+        ASK_TO_EXIT(R.string.ask_to_exit_msg, false, true, true);
 
         private final boolean progressBarNeeded;
         private final boolean positiveTextNeeded;
+        private final boolean negativeTextNeeded;
         private int resource;
 
         MessageType(int resource, boolean progressBarNeeded,
-                    boolean positiveTextNeeded) {
+                    boolean positiveTextNeeded, boolean negativeTextNeeded) {
             this.resource = resource;
             this.progressBarNeeded = progressBarNeeded;
             this.positiveTextNeeded = positiveTextNeeded;
+            this.negativeTextNeeded = negativeTextNeeded;
         }
 
         public int getResource() {

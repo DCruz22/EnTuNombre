@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dulcerefugio.app.entunombre"
-    android:versionCode="10"
-    android:versionName="1.0" >
+    android:versionCode="11"
+    android:versionName="1.1" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -49,7 +49,7 @@
             android:label="@string/title_activity_generate_picture">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dulcerefugio.app.entunombre.activities.MainActivity" />
+                android:value="com.dulcerefugio.app.entunombre.activities.MainActivity_" />
         </activity>
         <activity android:name=".activities.AuthActivity"
             android:screenOrientation="portrait"

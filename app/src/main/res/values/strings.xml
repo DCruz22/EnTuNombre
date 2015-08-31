@@ -20,5 +20,6 @@
     <string name="about">#EnTuNombre es un concierto juvenil que nace en el año 2013 en el seno del ministerio juvenil Generación que OBDC del Centro de Adoración Dulce Refugio.</string>
     <string name="entendido">Aceptar</string>
     <string name="create_image_showcase">Para crear una imagen debe hacer click en el botón con la cámara en la parte inferior derecha.</string>
+    <string name="ask_to_exit_msg">¿Está seguro que desea salir?</string>
 
 </resources>
