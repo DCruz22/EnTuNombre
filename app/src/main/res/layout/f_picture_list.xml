@@ -3,10 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:custom="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:id="@+id/f_picture_list_tv_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No ha creado ninguna foto todavía. Dale click al boton debajo para crear una nueva"
+        android:padding="30dp"
+        android:gravity="center"
+        android:layout_gravity="center"/>
     <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/f_picture_list_rv_pictures"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
     <com.dulcerefugio.app.entunombre.ui.widgets.MaterialButton
         android:id="@+id/materialButton"
         android:layout_width="@dimen/a_main_material_button_width_height"

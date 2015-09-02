@@ -21,5 +21,8 @@
     <string name="entendido">Aceptar</string>
     <string name="create_image_showcase">Para crear una imagen debe hacer click en el botón con la cámara en la parte inferior derecha.</string>
     <string name="ask_to_exit_msg">¿Está seguro que desea salir?</string>
+    <string name="f_picture_chooser_title">Elija tipo</string>
+    <string name="df_picture_chooser_btn_cancel">Cancelar</string>
+    <string name="chooser_title">Escoja un visor de imagenes</string>
 
 </resources>

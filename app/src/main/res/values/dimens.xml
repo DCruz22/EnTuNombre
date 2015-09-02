@@ -25,5 +25,8 @@
     <dimen name="row_frame_iv_width_height">90dp</dimen>
     <dimen name="row_frame_tv_name_textsize">13sp</dimen>
     <dimen name="dialog_preview_iv_width_height">200dp</dimen>
+    <dimen name="df_picture_chooser_lv_margin_bottom">10dp</dimen>
+    <dimen name="item_picture_chooser_tv_textsize">22sp</dimen>
+    <dimen name="item_picture_chooser_tv_padding">10dp</dimen>
 
 </resources>

@@ -1,9 +1,13 @@
 package com.dulcerefugio.app.entunombre.util;
 
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 
@@ -71,5 +75,36 @@ public class Util {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static Intent getRateUsIntent(){
+        final String appPackageName = EnTuNombre.context.getPackageName(); // getPackageName() from Context or Activity object
+        try {
+            return (new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+        }
+        catch (android.content.ActivityNotFoundException anfe) {
+            return (new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + appPackageName)));
+        }
+    }
+
+
+
+    public static String getPath(Uri uri) {
+        String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+        Cursor cursor = EnTuNombre.context.getContentResolver().query(uri,
+                filePathColumn, null, null, null);
+
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+        }else{
+            return "";
+        }
+
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String picturePath = cursor.getString(columnIndex);
+        cursor.close();
+
+        return picturePath;
     }
 }

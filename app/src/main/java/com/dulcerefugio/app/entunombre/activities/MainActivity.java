@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -25,6 +26,7 @@ import com.dulcerefugio.app.entunombre.activities.fragments.PictureListFragment.
 import com.dulcerefugio.app.entunombre.activities.fragments.PictureListFragment_;
 import com.dulcerefugio.app.entunombre.activities.fragments.VideoListFragment;
 import com.dulcerefugio.app.entunombre.activities.fragments.dialog.AppMessageDialog;
+import com.dulcerefugio.app.entunombre.activities.fragments.dialog.PictureChooserDialog;
 import com.dulcerefugio.app.entunombre.activities.fragments.dialog.WelcomeDialogFragment;
 import com.dulcerefugio.app.entunombre.data.dao.GeneratedImages;
 import com.dulcerefugio.app.entunombre.logic.BitmapProcessor;
@@ -52,7 +54,8 @@ import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 public class MainActivity extends Base implements
         PictureListListeners,
         VideoListFragment.VideoListListeners,
-        AppMessageDialog.OnAppMessageDialogListener {
+        AppMessageDialog.OnAppMessageDialogListener,
+        PictureChooserDialog.OnPictureChooserListeners{
 
     //=============================CONSTANTS======================================
     public static final java.lang.String VIDEO_URL_PLAY = "URL_VIDEO_PLAY";
@@ -63,6 +66,8 @@ public class MainActivity extends Base implements
     private static final String PICTURE_PREVIEW_DIALOG = "PICTURE_PREVIEW_DIALOG";
     private static final String APP_ABOUT_DIALOG = "APP_ABOUT_DIALOG";
     private static final String SHOWCASE_ID = "1234cx.";
+    private final int cSELECT_FILE_RQ = 1934;
+    private String cPICTURE_POST_CHOOSER_FRAGMENT_TAG="cPICTURE_POST_CHOOSER_FRAGMENT_TAG";
 
     //=============================FIELDS======================================
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -110,6 +115,10 @@ public class MainActivity extends Base implements
                     //Opening Cropper Activity
                     CropperActivity_.intent(this).mPicturePath(imageFile.getPath()).startForResult(CROPPER_ACTIVITY_RESULT_CODE);
                     break;
+                case cSELECT_FILE_RQ:
+                    Uri selectedImageUri = data.getData();
+                    CropperActivity_.intent(this).mPicturePath(Util.getPath(selectedImageUri)).startForResult(CROPPER_ACTIVITY_RESULT_CODE);
+                    break;
                 case CROPPER_ACTIVITY_RESULT_CODE:
                     long generatedImageID = data.getLongExtra(CropperActivity.GENERATED_IMAGE_ID, 0);
                     GeneratedImages generatedImage = EnTuNombre
@@ -148,7 +157,8 @@ public class MainActivity extends Base implements
 
     @Override
     public void onGeneratePictureClick() {
-        initCamera();
+        PictureChooserDialog chooserDialog = new PictureChooserDialog();
+        chooserDialog.show(getSupportFragmentManager(), cPICTURE_POST_CHOOSER_FRAGMENT_TAG);
     }
 
     @Override
@@ -217,7 +227,10 @@ public class MainActivity extends Base implements
 
                         mAppMessageAbout.show(mFragmentManager, APP_ABOUT_DIALOG);
                         break;
-                    case 2: //Exit
+                    case 2: //Rate us
+                        startActivity(Util.getRateUsIntent());
+                        break;
+                    case 3: //Exit
                         finish();
                         break;
                 }
@@ -288,5 +301,26 @@ public class MainActivity extends Base implements
     @Override
     public void onPositiveButton() {
         finish();
+    }
+
+    @Override
+    public void onTakePicture(Fragment fragment) {
+        initCamera();
+    }
+
+    @Override
+    public void onChooseFromGallery(Fragment fragment) {
+        Intent intent = new Intent(
+                Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        startActivityForResult(
+                Intent.createChooser(intent, getString(R.string.chooser_title)),
+                cSELECT_FILE_RQ);
+    }
+
+    @Override
+    public void onPicturePostCancel() {
+
     }
 }

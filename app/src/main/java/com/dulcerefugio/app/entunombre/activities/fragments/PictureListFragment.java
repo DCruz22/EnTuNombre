@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.dulcerefugio.app.entunombre.EnTuNombre;
 import com.dulcerefugio.app.entunombre.R;
@@ -37,6 +38,8 @@ public class PictureListFragment extends Fragment
     private PictureListAdapter mPictureListAdapter;
     @ViewById(R.id.materialButton)
     public MaterialButton mMaterialButton;
+    @ViewById(R.id.f_picture_list_tv_empty)
+    public TextView mTvEmpty;
 
     public PictureListFragment() {
     }
@@ -68,8 +71,11 @@ public class PictureListFragment extends Fragment
 
     public void addItem(GeneratedImages generatedImage, int position){
         mPictures.add(position, generatedImage);
-        //mPictureListAdapter.addItem(generatedImage, position);
         mAdapter.notifyDataSetChanged();
+        if(mRecyclerView.getVisibility() == View.GONE) {
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mTvEmpty.setVisibility(View.GONE);
+        }
     }
 
     @AfterViews
@@ -81,6 +87,10 @@ public class PictureListFragment extends Fragment
                 .queryBuilder()
                 .orderDesc(GeneratedImagesDao.Properties.Id)
                 .list();
+        if(mPictures.size() > 0){
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mTvEmpty.setVisibility(View.GONE);
+        }
         mPictureListAdapter = new PictureListAdapter(mPictures, new PictureListAdapter.OnPictureListAdapter() {
             @Override
             public void onPictureShare(String imageUri) {
