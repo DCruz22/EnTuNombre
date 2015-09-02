@@ -17,6 +17,7 @@
         android:id="@+id/df_btn_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/df_picture_chooser_btn_cancel">
+        android:text="@string/df_picture_chooser_btn_cancel"
+        android:textColor="@android:color/black">
     </Button>
 </LinearLayout>
