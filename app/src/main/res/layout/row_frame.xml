@@ -14,9 +14,9 @@
         android:scaleType="centerCrop"
         android:src="@drawable/frame_show"/>
     <TextView
+        android:id="@+id/row_frame_tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Frame1"
         android:textColor="@android:color/white"
         android:textSize="@dimen/row_frame_tv_name_textsize"
         android:textStyle="bold"

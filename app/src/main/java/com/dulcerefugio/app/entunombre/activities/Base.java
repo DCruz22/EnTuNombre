@@ -80,7 +80,6 @@ public abstract class Base extends AppCompatActivity {
             mAppMessageWait.dismiss();
     }
 
-
     protected abstract boolean isDisplayHomeAsUpEnabled();
 
     protected void checkInternetConnection() {

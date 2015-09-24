@@ -13,8 +13,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:scaleType="fitStart"
-            android:layout_marginTop="@dimen/row_video_child_margin_top"
-            android:src="@drawable/no_image" />
+            android:layout_marginTop="@dimen/row_video_child_margin_top" />
         <RelativeLayout
             android:id="@+id/containerVideoDescription"
             android:layout_width="match_parent"

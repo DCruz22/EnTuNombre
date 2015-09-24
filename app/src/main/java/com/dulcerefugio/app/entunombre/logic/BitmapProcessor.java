@@ -37,7 +37,7 @@ public class BitmapProcessor {
     public Bitmap mergeImages(final Bitmap bottomImage, final Bitmap topImage) {
         Log.d(TAG, "bottom image height: " + bottomImage.getHeight());
         Log.d(TAG, "bottom image width: " + bottomImage.getWidth());
-        Bitmap resizedbitmap = Bitmap.createScaledBitmap(bottomImage, 780, 780, true);
+        Bitmap resizedbitmap = Bitmap.createScaledBitmap(bottomImage, topImage.getWidth(), topImage.getHeight(), true);
         bottomImage.recycle();
         System.gc();
 

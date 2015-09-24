@@ -49,9 +49,9 @@ public class EnTuNombre extends Application{
 
         //Default Display Options
         DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.no_image)
-                //.showImageForEmptyUri(R.drawable.locked_category)
-                .showImageOnFail(R.drawable.no_image)
+                .showImageOnLoading(R.drawable.ic_img_wait)
+                .showImageForEmptyUri(R.drawable.ic_img_error)
+                .showImageOnFail(R.drawable.ic_img_error)
                 .delayBeforeLoading(500)
                 .cacheInMemory(true)
                 .cacheOnDisk(true)
