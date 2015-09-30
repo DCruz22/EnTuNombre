@@ -53,7 +53,6 @@ public class CropPicture extends Fragment {
     public ImageView mIvCancel;
     @ViewById(R.id.f_cropper_iv_crop)
     public ImageView mIvCrop;
-    private Bitmap mFrame;
     private boolean mIsImageCrop;
 
     //======================================================
@@ -87,10 +86,6 @@ public class CropPicture extends Fragment {
 
     @AfterViews
     public void initialize() {
-        //Initialize frame bitmap
-        mFrame = BitmapProcessor
-                .getInstance(mContext)
-                .decodeSampledBitmapFromResource(getResources(), R.drawable.frame, 300, 400);
         mCropImageView.setFixedAspectRatio(true);
 
         mCropImageView.setAspectRatio(DEFAULT_ASPECT_RATIO_VALUES, DEFAULT_ASPECT_RATIO_VALUES);
@@ -101,7 +96,7 @@ public class CropPicture extends Fragment {
                     public void onClick(View v) {
                         if (!mIsImageCrop) {
                             mIsImageCrop = true;
-                            mListener.onCropImage(mCropImageView.getCroppedImage(), mFrame);
+                            mListener.onCropImage(mCropImageView.getCroppedImage());
                         }
                     }
                 });
@@ -125,7 +120,7 @@ public class CropPicture extends Fragment {
     }
 
     public interface onCropPictureListener {
-        void onCropImage(Bitmap croppedImage, final Bitmap frame);
+        void onCropImage(Bitmap croppedImage);
 
         void onCropCancel();
     }

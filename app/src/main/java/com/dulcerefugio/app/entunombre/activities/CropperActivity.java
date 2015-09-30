@@ -116,7 +116,7 @@ public class CropperActivity extends Base
 
     @Override
     @Background
-    public void onCropImage(final Bitmap croppedImage, final Bitmap frame) {
+    public void onCropImage(final Bitmap croppedImage) {
         onShowWaitDialog();
         File file = mBitmapProcessor.storeImage(croppedImage);
         mCroppedPicturePath = file.getPath();

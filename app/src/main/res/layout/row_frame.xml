@@ -11,8 +11,7 @@
         android:id="@+id/row_frame_iv_frame"
         android:layout_width="@dimen/row_frame_iv_width_height"
         android:layout_height="@dimen/row_frame_iv_width_height"
-        android:scaleType="centerCrop"
-        android:src="@drawable/frame_show"/>
+        android:scaleType="centerCrop"/>
     <TextView
         android:id="@+id/row_frame_tv_name"
         android:layout_width="wrap_content"

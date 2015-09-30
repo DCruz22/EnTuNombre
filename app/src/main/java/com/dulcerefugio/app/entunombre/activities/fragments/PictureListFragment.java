@@ -99,6 +99,7 @@ public class PictureListFragment extends Fragment
 
             @Override
             public void onImageSelected(GeneratedImages generatedImages) {
+                Logger.d(generatedImages.getPath());
                 mListener.onCardSelected(generatedImages);
             }
         });

@@ -168,8 +168,8 @@ public class MainActivity extends Base implements
 
     @Override
     public void onCardSelected(GeneratedImages generatedImages) {
-        if (mAppMessageImagePreview == null)
-            mAppMessageImagePreview = Util.getAppMessageDialog(AppMessageDialog.MessageType.IMAGE_PREVIEW, generatedImages.getPath(), false);
+        mAppMessageImagePreview = Util.getAppMessageDialog(AppMessageDialog.MessageType.IMAGE_PREVIEW,
+                generatedImages.getPath(), false);
 
         mAppMessageImagePreview.show(mFragmentManager, PICTURE_PREVIEW_DIALOG);
     }

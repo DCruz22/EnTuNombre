@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dulcerefugio.app.entunombre"
-    android:versionCode="12"
-    android:versionName="1.2" >
+    android:versionCode="15"
+    android:versionName="1.5" >
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="22" />
+        android:targetSdkVersion="18" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -19,23 +19,7 @@
         android:largeScreens="true"
         android:xlargeScreens="true"
         android:anyDensity="true"
-        android:largestWidthLimitDp="600"/>
-
-    <compatible-screens>
-        <!-- all normal size screens -->
-        <screen android:screenSize="normal" android:screenDensity="mdpi" />
-        <screen android:screenSize="normal" android:screenDensity="hdpi" />
-        <screen android:screenSize="normal" android:screenDensity="xhdpi" />
-        <!-- all large size screens -->
-        <screen android:screenSize="large" android:screenDensity="mdpi" />
-        <screen android:screenSize="large" android:screenDensity="hdpi" />
-        <screen android:screenSize="large" android:screenDensity="xhdpi" />
-        <!-- all xlarge size screens -->
-        <screen android:screenSize="xlarge" android:screenDensity="mdpi" />
-        <screen android:screenSize="xlarge" android:screenDensity="hdpi" />
-        <screen android:screenSize="xlarge" android:screenDensity="xhdpi" />
-    </compatible-screens>
-
+        />
 
     <application
         android:name="com.dulcerefugio.app.entunombre.EnTuNombre"

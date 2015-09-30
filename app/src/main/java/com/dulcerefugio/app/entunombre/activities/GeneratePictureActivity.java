@@ -48,7 +48,6 @@ public class GeneratePictureActivity extends Activity {
     private static Uri picUri;
     private static BitmapProcessor mBitmapProcessor;
     private static Bitmap picture;
-    private static Bitmap frame;
     //private static Bitmap result;
     private static ImageView mImageResult;
     private static ProgressBar mProgressBar;
@@ -98,10 +97,6 @@ public class GeneratePictureActivity extends Activity {
                 //get the cropped bitmap
                 //picture = extras.getParcelable("data");
                 //picture = mBitmapProcessor.decodeSampledBitmapFromFile(cropImageFile, frame.getWidth(), frame.getHeight() - 200);
-
-                if(picture!=null && frame != null){
-                    //processImage();
-                }
             }
         }
     }
@@ -140,7 +135,6 @@ public class GeneratePictureActivity extends Activity {
 		mImageResult = (ImageView) findViewById(R.id.ivMerge);
 		mBitmapProcessor = BitmapProcessor.getInstance(this);
         mProgressBar = (ProgressBar) findViewById(R.id.pbGeneratePicture);
-        frame = mBitmapProcessor.decodeSampledBitmapFromResource(getResources(), R.drawable.frame, 300,400);
 
         saveFolderName = Environment.getExternalStorageDirectory()
                 .getAbsolutePath()

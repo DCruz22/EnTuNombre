@@ -79,7 +79,7 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
             holder.imageView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
-                    mListener.onImageSelected(mImages.get(position));
+                    mListener.onImageSelected(generatedImage);
                     return false;
                 }
             });

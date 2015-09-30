@@ -13,7 +13,7 @@ android {
     defaultConfig {
         applicationId "com.dulcerefugio.app.entunombre"
         minSdkVersion 14
-        targetSdkVersion 22
+        targetSdkVersion 18
     }
 
     buildTypes {
