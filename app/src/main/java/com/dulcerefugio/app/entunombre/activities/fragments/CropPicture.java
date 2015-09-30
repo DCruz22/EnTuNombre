@@ -9,10 +9,12 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.dulcerefugio.app.entunombre.R;
 import com.dulcerefugio.app.entunombre.logic.BitmapProcessor;
 import com.edmodo.cropper.CropImageView;
+import com.orhanobut.logger.Logger;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -87,6 +89,7 @@ public class CropPicture extends Fragment {
     @AfterViews
     public void initialize() {
         mCropImageView.setFixedAspectRatio(true);
+        mCropImageView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
         mCropImageView.setAspectRatio(DEFAULT_ASPECT_RATIO_VALUES, DEFAULT_ASPECT_RATIO_VALUES);
 
@@ -112,10 +115,15 @@ public class CropPicture extends Fragment {
             try {
                 Uri uri = Uri.fromFile(new File(mPicturePath));
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(mContext.getContentResolver(), uri);
+                Logger.d(bitmap.getWidth()+"x"+bitmap.getHeight());
                 mCropImageView.setImageBitmap(bitmap);
+                mCropImageView.requestLayout();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }else{
+            Toast.makeText(getActivity(), "No se puede mostrar esta imagen", Toast.LENGTH_LONG).show();
+            getActivity().finish();
         }
     }
 

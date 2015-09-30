@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dulcerefugio.app.entunombre.EnTuNombre;
 import com.dulcerefugio.app.entunombre.R;
@@ -73,8 +74,12 @@ public class VideoListFragment extends Base
 
     @Override
     public void onRecyclerItemClick(View view, int position) {
-        YoutubeVideo youtubeVideo = mYoutubeVideos.get(position);
-        mCallbacks.onVideoPlayback(youtubeVideo.getVideo_id());
+        try {
+            YoutubeVideo youtubeVideo = mYoutubeVideos.get(position-1);
+            mCallbacks.onVideoPlayback(youtubeVideo.getVideo_id());
+        } catch (IndexOutOfBoundsException e) {
+            Toast.makeText(getActivity(), "No se puede reproducir este video, intente luego", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
