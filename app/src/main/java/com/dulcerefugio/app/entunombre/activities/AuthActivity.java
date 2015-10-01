@@ -65,10 +65,15 @@ public class AuthActivity extends FragmentActivity implements SplashScreenFragme
             @Override
             protected Void doInBackground(Void... params) {
                 if (Util.isNetworkAvailable(AuthActivity.this)) {
-                    List<YoutubeVideo> videoList = ym.getVideosFromYoutubeChannel("", YouTubeManager.CHANNEL_ID);
-                    Log.d("",(mDaoSession == null)+"");
-                    Log.d("",(mDaoSession.getYoutubeVideoDao() == null)+"");
-                    mDaoSession.getYoutubeVideoDao().insertOrReplaceInTx(videoList);
+                    try {
+                        List<YoutubeVideo> videoList = ym.getVideosFromYoutubeChannel("", YouTubeManager.CHANNEL_ID);
+                        Log.d("", (mDaoSession == null) + "");
+                        Log.d("", (mDaoSession.getYoutubeVideoDao() == null) + "");
+                        if (videoList != null || videoList.size() > 0)
+                            mDaoSession.getYoutubeVideoDao().insertOrReplaceInTx(videoList);
+                    }catch (NullPointerException ex){
+                        ex.printStackTrace();
+                    }
                 }
                 return null;
             }

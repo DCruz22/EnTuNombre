@@ -20,6 +20,7 @@ import com.dulcerefugio.app.entunombre.R;
 import com.dulcerefugio.app.entunombre.activities.MainActivity;
 import com.dulcerefugio.app.entunombre.activities.fragments.listeners.RecyclerItemClickListener;
 import com.dulcerefugio.app.entunombre.data.dao.YoutubeVideo;
+import com.dulcerefugio.app.entunombre.data.dao.YoutubeVideoDao;
 import com.dulcerefugio.app.entunombre.ui.adapters.RecyclerViewDividerItemDecorator;
 import com.dulcerefugio.app.entunombre.ui.adapters.VideosAdapter;
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
@@ -75,7 +76,7 @@ public class VideoListFragment extends Base
     @Override
     public void onRecyclerItemClick(View view, int position) {
         try {
-            YoutubeVideo youtubeVideo = mYoutubeVideos.get(position-1);
+            YoutubeVideo youtubeVideo = mYoutubeVideos.get(position - 1);
             mCallbacks.onVideoPlayback(youtubeVideo.getVideo_id());
         } catch (IndexOutOfBoundsException e) {
             Toast.makeText(getActivity(), "No se puede reproducir este video, intente luego", Toast.LENGTH_LONG).show();
@@ -96,7 +97,12 @@ public class VideoListFragment extends Base
 
     @AfterViews
     public void initialize() {
-        mYoutubeVideos = EnTuNombre.getInstance().getDaoSession().getYoutubeVideoDao().loadAll();
+        mYoutubeVideos = EnTuNombre.getInstance()
+                .getDaoSession()
+                .getYoutubeVideoDao()
+                .queryBuilder()
+                .orderDesc(YoutubeVideoDao.Properties.Created_at)
+                .list();
         mAdapter = new RecyclerViewMaterialAdapter(new VideosAdapter(mYoutubeVideos));
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),

@@ -21,6 +21,7 @@ import com.google.api.services.youtube.model.ResourceId;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 import com.google.api.services.youtube.model.Thumbnail;
+import com.google.common.collect.Lists;
 
 
 public class YouTubeManager {
@@ -84,7 +85,7 @@ public class YouTubeManager {
             SearchListResponse searchResponse = search.execute();
             List<SearchResult> searchResultList = searchResponse.getItems();
             if (searchResultList != null) {
-                return getYoutubeVideoList(searchResultList.iterator());
+                return Lists.reverse(getYoutubeVideoList(searchResultList.iterator()));
             }
         } catch (GoogleJsonResponseException e) {
             Log.e(TAG,"There was a service error: " + e.getDetails().getCode() + " : "
@@ -112,7 +113,7 @@ public class YouTubeManager {
 
         if (!iteratorSearchResults.hasNext()) {
             Log.d(TAG, "No videos found in Youtube");
-            return null;
+            return new ArrayList<>();
         }
 
         while (iteratorSearchResults.hasNext()) {
@@ -131,11 +132,10 @@ public class YouTubeManager {
                 String thumbUrl = thumbnail.getUrl();
 
                 videoList.add(new YoutubeVideo(videoId, title, description, thumbUrl, new Date()));
-
             }
         }
 
-        return  videoList;
+        return videoList;
     }
 
 }

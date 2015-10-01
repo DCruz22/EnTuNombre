@@ -54,6 +54,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
             viewHolder.tvDescription.setText(getShortDescription(youtubeVideo.getDescription()));
             mImageLoader.displayImage(youtubeVideo.getThumbnail_url(), viewHolder.imageView);
             Log.d("", youtubeVideo.getTitle());
+            Log.d("", youtubeVideo.getCreated_at()+"");
         }
     }
 

@@ -2,7 +2,10 @@ package com.dulcerefugio.app.entunombre.data.dao.openhelpers;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
 import com.dulcerefugio.app.entunombre.data.dao.DaoMaster;
+import com.dulcerefugio.app.entunombre.data.dao.YoutubeVideoDao;
 
 /**
  * Created by euriperez16 on 2/17/2015.
@@ -13,7 +16,6 @@ public class EnTuNombreOpenHelper extends DaoMaster.OpenHelper {
     //======================================================
     //                      FIELDS
     //======================================================
-    private static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "EnTuNombre";
     private SQLiteDatabase db;
 
@@ -45,9 +47,12 @@ public class EnTuNombreOpenHelper extends DaoMaster.OpenHelper {
     //======================================================
 
     private void upgradeDatabase(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        Log.d("EnTuNombreOpenHelper", "old: "+oldVersion+" new: "+newVersion);
         switch (oldVersion) {
             //SWITCH BETWEEN VERSION CHANGES
+            case 1:
+                YoutubeVideoDao.dropTable(db, true);
+                YoutubeVideoDao.createTable(db, true);
             default:
                 return;
         }

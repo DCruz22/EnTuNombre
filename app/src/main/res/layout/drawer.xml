@@ -6,7 +6,8 @@
     android:layout_gravity="left|start"
     android:background="@android:color/white"
     android:gravity="left"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="10dp">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -21,11 +22,10 @@
             android:textStyle="bold" />
         <ListView
             android:id="@+id/drawer_lv_items"
-            android:layout_width="320dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/drawer_app_name"/>
         <LinearLayout
-            android:id="@id/drawer_lv_items"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
