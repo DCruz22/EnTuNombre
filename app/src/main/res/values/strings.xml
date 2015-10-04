@@ -24,5 +24,7 @@
     <string name="f_picture_chooser_title">Elija tipo</string>
     <string name="df_picture_chooser_btn_cancel">Cancelar</string>
     <string name="chooser_title">Escoja un visor de imagenes</string>
+    <string name="picture_error_snackbar">Ha ocurrido un error creando su imagen, intentelo nuevamente.</string>
+    <string name="picture_error_displayn_snackbar">Ha ocurrido un error mostrando su imagen, por favor reinicie la aplicacion para verla</string>
 
 </resources>

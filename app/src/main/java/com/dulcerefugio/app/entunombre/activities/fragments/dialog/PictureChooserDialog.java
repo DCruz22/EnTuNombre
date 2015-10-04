@@ -76,22 +76,31 @@ public class PictureChooserDialog extends DialogFragment {
         });
 
         String[] options = getActivity().getResources().getStringArray(R.array.picture_chooser_items);
-        ListView lvOptions = (ListView)view.findViewById(R.id.df_lv_picture_chooser);
+        ListView lvOptions = (ListView) view.findViewById(R.id.df_lv_picture_chooser);
         PictureChooserOptionsAdapter pictureChooserOptionsAdapter =
-                new PictureChooserOptionsAdapter(getActivity(), R.layout.item_picture_chooser,options);
+                new PictureChooserOptionsAdapter(getActivity(), R.layout.item_picture_chooser, options);
         lvOptions.setAdapter(pictureChooserOptionsAdapter);
         lvOptions.setClickable(true);
         lvOptions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position){
+                switch (position) {
                     case 0: //CAMERA
-                        PictureChooserDialog.this.dismiss();
-                        mListeners.onTakePicture(PictureChooserDialog.this);
+                        try {
+                            PictureChooserDialog.this.dismiss();
+                            mListeners.onTakePicture(PictureChooserDialog.this);
+                        } catch (IllegalStateException ise) {
+                            ise.printStackTrace();
+                        }
                         break;
                     case 1:
-                        PictureChooserDialog.this.dismiss();
-                        mListeners.onChooseFromGallery(PictureChooserDialog.this);
+                        try {
+                            PictureChooserDialog.this.dismiss();
+                            mListeners.onChooseFromGallery(PictureChooserDialog.this);
+                        } catch (IllegalStateException ise) {
+                            ise.printStackTrace();
+                        }
+
                         break;
                 }
             }
@@ -129,7 +138,9 @@ public class PictureChooserDialog extends DialogFragment {
 
     public interface OnPictureChooserListeners {
         void onTakePicture(Fragment fragment);
+
         void onChooseFromGallery(Fragment fragment);
+
         void onPicturePostCancel();
     }
 

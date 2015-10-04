@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="main_drawer_options">
-        <item>Hacer imagen</item>
+        <item>Crear imagen</item>
         <item>Información</item>
         <item>Dános 5 estrellas</item>
         <item>Salir</item>
     </string-array>
     <string-array name="picture_chooser_items">
-        <item>Camera</item>
-        <item>Gallery</item>
+        <item>Camara</item>
+        <item>Galería</item>
     </string-array>
 </resources>

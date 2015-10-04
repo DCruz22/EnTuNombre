@@ -57,6 +57,12 @@ public class PictureListFragment extends Fragment
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mListener.onPictureListFragmentReady();
+    }
+
+    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && mPictures != null && mPictures.size() > 0) {
@@ -69,10 +75,11 @@ public class PictureListFragment extends Fragment
     public void onRecyclerItemClick(View view, int position) {
     }
 
-    public void addItem(GeneratedImages generatedImage, int position){
-        mPictures.add(position, generatedImage);
-        mAdapter.notifyDataSetChanged();
-        if(mRecyclerView.getVisibility() == View.GONE) {
+    public void addItem(GeneratedImages generatedImage, int position) throws NullPointerException{
+            mPictures.add(position, generatedImage);
+            mAdapter.notifyDataSetChanged();
+
+        if (mRecyclerView.getVisibility() == View.GONE) {
             mRecyclerView.setVisibility(View.VISIBLE);
             mTvEmpty.setVisibility(View.GONE);
         }
@@ -81,13 +88,14 @@ public class PictureListFragment extends Fragment
     @AfterViews
     public void initialize() {
         Logger.d("0");
-        mPictures = EnTuNombre.getInstance()
-                .getDaoSession()
-                .getGeneratedImagesDao()
-                .queryBuilder()
-                .orderDesc(GeneratedImagesDao.Properties.Id)
-                .list();
-        if(mPictures.size() > 0){
+        if (mPictures == null)
+            mPictures = EnTuNombre.getInstance()
+                    .getDaoSession()
+                    .getGeneratedImagesDao()
+                    .queryBuilder()
+                    .orderDesc(GeneratedImagesDao.Properties.Id)
+                    .list();
+        if (mPictures.size() > 0) {
             mRecyclerView.setVisibility(View.VISIBLE);
             mTvEmpty.setVisibility(View.GONE);
         }
@@ -113,6 +121,8 @@ public class PictureListFragment extends Fragment
         mRecyclerView.setAdapter(mAdapter);
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
         mListener.onPictureListLoaded(getView());
+
+        mListener.onPictureListFragmentReady();
     }
 
     @Click(R.id.materialButton)
@@ -122,8 +132,12 @@ public class PictureListFragment extends Fragment
 
     public interface PictureListListeners {
         void onGeneratePictureClick();
+
         void onPictureShare(String imageUri);
+
         void onCardSelected(GeneratedImages generatedImages);
+
+        void onPictureListFragmentReady();
         void onPictureListLoaded(View view);
     }
 }

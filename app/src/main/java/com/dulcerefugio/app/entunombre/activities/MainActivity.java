@@ -55,7 +55,7 @@ public class MainActivity extends Base implements
         PictureListListeners,
         VideoListFragment.VideoListListeners,
         AppMessageDialog.OnAppMessageDialogListener,
-        PictureChooserDialog.OnPictureChooserListeners{
+        PictureChooserDialog.OnPictureChooserListeners {
 
     //=============================CONSTANTS======================================
     public static final java.lang.String VIDEO_URL_PLAY = "URL_VIDEO_PLAY";
@@ -67,7 +67,7 @@ public class MainActivity extends Base implements
     private static final String APP_ABOUT_DIALOG = "APP_ABOUT_DIALOG";
     private static final String SHOWCASE_ID = "1234cx.";
     private final int cSELECT_FILE_RQ = 1934;
-    private String cPICTURE_POST_CHOOSER_FRAGMENT_TAG="cPICTURE_POST_CHOOSER_FRAGMENT_TAG";
+    private String cPICTURE_POST_CHOOSER_FRAGMENT_TAG = "cPICTURE_POST_CHOOSER_FRAGMENT_TAG";
 
     //=============================FIELDS======================================
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -87,6 +87,7 @@ public class MainActivity extends Base implements
     @ViewById(R.id.left_drawer)
     public View mDrawer;
     private DialogFragment mAppMessageAbout;
+    private long mGeneratedImageID;
 
     //=============================OVERRIDEN METHODS======================================
 
@@ -108,7 +109,7 @@ public class MainActivity extends Base implements
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Logger.d(resultCode+" result");
+        Logger.d(resultCode + " result");
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE:
@@ -121,19 +122,36 @@ public class MainActivity extends Base implements
                     CropperActivity_.intent(this).mPicturePath(Util.getPath(selectedImageUri)).startForResult(CROPPER_ACTIVITY_RESULT_CODE);
                     break;
                 case CROPPER_ACTIVITY_RESULT_CODE:
-                    long generatedImageID = data.getLongExtra(CropperActivity.GENERATED_IMAGE_ID, 0);
-                    GeneratedImages generatedImage = EnTuNombre
+                    mGeneratedImageID = data.getLongExtra(CropperActivity.GENERATED_IMAGE_ID, 0);
+                    final GeneratedImages generatedImage = EnTuNombre
                             .getInstance()
                             .getDaoSession()
                             .getGeneratedImagesDao()
-                            .load(generatedImageID);
-                    PictureListFragment_ fragment = (PictureListFragment_) mSectionsPagerAdapter.getItem(0);
-                    fragment.addItem(generatedImage, 0);
-                    openShareIntent(generatedImage.getPath());
-                    Snackbar.make(findViewById(android.R.id.content),
-                            R.string.picture_added_snackbar,
-                            Snackbar.LENGTH_LONG)
-                            .show();
+                            .load(mGeneratedImageID);
+                    /*if (generatedImage != null) {
+                        final PictureListFragment_ fragment = (PictureListFragment_) mSectionsPagerAdapter.getItem(0);
+                        try {
+                            fragment.addItem(generatedImage, 0);
+                            openShareIntent(generatedImage.getPath());
+                            Snackbar.make(findViewById(android.R.id.content),
+                                    R.string.picture_added_snackbar,
+                                    Snackbar.LENGTH_LONG)
+                                    .show();
+                        } catch (NullPointerException npe) {
+                            npe.printStackTrace();
+                            Snackbar.make(findViewById(android.R.id.content),
+                                    getString(R.string.picture_error_displayn_snackbar),
+                                    Snackbar.LENGTH_LONG)
+                                    .show();
+
+                        }
+                    } else {
+                        Snackbar.make(findViewById(android.R.id.content),
+                                getString(R.string.picture_error_snackbar),
+                                Snackbar.LENGTH_LONG)
+                                .show();
+
+                    }*/
                     break;
             }
         }
@@ -323,5 +341,43 @@ public class MainActivity extends Base implements
     @Override
     public void onPicturePostCancel() {
 
+    }
+
+    @Override
+    public void onPictureListFragmentReady() {
+        Log.d("main:348", "0");
+        if (mGeneratedImageID != 0) {
+            final GeneratedImages generatedImage = EnTuNombre
+                    .getInstance()
+                    .getDaoSession()
+                    .getGeneratedImagesDao()
+                    .load(mGeneratedImageID);
+            if (generatedImage != null) {
+                try {
+                    final PictureListFragment_ fragment = (PictureListFragment_) mSectionsPagerAdapter.getItem(0);
+                    fragment.addItem(generatedImage, 0);
+                    openShareIntent(generatedImage.getPath());
+                    Snackbar.make(findViewById(android.R.id.content),
+                            R.string.picture_added_snackbar,
+                            Snackbar.LENGTH_LONG)
+                            .show();
+
+                    mGeneratedImageID = 0;
+
+                } catch (NullPointerException npe) {
+                    npe.printStackTrace();
+                    Snackbar.make(findViewById(android.R.id.content),
+                            getString(R.string.picture_error_displayn_snackbar),
+                            Snackbar.LENGTH_LONG)
+                            .show();
+                }
+            } else {
+                Snackbar.make(findViewById(android.R.id.content),
+                        getString(R.string.picture_error_snackbar),
+                        Snackbar.LENGTH_LONG)
+                        .show();
+
+            }
+        }
     }
 }
