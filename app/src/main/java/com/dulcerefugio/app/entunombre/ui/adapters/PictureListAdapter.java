@@ -9,12 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dulcerefugio.app.entunombre.EnTuNombre;
 import com.dulcerefugio.app.entunombre.R;
 import com.dulcerefugio.app.entunombre.data.dao.GeneratedImages;
 import com.dulcerefugio.app.entunombre.ui.widgets.CustomShareButton;
 import com.dulcerefugio.app.entunombre.util.Util;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.orhanobut.logger.Logger;
+import com.squareup.picasso.Picasso;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
@@ -31,7 +32,6 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
     //                      FIELDS
     //======================================================
     private List<GeneratedImages> mImages;
-    private ImageLoader mImageLoader;
     private OnPictureListAdapter mListener;
 
     //======================================================
@@ -39,7 +39,6 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
     //======================================================
     public PictureListAdapter(List<GeneratedImages> mPictures, OnPictureListAdapter listener) {
         mImages = mPictures;
-        this.mImageLoader = ImageLoader.getInstance();
         mListener = listener;
     }
 
@@ -66,8 +65,7 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
             holder.tvTitle.setText(path[path.length - 1].replace(".jpg", ""));
             Date date = Util.parseStringToDate(generatedImage.getDate());
             holder.tvDate.setText(new PrettyTime().format(date == null ? new Date() : date));
-            mImageLoader.displayImage(Uri.decode(
-                    Uri.fromFile(new File(generatedImage.getPath())).toString()), holder.imageView);
+            Picasso.with(EnTuNombre.context).load(new File(generatedImage.getPath())).into(holder.imageView);
             holder.mBtnShare.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {

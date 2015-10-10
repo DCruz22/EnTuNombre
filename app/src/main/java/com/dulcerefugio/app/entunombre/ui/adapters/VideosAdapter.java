@@ -8,9 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dulcerefugio.app.entunombre.EnTuNombre;
 import com.dulcerefugio.app.entunombre.R;
 import com.dulcerefugio.app.entunombre.data.dao.YoutubeVideo;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -19,7 +20,6 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
     //=======================================================================
     //FIELDS
     //=======================================================================
-    private ImageLoader mImageLoader;
     private List<YoutubeVideo> youtubeVideoList;
 
     //=======================================================================
@@ -28,7 +28,6 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
 
     public VideosAdapter(List<YoutubeVideo> youtubeVideoList) {
         this.youtubeVideoList = youtubeVideoList;
-        this.mImageLoader = ImageLoader.getInstance();
     }
 
     //=======================================================================
@@ -52,7 +51,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
         if (youtubeVideo != null) {
             viewHolder.tvTitle.setText(youtubeVideo.getTitle());
             viewHolder.tvDescription.setText(getShortDescription(youtubeVideo.getDescription()));
-            mImageLoader.displayImage(youtubeVideo.getThumbnail_url(), viewHolder.imageView);
+            Picasso.with(EnTuNombre.context).load(youtubeVideo.getThumbnail_url()).into(viewHolder.imageView);
             Log.d("", youtubeVideo.getTitle());
             Log.d("", youtubeVideo.getCreated_at()+"");
         }

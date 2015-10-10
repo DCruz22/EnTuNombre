@@ -7,7 +7,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -21,16 +20,13 @@ import android.widget.Toast;
 
 import com.dulcerefugio.app.entunombre.EnTuNombre;
 import com.dulcerefugio.app.entunombre.R;
-import com.dulcerefugio.app.entunombre.activities.fragments.PictureListFragment;
 import com.dulcerefugio.app.entunombre.activities.fragments.PictureListFragment.PictureListListeners;
 import com.dulcerefugio.app.entunombre.activities.fragments.PictureListFragment_;
 import com.dulcerefugio.app.entunombre.activities.fragments.VideoListFragment;
 import com.dulcerefugio.app.entunombre.activities.fragments.dialog.AppMessageDialog;
 import com.dulcerefugio.app.entunombre.activities.fragments.dialog.PictureChooserDialog;
-import com.dulcerefugio.app.entunombre.activities.fragments.dialog.WelcomeDialogFragment;
 import com.dulcerefugio.app.entunombre.data.dao.GeneratedImages;
 import com.dulcerefugio.app.entunombre.logic.BitmapProcessor;
-import com.dulcerefugio.app.entunombre.logic.Preferences;
 import com.dulcerefugio.app.entunombre.ui.adapters.SectionsPagerAdapter;
 
 import android.content.Intent;
@@ -88,6 +84,9 @@ public class MainActivity extends Base implements
     public View mDrawer;
     private DialogFragment mAppMessageAbout;
     private long mGeneratedImageID;
+    private boolean mIsPreviewShown;
+    private boolean mIsSharedShown;
+    private boolean mIsCameraInit;
 
     //=============================OVERRIDEN METHODS======================================
 
@@ -176,21 +175,31 @@ public class MainActivity extends Base implements
 
     @Override
     public void onGeneratePictureClick() {
-        PictureChooserDialog chooserDialog = new PictureChooserDialog();
-        chooserDialog.show(getSupportFragmentManager(), cPICTURE_POST_CHOOSER_FRAGMENT_TAG);
+        if (!mIsCameraInit) {
+            mIsCameraInit = true;
+            PictureChooserDialog chooserDialog = new PictureChooserDialog();
+            chooserDialog.show(getSupportFragmentManager(), cPICTURE_POST_CHOOSER_FRAGMENT_TAG);
+        }
     }
 
     @Override
     public void onPictureShare(String imageUri) {
-        openShareIntent(imageUri);
+        if (!mIsSharedShown) {
+            mIsSharedShown = true;
+            openShareIntent(imageUri);
+        }
     }
 
     @Override
     public void onCardSelected(GeneratedImages generatedImages) {
-        mAppMessageImagePreview = Util.getAppMessageDialog(AppMessageDialog.MessageType.IMAGE_PREVIEW,
-                generatedImages.getPath(), false);
+        if (!mIsPreviewShown) {
+            mIsPreviewShown = true;
+            mAppMessageImagePreview = Util.getAppMessageDialog(AppMessageDialog.MessageType.IMAGE_PREVIEW,
+                    generatedImages.getPath(), false);
 
-        mAppMessageImagePreview.show(mFragmentManager, PICTURE_PREVIEW_DIALOG);
+            mAppMessageImagePreview.show(mFragmentManager, PICTURE_PREVIEW_DIALOG);
+
+        }
     }
 
     @Override
@@ -210,7 +219,6 @@ public class MainActivity extends Base implements
             final Intent i = new Intent(this, VideoPlayerActivity.class);
             Bundle mBundle = new Bundle();
             mBundle.putString(VIDEO_URL_PLAY, videoId);
-            Log.d("Main act", videoId);
             i.putExtras(mBundle);
             startActivityForResult(i, PLAY_YOUTUBE_VIDEO);
         }
@@ -308,8 +316,10 @@ public class MainActivity extends Base implements
     private void openShareIntent(String imageUri) {
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("image/jpeg");
+        share.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
         share.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageUri)));
         startActivity(Intent.createChooser(share, "Compartir Imagen"));
+        mIsSharedShown = false;
     }
 
     @Override
@@ -320,6 +330,11 @@ public class MainActivity extends Base implements
     @Override
     public void onPositiveButton() {
         finish();
+    }
+
+    @Override
+    public void onDismiss() {
+        mIsPreviewShown = false;
     }
 
     @Override
@@ -340,7 +355,13 @@ public class MainActivity extends Base implements
 
     @Override
     public void onPicturePostCancel() {
+        mIsCameraInit = false;
 
+    }
+
+    @Override
+    public void onPictureChooserDismiss() {
+        mIsCameraInit = false;
     }
 
     @Override

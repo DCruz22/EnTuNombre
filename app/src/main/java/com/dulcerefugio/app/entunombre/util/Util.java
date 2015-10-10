@@ -48,12 +48,13 @@ public class Util {
         return new BigInteger(130, random).toString(32);
     }
 
-    public static DialogFragment getAppMessageDialog(AppMessageDialog.MessageType messageType, String imageUri, boolean cancelable){
+    public static DialogFragment getAppMessageDialog(AppMessageDialog.MessageType messageType, String imageUri,
+                                                     boolean cancelable){
         Bundle args = new Bundle();
         args.putParcelable(AppMessageDialog.cBUNDLE_ARG_MESSAGE_TYPE, messageType);
         if(imageUri != null)
             args.putString(AppMessageDialog.cBUNDLE_ARG_IMAGE_URI, imageUri);
-        DialogFragment dialog = new AppMessageDialog();
+        AppMessageDialog dialog = new AppMessageDialog();
         dialog.setArguments(args);
         dialog.setCancelable(cancelable);
 

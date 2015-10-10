@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dulcerefugio.app.entunombre"
-    android:versionCode="163"
-    android:versionName="1.6.3" >
+    android:versionCode="165"
+    android:versionName="1.6.5" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -26,7 +26,8 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:largeHeap="true">
 
         <activity
             android:name="com.dulcerefugio.app.entunombre.activities.MainActivity_"
@@ -49,7 +50,7 @@
             android:label="@string/title_activity_generate_picture">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dulcerefugio.app.entunombre.activities.MainActivity_" />
+                android:value="com.dulcerefugio.app.entuntombre.activities.MainActivity_" />
         </activity>
         <activity android:name=".activities.AuthActivity"
             android:screenOrientation="portrait"

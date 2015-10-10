@@ -123,6 +123,12 @@ public class PictureChooserDialog extends DialogFragment {
         super.show(manager, tag);
     }
 
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        mListeners.onPictureChooserDismiss();
+    }
+
     //======================================================
     //                      METHODS
     //======================================================
@@ -142,6 +148,8 @@ public class PictureChooserDialog extends DialogFragment {
         void onChooseFromGallery(Fragment fragment);
 
         void onPicturePostCancel();
+
+        void onPictureChooserDismiss();
     }
 
     //======================================================

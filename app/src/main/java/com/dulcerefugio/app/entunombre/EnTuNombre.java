@@ -9,14 +9,6 @@ import com.dulcerefugio.app.entunombre.data.dao.DaoMaster;
 import com.dulcerefugio.app.entunombre.data.dao.DaoSession;
 import com.dulcerefugio.app.entunombre.data.dao.openhelpers.EnTuNombreOpenHelper;
 import com.dulcerefugio.app.entunombre.logic.Preferences;
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
-import com.nostra13.universalimageloader.utils.StorageUtils;
 
 import java.io.File;
 import java.util.logging.Handler;
@@ -41,36 +33,6 @@ public class EnTuNombre extends Application{
         context = getApplicationContext();
         mPreferences = Preferences.getInstance();
         setupDatabase();
-
-
-        //ImageLoader Configuration
-
-        File cacheDir = StorageUtils.getCacheDirectory(getApplicationContext());
-
-        //Default Display Options
-        DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.ic_img_wait)
-                .showImageForEmptyUri(R.drawable.ic_img_error)
-                .showImageOnFail(R.drawable.ic_img_error)
-                .delayBeforeLoading(500)
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .imageScaleType(ImageScaleType.IN_SAMPLE_INT)
-                .build();
-
-        //Image Loader Configurations
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration
-                .Builder(getApplicationContext())
-                .threadPoolSize(8)
-                .threadPriority(Thread.NORM_PRIORITY - 1)
-                .tasksProcessingOrder(QueueProcessingType.FIFO)
-                .memoryCacheSizePercentage(20)
-                .diskCache(new UnlimitedDiscCache(cacheDir))
-                .imageDownloader(new BaseImageDownloader(getApplicationContext()))
-                .defaultDisplayImageOptions(options)
-                .build();
-
-        ImageLoader.getInstance().init(config);
     }
 
     //======================================================================================

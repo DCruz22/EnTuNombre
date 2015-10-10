@@ -13,13 +13,14 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.dulcerefugio.app.entunombre.EnTuNombre;
 import com.dulcerefugio.app.entunombre.R;
 import com.dulcerefugio.app.entunombre.ui.widgets.CustomShareButton;
 import com.orhanobut.logger.Logger;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
-import fr.tvbarthel.lib.blurdialogfragment.BlurDialogEngine;
 /**
  * Created by eperez on 8/20/15.
  */
@@ -37,7 +38,6 @@ public class AppMessageDialog extends DialogFragment {
     //========================================================
     //FIELDS
     //========================================================
-    private BlurDialogEngine mBlurDialogEngine;
     private MaterialDialog mDialog;
     private static OnAppMessageDialogListener mListener;
     private boolean shown;
@@ -54,7 +54,6 @@ public class AppMessageDialog extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBlurDialogEngine = new BlurDialogEngine(getActivity());
     }
 
     @NonNull
@@ -65,22 +64,18 @@ public class AppMessageDialog extends DialogFragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mBlurDialogEngine.onResume(getRetainInstance());
-    }
-
-    @Override
-    public void onDestroy() {
-        mBlurDialogEngine.onDestroy();
-        super.onDestroy();
-    }
-
-    @Override
     public void onDismiss(DialogInterface dialog) {
         shown = false;
-        mBlurDialogEngine.onDismiss();
-        super.onDismiss(dialog);
+        try {
+            super.onDismiss(dialog);
+            try {
+                ((OnAppMessageDialogListener) getActivity()).onDismiss();
+            } catch (ClassCastException cce) {
+                cce.printStackTrace();
+            }
+        } catch (NullPointerException npe) {
+            npe.printStackTrace();
+        }
     }
 
     @Override
@@ -99,26 +94,26 @@ public class AppMessageDialog extends DialogFragment {
         final String imageUri = getArguments().getString(cBUNDLE_ARG_IMAGE_URI);
         String title = getString(R.string.app_name);
         String message = "";
-        if(messageTypeInt.getResource() != 0)
+        if (messageTypeInt.getResource() != 0)
             message = getString(messageTypeInt.getResource());
-
-        Logger.d(message);
 
         MaterialDialog.Builder builder = getBuilder(messageTypeInt, title, message);
         mDialog = builder.build();
 
-        if(messageTypeInt == MessageType.IMAGE_PREVIEW){
-            ImageView imageView = (ImageView)mDialog.getCustomView().findViewById(R.id.dialog_preview_iv_image);
-            imageView.setImageURI(Uri.fromFile(new File(imageUri)));
+        if (messageTypeInt == MessageType.IMAGE_PREVIEW) {
+            if (mDialog != null && mDialog.getCustomView() != null) {
+                ImageView imageView = (ImageView) mDialog.getCustomView().findViewById(R.id.dialog_preview_iv_image);
+                Picasso.with(EnTuNombre.context).load(new File(imageUri)).into(imageView);
 
-            CustomShareButton csb = (CustomShareButton)mDialog.getCustomView().findViewById(R.id.dialog_preview_csb_picture_share);
-            csb.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ((OnAppMessageDialogListener)getActivity()).onPreviewDialogShare(imageUri);
-                    AppMessageDialog.this.dismiss();
-                }
-            });
+                CustomShareButton csb = (CustomShareButton) mDialog.getCustomView().findViewById(R.id.dialog_preview_csb_picture_share);
+                csb.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ((OnAppMessageDialogListener) getActivity()).onPreviewDialogShare(imageUri);
+                        AppMessageDialog.this.dismiss();
+                    }
+                });
+            }
         }
     }
 
@@ -130,19 +125,19 @@ public class AppMessageDialog extends DialogFragment {
                 .contentColorRes(android.R.color.black)
                 .backgroundColorRes(android.R.color.white);
 
-        if(message.length() > 0)
+        if (message.length() > 0)
             builder.content(message);
 
-        if(messageTypeInt.progressBarNeeded)
+        if (messageTypeInt.progressBarNeeded)
             builder.progress(true, 0);
 
-        if(messageTypeInt.negativeTextNeeded)
+        if (messageTypeInt.negativeTextNeeded)
             builder.negativeText(android.R.string.no);
 
         if (messageTypeInt.positiveTextNeeded) {
-            if(messageTypeInt == MessageType.ASK_TO_EXIT) {
+            if (messageTypeInt == MessageType.ASK_TO_EXIT) {
                 builder.positiveText(android.R.string.yes);
-            }else{
+            } else {
                 builder.positiveText(android.R.string.ok);
             }
 
@@ -150,8 +145,8 @@ public class AppMessageDialog extends DialogFragment {
                 @Override
                 public void onPositive(MaterialDialog dialog) {
                     super.onPositive(dialog);
-                    if(messageTypeInt == MessageType.ASK_TO_EXIT) {
-                        ((OnAppMessageDialogListener)getActivity()).onPositiveButton();
+                    if (messageTypeInt == MessageType.ASK_TO_EXIT) {
+                        ((OnAppMessageDialogListener) getActivity()).onPositiveButton();
                         AppMessageDialog.this.dismiss();
                     }
                 }
@@ -164,7 +159,7 @@ public class AppMessageDialog extends DialogFragment {
             });
         }
 
-        if(messageTypeInt == MessageType.IMAGE_PREVIEW){
+        if (messageTypeInt == MessageType.IMAGE_PREVIEW) {
             builder.customView(R.layout.dialog_preview_image, true);
         }
         return builder;
@@ -175,7 +170,10 @@ public class AppMessageDialog extends DialogFragment {
     //========================================================
     public interface OnAppMessageDialogListener {
         void onPreviewDialogShare(String ImageUri);
+
         void onPositiveButton();
+
+        void onDismiss();
     }
 
     public enum MessageType implements Parcelable {

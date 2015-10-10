@@ -8,6 +8,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -35,7 +36,7 @@ import java.util.List;
  */
 @EFragment(R.layout.f_edit_picture)
 public class EditPicture extends Fragment
-        implements RecyclerItemClickListener.OnItemClickListener{
+        implements RecyclerItemClickListener.OnItemClickListener {
 
     public static final String PICTURE_PATH_EXTRA = "PICTURE_PATH_EXTRA";
 
@@ -69,6 +70,16 @@ public class EditPicture extends Fragment
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(mIvPicture!= null) {
+            mIvPicture.setImageBitmap(null);
+            mPictureBitmap = null;
+            System.gc();
+        }
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_a_cropper, menu);
     }
@@ -84,6 +95,7 @@ public class EditPicture extends Fragment
         }
         return super.onOptionsItemSelected(item);
     }
+
     @AfterViews
     public void init() {
         if (mPicturePath != null) {
@@ -119,16 +131,30 @@ public class EditPicture extends Fragment
     @Override
     public void onRecyclerItemClick(View view, int position) {
         mListener.onShowWaitDialog();
+        Log.d("EditPicture", "showed");
         mListener.onFrameSelected(mPicturePath, mAdapter.getItem(position));
     }
 
-    public void showFramedImage(Bitmap bitmap){
+    public void showFramedImage(Bitmap bitmap) {
+        mIvPicture.setImageBitmap(null);
+        mPictureBitmap.recycle();
+        mPictureBitmap = null;
+        System.gc();
+
+        mPictureBitmap = bitmap;
         mIvPicture.setImageBitmap(bitmap);
     }
 
-    public interface onEditPictureListener{
+    public void setImageBitmap(Bitmap bitmap) {
+        if (mIvPicture != null)
+            mIvPicture.setImageBitmap(bitmap);
+    }
+
+    public interface onEditPictureListener {
         void onShowWaitDialog();
+
         void onFrameSelected(String croppedImage, final int frame);
+
         void onFinishEditing();
     }
 }

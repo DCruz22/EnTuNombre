@@ -77,7 +77,7 @@ public class PictureListFragment extends Fragment
 
     public void addItem(GeneratedImages generatedImage, int position) throws NullPointerException{
             mPictures.add(position, generatedImage);
-            mAdapter.notifyDataSetChanged();
+            mAdapter.notifyItemInserted(position);
 
         if (mRecyclerView.getVisibility() == View.GONE) {
             mRecyclerView.setVisibility(View.VISIBLE);

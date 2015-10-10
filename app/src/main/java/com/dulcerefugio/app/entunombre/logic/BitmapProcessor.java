@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Bitmap.Config;
+import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -22,36 +23,33 @@ import com.dulcerefugio.app.entunombre.EnTuNombre;
 public class BitmapProcessor {
 
     private final String TAG = "BitmapProcessor";
-    private static BitmapProcessor bitmapProcessor;
-    private static Context context;
 
-    private BitmapProcessor() {
-
-    }
-
-    public static BitmapProcessor getInstance(Context _context) {
-        context = _context;
-        return bitmapProcessor == null ? bitmapProcessor = new BitmapProcessor() : bitmapProcessor;
-    }
-
-    public Bitmap mergeImages(final Bitmap bottomImage, final Bitmap topImage) {
+    public Bitmap mergeImages(Bitmap bottomImage, Bitmap topImage) {
         Log.d(TAG, "bottom image height: " + bottomImage.getHeight());
         Log.d(TAG, "bottom image width: " + bottomImage.getWidth());
+
         Bitmap resizedbitmap = Bitmap.createScaledBitmap(bottomImage, topImage.getWidth(), topImage.getHeight(), true);
-        bottomImage.recycle();
-        System.gc();
+
+        if (!bottomImage.isRecycled()) {
+            bottomImage = null;
+            System.gc();
+        }
 
         final Bitmap output = Bitmap.createBitmap(topImage.getWidth(),
                 topImage.getHeight(),
                 Config.ARGB_8888);
 
-        final Canvas canvas = new Canvas(output);
-        final Paint paint = new Paint();
+        Canvas canvas = new Canvas(output);
+        Paint paint = new Paint();
         paint.setAntiAlias(true);
 
         canvas.drawBitmap(resizedbitmap, 26, 10, paint);
         canvas.drawBitmap(topImage, 0, 0, paint);
 
+        if (!resizedbitmap.isRecycled()) {
+            resizedbitmap.recycle();
+            resizedbitmap=null;
+        }
         System.gc();
 
         return output;
@@ -67,7 +65,7 @@ public class BitmapProcessor {
             FileOutputStream fos = new FileOutputStream(pictureFile);
             image.compress(Bitmap.CompressFormat.PNG, 90, fos);
             fos.close();
-
+            image.recycle();
             return pictureFile;
         } catch (FileNotFoundException e) {
             Log.d(TAG, "File not found: " + e.getMessage());
@@ -202,7 +200,7 @@ public class BitmapProcessor {
         return inSampleSize;
     }
 
-    public void deleteLastPhotoTaken() {
+    public static void deleteLastPhotoTaken() {
 
         String[] projection = new String[] {
                 MediaStore.Images.ImageColumns._ID,

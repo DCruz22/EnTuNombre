@@ -8,6 +8,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.dulcerefugio.app.entunombre.R;
@@ -71,13 +72,21 @@ public abstract class Base extends AppCompatActivity {
         if (mAppMessageWait == null)
             mAppMessageWait = Util.getAppMessageDialog(AppMessageDialog.MessageType.PLEASE_WAIT, null, false);
 
+        Log.d("CropperActivity", "showing");
         mAppMessageWait.show(mFragmentManager, FRAME_WAIT_DIALOG);
     }
 
     @UiThread
     protected void dismissWaitDialog(){
-        if (mAppMessageWait != null)
+        Log.d("Base", "dismissing0");
+        if (mAppMessageWait != null) {
             mAppMessageWait.dismiss();
+
+            Log.d("Base", "dismissing2");
+            return;
+        }
+
+        Log.d("Base","dismissing3");
     }
 
     protected abstract boolean isDisplayHomeAsUpEnabled();

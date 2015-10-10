@@ -133,7 +133,7 @@ public class GeneratePictureActivity extends Activity {
         getActionBar().setDisplayShowHomeEnabled(true);
 
 		mImageResult = (ImageView) findViewById(R.id.ivMerge);
-		mBitmapProcessor = BitmapProcessor.getInstance(this);
+		mBitmapProcessor = new BitmapProcessor();
         mProgressBar = (ProgressBar) findViewById(R.id.pbGeneratePicture);
 
         saveFolderName = Environment.getExternalStorageDirectory()

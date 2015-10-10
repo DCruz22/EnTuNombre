@@ -2,14 +2,17 @@ package com.dulcerefugio.app.entunombre.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.UiThread;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.dulcerefugio.app.entunombre.EnTuNombre;
 import com.dulcerefugio.app.entunombre.R;
@@ -22,6 +25,9 @@ import com.dulcerefugio.app.entunombre.data.dao.GeneratedImages;
 import com.dulcerefugio.app.entunombre.logic.BitmapProcessor;
 import com.dulcerefugio.app.entunombre.util.Util;
 import com.orhanobut.logger.Logger;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
@@ -29,7 +35,6 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.FragmentByTag;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Date;
 
 /**
@@ -51,7 +56,6 @@ public class CropperActivity extends Base
     //fields
     @Extra(PICTURE_PATH_EXTRA)
     public String mPicturePath;
-    private BitmapProcessor mBitmapProcessor;
 
     @FragmentByTag(CROP_PICTURE_FRAGMENT)
     CropPicture mCropPicture;
@@ -63,12 +67,23 @@ public class CropperActivity extends Base
     private boolean mIsFrameSelected;
     private DialogFragment mAppMessageMustSelectFrame;
     private String mCroppedPicturePath;
+    private Bitmap mCroppedImage;
+    private Target mTargetCroppedImage;
+    private Target mTargetFrame;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBitmapProcessor = BitmapProcessor.getInstance(this);
         showCropFragment();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mLastResult = null;
+        mCroppedImage = null;
+        System.gc();
+
     }
 
     @Override
@@ -118,7 +133,10 @@ public class CropperActivity extends Base
     @Background
     public void onCropImage(final Bitmap croppedImage) {
         onShowWaitDialog();
-        File file = mBitmapProcessor.storeImage(croppedImage);
+        File file = new BitmapProcessor().storeImage(croppedImage);
+        if (!croppedImage.isRecycled()) {
+            croppedImage.recycle();
+        }
         mCroppedPicturePath = file.getPath();
         showEditFragment();
     }
@@ -131,32 +149,96 @@ public class CropperActivity extends Base
     @Override
     public void onFrameSelected(final String picturePath, final int _frame) {
         if (!mSelectingFrame) {
-            mSelectingFrame = true;
-            mBitmapProcessor.processImage(new BitmapProcessor.OnImageProcess() {
-                @Override
-                public Bitmap onBackgroundProcess() {
-                    Uri uri = Uri.fromFile(new File(picturePath));
-                    Bitmap croppedImage = null;
-                    try {
-                        croppedImage = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+            try {
+                mSelectingFrame = true;
+                mTargetFrame = new Target() {
+                    @Override
+                    public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+                        if (bitmap == null || bitmap.isRecycled())
+                            return;
+                        new AsyncTask<Void, Void, Bitmap>() {
+                            @Override
+                            protected Bitmap doInBackground(Void... params) {
+                                try {
+                                    mLastResult = new BitmapProcessor().mergeImages(mCroppedImage, bitmap);
+                                } catch (Exception ex) {
+                                    ex.printStackTrace();
+                                    Toast.makeText(CropperActivity.this, "Ha ocurrido un error, por favor intente luego", Toast.LENGTH_LONG).show();
+                                    finish();
+                                }
+                                System.gc();
+                                return mLastResult;
+                            }
+
+                            @Override
+                            protected void onPostExecute(Bitmap bitmap) {
+                                super.onPostExecute(bitmap);
+                                if (bitmap != null) {
+                                    if (mEditPicture != null) {
+                                        mEditPicture.setImageBitmap(null);
+                                        mCroppedImage = null;
+                                        System.gc();
+                                        mEditPicture.showFramedImage(bitmap);
+
+                                    }
+                                    mSelectingFrame = false;
+                                    mIsFrameSelected = true;
+                                } else {
+                                    finish();
+                                    Toast.makeText(CropperActivity.this,
+                                            "Ha ocurrido un error, por favor intente luego", Toast.LENGTH_LONG).show();
+                                }
+                                dismissWaitDialog();
+                            }
+                        }.execute();
+
+                        if (mTargetFrame != null) {
+                            mTargetFrame.onBitmapFailed(null);
+                            Picasso.with(CropperActivity.this).cancelRequest(mTargetFrame);
+                        }
+                        if (mTargetCroppedImage != null) {
+                            mTargetCroppedImage.onBitmapFailed(null);
+                            Picasso.with(CropperActivity.this).cancelRequest(mTargetCroppedImage);
+                        }
                     }
-                    final Bitmap frame = BitmapFactory.decodeResource(getResources(), _frame);
 
-                    return mLastResult = mBitmapProcessor.mergeImages(croppedImage, frame);
-                }
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+                    }
 
-                @Override
-                public void onPostExecute(Bitmap bitmap) {
-                    if (mEditPicture != null)
-                        mEditPicture.showFramedImage(bitmap);
-                    System.gc();
-                    mSelectingFrame = false;
-                    mIsFrameSelected = true;
-                    dismissWaitDialog();
-                }
-            });
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                    }
+                };
+                mTargetCroppedImage = new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        if (bitmap == null || bitmap.isRecycled())
+                            return;
+
+                        mCroppedImage = bitmap;
+                        Picasso.with(EnTuNombre.context).load(_frame).memoryPolicy(MemoryPolicy.NO_CACHE).into(mTargetFrame);
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                    }
+
+                };
+                Picasso.with(EnTuNombre.context).load(new File(picturePath))
+                        .memoryPolicy(MemoryPolicy.NO_CACHE).into(mTargetCroppedImage);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                Toast.makeText(this, "Ha ocurrido un error, por favor intente luego", Toast.LENGTH_LONG).show();
+                finish();
+            }
         }
     }
 
@@ -166,8 +248,9 @@ public class CropperActivity extends Base
         Logger.d("0");
         if (mIsFrameSelected) {
             onShowWaitDialog();
-            File finalImage = mBitmapProcessor.storeImage(mLastResult);
+            File finalImage = new BitmapProcessor().storeImage(mLastResult);
 
+            mLastResult = null;
             //persisting picture path
             GeneratedImages generatedImage = new GeneratedImages();
             generatedImage.setPath(finalImage.getAbsolutePath());
@@ -179,7 +262,8 @@ public class CropperActivity extends Base
             finishActivity(generatedImage.getId(), RESULT_OK);
         } else {
             if (mAppMessageMustSelectFrame == null)
-                mAppMessageMustSelectFrame = Util.getAppMessageDialog(AppMessageDialog.MessageType.MUST_SELECT_FRAME, null, false);
+                mAppMessageMustSelectFrame = Util.getAppMessageDialog(AppMessageDialog.MessageType.MUST_SELECT_FRAME,
+                        null, false);
 
             mAppMessageMustSelectFrame.show(mFragmentManager, MUST_SELECT_FRAME_DIALOG);
         }
@@ -189,14 +273,14 @@ public class CropperActivity extends Base
     public void finishActivity(Long id, int result) {
         Logger.d("0");
         deleteLastPicture();
-        switch(result){
+        switch (result) {
             case RESULT_OK:
                 Intent i = new Intent();
                 i.putExtra(GENERATED_IMAGE_ID, id);
                 setResult(RESULT_OK, i);
                 break;
             case RESULT_CANCELED:
-                setResult(result,new Intent());
+                setResult(result, new Intent());
         }
 
         finish();
@@ -213,8 +297,13 @@ public class CropperActivity extends Base
         finishActivity(0L, RESULT_CANCELED);
     }
 
+    @Override
+    public void onDismiss() {
+
+    }
+
     @Background
     public void deleteLastPicture() {
-        mBitmapProcessor.deleteLastPhotoTaken();
+        BitmapProcessor.deleteLastPhotoTaken();
     }
 }

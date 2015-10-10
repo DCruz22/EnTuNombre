@@ -10,9 +10,8 @@ import android.widget.TextView;
 import com.dulcerefugio.app.entunombre.EnTuNombre;
 import com.dulcerefugio.app.entunombre.R;
 import com.dulcerefugio.app.entunombre.data.pojos.PictureFrame;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 
-import junit.framework.TestCase;
 
 import java.util.List;
 
@@ -21,12 +20,10 @@ import java.util.List;
  */
 public class PictureFramesAdapter extends RecyclerView.Adapter<PictureFramesAdapter.ViewHolder> {
 
-    private final ImageLoader mImageLoader;
     private List<PictureFrame> pictureFrames;
 
     public PictureFramesAdapter(List<PictureFrame> drawables) {
         this.pictureFrames = drawables;
-        this.mImageLoader = ImageLoader.getInstance();
     }
 
     @Override
@@ -41,7 +38,7 @@ public class PictureFramesAdapter extends RecyclerView.Adapter<PictureFramesAdap
     @Override
     public void onBindViewHolder(PictureFramesAdapter.ViewHolder holder, int position) {
         Integer drawable = pictureFrames.get(position).resToShow;
-        mImageLoader.displayImage("drawable://"+drawable,holder.ivPicture);
+        Picasso.with(EnTuNombre.context).load(drawable).resize(300,300).into(holder.ivPicture);
         //holder.ivPicture.setImageDrawable(EnTuNombre.context.getResources().getDrawable(drawable));
         holder.tvName.setText(pictureFrames.get(position).name);
     }

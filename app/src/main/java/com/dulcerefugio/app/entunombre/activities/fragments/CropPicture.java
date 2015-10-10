@@ -1,12 +1,17 @@
 package com.dulcerefugio.app.entunombre.activities.fragments;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -82,6 +87,15 @@ public class CropPicture extends Fragment {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(mCropImageView!=null){
+            mCropImageView.setImageBitmap(null);
+            System.gc();
+        }
+    }
+
     //======================================================
     //                      METHODS
     //======================================================
@@ -99,7 +113,11 @@ public class CropPicture extends Fragment {
                     public void onClick(View v) {
                         if (!mIsImageCrop) {
                             mIsImageCrop = true;
-                            mListener.onCropImage(mCropImageView.getCroppedImage());
+                            Bitmap bitmap = mCropImageView.getCroppedImage();
+                            mCropImageView.setImageBitmap(null);
+                            mListener.onCropImage(bitmap);
+                            bitmap = null;
+                            System.gc();
                         }
                     }
                 });
@@ -112,19 +130,52 @@ public class CropPicture extends Fragment {
                 });
 
         if (mPicturePath != null) {
-            try {
-                Uri uri = Uri.fromFile(new File(mPicturePath));
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(mContext.getContentResolver(), uri);
-                Logger.d(bitmap.getWidth()+"x"+bitmap.getHeight());
-                mCropImageView.setImageBitmap(bitmap);
-                mCropImageView.requestLayout();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            Uri uri = Uri.fromFile(new File(mPicturePath));
+            Bitmap bitmap = fromGallery(uri);
+            mCropImageView.setImageBitmap(bitmap);
+            mCropImageView.requestLayout();
         }else{
             Toast.makeText(getActivity(), "No se puede mostrar esta imagen", Toast.LENGTH_LONG).show();
             getActivity().finish();
         }
+    }
+
+    private Bitmap fromGallery(final Uri selectedImageUri) {
+        try {
+            Bitmap bm = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImageUri);
+
+            ExifInterface exif = new ExifInterface(selectedImageUri.getPath());
+            int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+            int angle = 0;
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    angle = 90;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    angle = 180;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    angle = 270;
+                    break;
+                default:
+                    angle = 0;
+                    break;
+            }
+            Matrix mat = new Matrix();
+            if (angle == 0 && bm.getWidth() > bm.getHeight())
+                mat.postRotate(90);
+            else
+                mat.postRotate(angle);
+
+            return Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), mat, true);
+
+        } catch (IOException e) {
+            Log.e("", "-- Error in setting image");
+        } catch (OutOfMemoryError oom) {
+            Log.e("", "-- OOM Error in setting image");
+        }
+        return null;
     }
 
     public interface onCropPictureListener {
