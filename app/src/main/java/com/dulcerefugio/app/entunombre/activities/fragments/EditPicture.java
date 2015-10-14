@@ -20,6 +20,7 @@ import com.dulcerefugio.app.entunombre.activities.fragments.listeners.RecyclerIt
 import com.dulcerefugio.app.entunombre.data.pojos.PictureFrame;
 import com.dulcerefugio.app.entunombre.ui.adapters.PictureFramesAdapter;
 import com.orhanobut.logger.Logger;
+import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -74,6 +75,10 @@ public class EditPicture extends Fragment
         super.onDestroy();
         if(mIvPicture!= null) {
             mIvPicture.setImageBitmap(null);
+            if(!mPictureBitmap.isRecycled()) {
+                Log.d("--Edit--", "recycled");
+                mPictureBitmap.recycle();
+            }
             mPictureBitmap = null;
             System.gc();
         }
@@ -152,9 +157,7 @@ public class EditPicture extends Fragment
 
     public interface onEditPictureListener {
         void onShowWaitDialog();
-
         void onFrameSelected(String croppedImage, final int frame);
-
         void onFinishEditing();
     }
 }

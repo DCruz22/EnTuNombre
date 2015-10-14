@@ -75,9 +75,12 @@ public class PictureListFragment extends Fragment
     public void onRecyclerItemClick(View view, int position) {
     }
 
-    public void addItem(GeneratedImages generatedImage, int position) throws NullPointerException{
-            mPictures.add(position, generatedImage);
-            mAdapter.notifyItemInserted(position);
+    public void addItem(GeneratedImages generatedImage, int position) throws NullPointerException {
+        mPictures.add(position, generatedImage);
+        mAdapter.notifyItemInserted(position);
+
+        mRecyclerView.smoothScrollToPosition(0); //I use this to get back to pos 0 if i have many cards
+        MaterialViewPagerHelper.getAnimator(getActivity()).onMaterialScrolled(null, 0); //jump back to 0 Yoffset
 
         if (mRecyclerView.getVisibility() == View.GONE) {
             mRecyclerView.setVisibility(View.VISIBLE);
@@ -87,7 +90,6 @@ public class PictureListFragment extends Fragment
 
     @AfterViews
     public void initialize() {
-        Logger.d("0");
         if (mPictures == null)
             mPictures = EnTuNombre.getInstance()
                     .getDaoSession()
@@ -138,6 +140,7 @@ public class PictureListFragment extends Fragment
         void onCardSelected(GeneratedImages generatedImages);
 
         void onPictureListFragmentReady();
+
         void onPictureListLoaded(View view);
     }
 }

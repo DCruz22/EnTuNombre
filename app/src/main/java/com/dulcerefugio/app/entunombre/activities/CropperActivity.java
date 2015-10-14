@@ -80,10 +80,15 @@ public class CropperActivity extends Base
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (mLastResult != null)
+            mLastResult.recycle();
         mLastResult = null;
+        //mCroppedImage.recycle();
         mCroppedImage = null;
-        System.gc();
 
+        Picasso.with(this).cancelRequest(mTargetFrame);
+        Picasso.with(this).cancelRequest(mTargetCroppedImage);
+        System.gc();
     }
 
     @Override
@@ -176,7 +181,6 @@ public class CropperActivity extends Base
                                 if (bitmap != null) {
                                     if (mEditPicture != null) {
                                         mEditPicture.setImageBitmap(null);
-                                        mCroppedImage = null;
                                         System.gc();
                                         mEditPicture.showFramedImage(bitmap);
 
@@ -250,7 +254,6 @@ public class CropperActivity extends Base
             onShowWaitDialog();
             File finalImage = new BitmapProcessor().storeImage(mLastResult);
 
-            mLastResult = null;
             //persisting picture path
             GeneratedImages generatedImage = new GeneratedImages();
             generatedImage.setPath(finalImage.getAbsolutePath());

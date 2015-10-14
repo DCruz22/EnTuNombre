@@ -60,7 +60,10 @@ public class CropPicture extends Fragment {
     public ImageView mIvCancel;
     @ViewById(R.id.f_cropper_iv_crop)
     public ImageView mIvCrop;
+    @ViewById(R.id.f_cropper_iv_rotate)
+    public ImageView mIvRotate;
     private boolean mIsImageCrop;
+    private Bitmap mBitmap;
 
     //======================================================
     //                    CONSTRUCTORS
@@ -92,6 +95,8 @@ public class CropPicture extends Fragment {
         super.onDestroy();
         if(mCropImageView!=null){
             mCropImageView.setImageBitmap(null);
+            mBitmap.recycle();
+            mBitmap = null;
             System.gc();
         }
     }
@@ -129,10 +134,17 @@ public class CropPicture extends Fragment {
                     }
                 });
 
+        mIvRotate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCropImageView.rotateImage(90);
+            }
+        });
+
         if (mPicturePath != null) {
             Uri uri = Uri.fromFile(new File(mPicturePath));
-            Bitmap bitmap = fromGallery(uri);
-            mCropImageView.setImageBitmap(bitmap);
+            mBitmap = fromGallery(uri);
+            mCropImageView.setImageBitmap(mBitmap);
             mCropImageView.requestLayout();
         }else{
             Toast.makeText(getActivity(), "No se puede mostrar esta imagen", Toast.LENGTH_LONG).show();

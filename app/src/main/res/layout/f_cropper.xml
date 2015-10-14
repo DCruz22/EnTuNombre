@@ -14,16 +14,23 @@
         android:layout_marginBottom="15dp">
         <ImageView
             android:id="@+id/f_cropper_iv_cancel"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:tint="@android:color/holo_orange_light"
-            android:src="@drawable/cancelmark_circle"
+            android:src="@drawable/ic_cancel"
             android:layout_marginRight="15dp"/>
         <ImageView
             android:id="@+id/f_cropper_iv_crop"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:tint="@android:color/holo_orange_light"
-            android:src="@drawable/checkmark_circle"/>
+            android:src="@drawable/ic_checkmark"
+            android:layout_marginRight="15dp"/>
+        <ImageView
+            android:id="@+id/f_cropper_iv_rotate"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:tint="@android:color/holo_orange_light"
+            android:src="@drawable/ic_rotate"/>
     </LinearLayout>
 </FrameLayout>
