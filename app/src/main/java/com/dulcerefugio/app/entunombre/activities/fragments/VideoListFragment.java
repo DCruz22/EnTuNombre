@@ -76,7 +76,7 @@ public class VideoListFragment extends Base
     @Override
     public void onRecyclerItemClick(View view, int position) {
         try {
-            YoutubeVideo youtubeVideo = mYoutubeVideos.get(position - 1);
+            YoutubeVideo youtubeVideo = mYoutubeVideos.get(position - 1); 
             mCallbacks.onVideoPlayback(youtubeVideo.getVideo_id());
         } catch (IndexOutOfBoundsException e) {
             Toast.makeText(getActivity(), "No se puede reproducir este video, intente luego", Toast.LENGTH_LONG).show();

@@ -113,11 +113,15 @@ public class MainActivity extends Base implements
                 case CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE:
                     Logger.d(imageFile.getPath());
                     //Opening Cropper Activity
-                    CropperActivity_.intent(this).mPicturePath(imageFile.getPath()).startForResult(CROPPER_ACTIVITY_RESULT_CODE);
+                    CropperActivity_.intent(this)
+                            .mPicturePath(imageFile.getPath())
+                            .startForResult(CROPPER_ACTIVITY_RESULT_CODE);
                     break;
                 case cSELECT_FILE_RQ:
                     Uri selectedImageUri = data.getData();
-                    CropperActivity_.intent(this).mPicturePath(Util.getPath(selectedImageUri)).startForResult(CROPPER_ACTIVITY_RESULT_CODE);
+                    CropperActivity_.intent(this)
+                            .mPicturePath(Util.getPath(selectedImageUri))
+                            .startForResult(CROPPER_ACTIVITY_RESULT_CODE);
                     break;
                 case CROPPER_ACTIVITY_RESULT_CODE:
                     mGeneratedImageID = data.getLongExtra(CropperActivity.GENERATED_IMAGE_ID, 0);

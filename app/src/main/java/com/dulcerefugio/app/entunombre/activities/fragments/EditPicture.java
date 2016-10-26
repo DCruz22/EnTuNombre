@@ -104,7 +104,7 @@ public class EditPicture extends Fragment
     @AfterViews
     public void init() {
         if (mPicturePath != null) {
-            try { 
+            try {
                 Uri uri = Uri.fromFile(new File(mPicturePath));
                 mPictureBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
                 mIvPicture.setImageBitmap(mPictureBitmap);

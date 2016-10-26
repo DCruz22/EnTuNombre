@@ -27,6 +27,9 @@ public class DaoGenerator {
         generatedImages.addStringProperty("path");
         generatedImages.addStringProperty("date");
 
+        String n = "";
+        String[] values = n.split(",");
+
         new de.greenrobot.daogenerator.DaoGenerator().generateAll(schema, args[0]);
     }
 }
