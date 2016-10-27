@@ -118,7 +118,9 @@ public class MainActivity extends Base implements
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
+        switch (resultCode) {
+
+            case RESULT_OK:
             mOutputFileUri = Uri.fromFile(new File(Environment
                     .getExternalStorageDirectory(), cCAMERA_PICTURE_TEMP_NAME));
             boolean picFromCam = data == null;
@@ -126,6 +128,7 @@ public class MainActivity extends Base implements
             switch (requestCode) {
                 case cCHOOSE_IMAGE_REQUEST_CODE:
                 case cSELECT_FILE_RQ:
+                    mIsCameraInit = false;
                     Uri selectedImageUri = Util.getSelectedImage(data, picFromCam, mOutputFileUri);
                     if(selectedImageUri != null) {
                         CropperActivity_.intent(this)
@@ -136,9 +139,15 @@ public class MainActivity extends Base implements
                     }
                     break;
                 case CROPPER_ACTIVITY_RESULT_CODE:
+                    mIsCameraInit = false;
                     mGeneratedImageID = data.getLongExtra(CropperActivity.GENERATED_IMAGE_ID, 0);
                     break;
             }
+            break;
+
+            case RESULT_CANCELED:
+                mIsCameraInit = false;
+                break;
         }
     }
 
@@ -259,13 +268,13 @@ public class MainActivity extends Base implements
             public HeaderDesign getHeaderDesign(int page) {
                 switch (page) {
                     case 0:
-                        return HeaderDesign.fromColorResAndUrl(
-                                R.color.blue,
-                                "http://www.droid-life.com/wp-content/uploads/2014/10/lollipop-wallpapers10.jpg");
+                        return HeaderDesign.fromColorResAndDrawable(
+                                android.R.color.holo_orange_light,
+                                getResources().getDrawable(R.drawable.etn_bg_app));
                     case 1:
-                        return HeaderDesign.fromColorResAndUrl(
-                                R.color.green,
-                                "https://fs01.androidpit.info/a/63/0e/android-l-wallpapers-630ea6-h900.jpg");
+                        return HeaderDesign.fromColorResAndDrawable(
+                                android.R.color.holo_orange_light,
+                                getResources().getDrawable(R.drawable.etn_bg_app));
                 }
 
                 return null;

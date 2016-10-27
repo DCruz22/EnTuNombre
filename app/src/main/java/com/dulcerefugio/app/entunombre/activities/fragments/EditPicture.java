@@ -112,16 +112,12 @@ public class EditPicture extends Fragment
                 e.printStackTrace();
             }
             List<PictureFrame> pictureFrames = new ArrayList<>();
-            pictureFrames.add(new PictureFrame(R.drawable.concierto_show, R.drawable.concierto, "Concierto"));
-            pictureFrames.add(new PictureFrame(R.drawable.england_show, R.drawable.england, "England"));
-            pictureFrames.add(new PictureFrame(R.drawable.everests_show, R.drawable.everest, "Everest dark"));
-            pictureFrames.add(new PictureFrame(R.drawable.everest2_show, R.drawable.everest2, "Everest light"));
-            pictureFrames.add(new PictureFrame(R.drawable.grunged_show, R.drawable.grunged, "Grunge"));
-            pictureFrames.add(new PictureFrame(R.drawable.guitar_show, R.drawable.guitar, "Guitar"));
-            pictureFrames.add(new PictureFrame(R.drawable.israel_show, R.drawable.israel, "Israel"));
-            pictureFrames.add(new PictureFrame(R.drawable.mic_show, R.drawable.mic, "Mic"));
-            pictureFrames.add(new PictureFrame(R.drawable.piano_show, R.drawable.piano, "Piano"));
-            pictureFrames.add(new PictureFrame(R.drawable.usa_show, R.drawable.usa, "USA"));
+            pictureFrames.add(new PictureFrame(R.drawable.frame1, R.drawable.frame1, "Concierto"));
+            pictureFrames.add(new PictureFrame(R.drawable.frame2, R.drawable.frame2, "England"));
+            pictureFrames.add(new PictureFrame(R.drawable.frame3, R.drawable.frame3, "Everest dark"));
+            pictureFrames.add(new PictureFrame(R.drawable.frame4, R.drawable.frame4, "Everest light"));
+            pictureFrames.add(new PictureFrame(R.drawable.frame5, R.drawable.frame5, "Grunge"));
+            pictureFrames.add(new PictureFrame(R.drawable.frame6, R.drawable.frame6, "Guitar"));
             mAdapter = new PictureFramesAdapter(pictureFrames);
             LinearLayoutManager layoutManager
                     = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
