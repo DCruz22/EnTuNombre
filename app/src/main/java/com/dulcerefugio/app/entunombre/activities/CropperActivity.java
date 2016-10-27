@@ -257,7 +257,6 @@ public class CropperActivity extends Base
     @Background
     @Override
     public void onFinishEditing() {
-        Logger.d("0");
         if (mIsFrameSelected) {
             onShowWaitDialog();
             File finalImage = new BitmapProcessor().storeImage(mLastResult);

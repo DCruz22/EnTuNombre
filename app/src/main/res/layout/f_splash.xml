@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="@drawable/splash_bg"
-        >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/splash_bg"
+    android:orientation="vertical">
 
 
     <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_alignParentBottom="true">
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
 
         <ProgressBar
-                android:id="@+id/pbSplash"
-                android:layout_width="@dimen/splash_progressbar_width"
-                android:layout_height="@dimen/splash_progressbar_height"
-                android:layout_gravity="center_horizontal"/>
+            android:id="@+id/pbSplash"
+            android:layout_width="@dimen/splash_progressbar_width"
+            android:layout_height="@dimen/splash_progressbar_height"
+            android:layout_gravity="center_horizontal" />
 
         <TextView
-                android:id="@+id/tvSplashStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:textSize="@dimen/splash_status_text_size"
-                android:text="@string/splash_status_text"/>
+            android:id="@+id/tvSplashStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/splash_status_text"
+            android:textSize="@dimen/splash_status_text_size" />
 
     </LinearLayout>
 
