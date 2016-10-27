@@ -2,7 +2,10 @@ package com.dulcerefugio.app.entunombre.activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.UiThread;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
@@ -19,6 +22,8 @@ import com.orhanobut.logger.Logger;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+
+import java.io.File;
 
 /**
  * Created by eperez on 7/23/15.
@@ -104,6 +109,15 @@ public abstract class Base extends AppCompatActivity {
                         }
                     }).show();
         }
+    }
+
+    protected Uri openImageChooserIntent(int requestCode, String imageName) {
+        final File outputFile = new File(Environment
+                .getExternalStorageDirectory(), imageName);
+        Uri outputFileUri = Uri.fromFile(outputFile);
+        Intent intent = Util.getImageChooserIntent(this, outputFile);
+        startActivityForResult(intent, requestCode);
+        return outputFileUri;
     }
 
     protected abstract boolean needToolbar();

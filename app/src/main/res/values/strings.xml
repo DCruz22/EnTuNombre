@@ -26,5 +26,6 @@
     <string name="chooser_title">Escoja un visor de imagenes</string>
     <string name="picture_error_snackbar">Ha ocurrido un error creando su imagen, intentelo nuevamente.</string>
     <string name="picture_error_displayn_snackbar">Ha ocurrido un error mostrando su imagen, por favor reinicie la aplicacion para verla</string>
+    <string name="image_chooser_message">Elija fuente</string>
 
 </resources>

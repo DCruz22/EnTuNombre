@@ -106,6 +106,25 @@ public class BitmapProcessor {
                 + "/Files";
     }
 
+    /**
+     * Added this method for a specific workaround implementation for
+     * CropImageView in some devices
+     *
+     * @param mCurrentPhotoPath
+     * @return
+     */
+    public static Bitmap decodeFile(String mCurrentPhotoPath) {
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inPurgeable = true;
+        return BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+    }
+
     public Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
                                                   int reqWidth, int reqHeight) {
         // First decode with inJustDecodeBounds=true to check dimensions

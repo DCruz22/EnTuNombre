@@ -1,11 +1,14 @@
 package com.dulcerefugio.app.entunombre.activities;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.UiThread;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
@@ -29,12 +32,17 @@ import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import org.androidannotations.annotations.AfterExtras;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.FragmentByTag;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Date;
 
 /**
@@ -55,7 +63,7 @@ public class CropperActivity extends Base
 
     //fields
     @Extra(PICTURE_PATH_EXTRA)
-    public String mPicturePath;
+    public Uri pictureUri;
 
     @FragmentByTag(CROP_PICTURE_FRAGMENT)
     CropPicture mCropPicture;
@@ -72,7 +80,7 @@ public class CropperActivity extends Base
     private Target mTargetFrame;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         showCropFragment();
     }
@@ -119,7 +127,7 @@ public class CropperActivity extends Base
     }
 
     private void showCropFragment() {
-        mCropPicture = CropPicture_.builder().mPicturePath(mPicturePath).build();
+        mCropPicture = CropPicture_.builder().mPictureUri(pictureUri).build();
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.a_cropper_fl_container, mCropPicture, CROP_PICTURE_FRAGMENT);
         fragmentTransaction.commit();
@@ -287,6 +295,26 @@ public class CropperActivity extends Base
         }
 
         finish();
+    }
+
+    public File compressImage(File imageFile){
+        File cachedImage = new File(getFilesDir(), imageFile.getName());
+        try {
+
+            float beforeSize = imageFile.length();
+
+            Util.copyFile(imageFile, cachedImage);
+            Util.compressImage(Uri.fromFile(cachedImage));
+
+            float afterSize = cachedImage.length();
+
+            if(afterSize > beforeSize){
+                Util.copyFile(imageFile, cachedImage);
+            }
+        } catch (IOException e) {
+            cachedImage = imageFile;
+        }
+        return cachedImage;
     }
 
     @Override

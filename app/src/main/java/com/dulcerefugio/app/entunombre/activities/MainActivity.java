@@ -2,6 +2,7 @@ package com.dulcerefugio.app.entunombre.activities;
 
 import android.content.ActivityNotFoundException;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
@@ -33,6 +34,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 
+import com.dulcerefugio.app.entunombre.util.Loggable;
 import com.dulcerefugio.app.entunombre.util.Util;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
@@ -51,42 +53,50 @@ public class MainActivity extends Base implements
         PictureListListeners,
         VideoListFragment.VideoListListeners,
         AppMessageDialog.OnAppMessageDialogListener,
-        PictureChooserDialog.OnPictureChooserListeners {
+        PictureChooserDialog.OnPictureChooserListeners,
+        Loggable {
 
     //=============================CONSTANTS======================================
-    public static final java.lang.String VIDEO_URL_PLAY = "URL_VIDEO_PLAY";
     private static final int PLAY_YOUTUBE_VIDEO = 1123;
-    private static final String TAG = "MAIN_ACTIVITY";
-    protected static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 820;
+    private final int cCHOOSE_IMAGE_REQUEST_CODE = 21;
     private static final int CROPPER_ACTIVITY_RESULT_CODE = 153;
+    protected static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 820;
+    private final int cSELECT_FILE_RQ = 1934;
+    public static final java.lang.String VIDEO_URL_PLAY = "URL_VIDEO_PLAY";
+    private static final String TAG = "MAIN_ACTIVITY";
     private static final String PICTURE_PREVIEW_DIALOG = "PICTURE_PREVIEW_DIALOG";
     private static final String APP_ABOUT_DIALOG = "APP_ABOUT_DIALOG";
     private static final String SHOWCASE_ID = "1234cx.";
-    private final int cSELECT_FILE_RQ = 1934;
     private String cPICTURE_POST_CHOOSER_FRAGMENT_TAG = "cPICTURE_POST_CHOOSER_FRAGMENT_TAG";
+    private String cCAMERA_PICTURE_TEMP_NAME = "temp.jpg";
 
     //=============================FIELDS======================================
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    @ViewById(R.id.drawer_layout)
+    public DrawerLayout mDrawerLayout;
+
     @ViewById(R.id.materialViewPager)
     public MaterialViewPager mViewPager;
+
+    @ViewById(R.id.drawer_lv_items)
+    public ListView mDrawerList;
+
+    @ViewById(R.id.left_drawer)
+    public View mDrawer;
+
+    private SectionsPagerAdapter mSectionsPagerAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private static File imageFile;
     private static String randomNumber = "";
     public static String saveFolderName;
     static String cameraPhotoImagePath = "";
-    @ViewById(R.id.drawer_layout)
-    public DrawerLayout mDrawerLayout;
     private DialogFragment mAppMessageImagePreview;
     private String[] mDrawerOptions;
-    @ViewById(R.id.drawer_lv_items)
-    public ListView mDrawerList;
-    @ViewById(R.id.left_drawer)
-    public View mDrawer;
     private DialogFragment mAppMessageAbout;
     private long mGeneratedImageID;
     private boolean mIsPreviewShown;
     private boolean mIsSharedShown;
     private boolean mIsCameraInit;
+    private Uri mOutputFileUri;
 
     //=============================OVERRIDEN METHODS======================================
 
@@ -109,19 +119,21 @@ public class MainActivity extends Base implements
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
+            mOutputFileUri = Uri.fromFile(new File(Environment
+                    .getExternalStorageDirectory(), cCAMERA_PICTURE_TEMP_NAME));
+            boolean picFromCam = data == null;
+
             switch (requestCode) {
-                case CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE:
-                    Logger.d(imageFile.getPath());
-                    //Opening Cropper Activity
-                    CropperActivity_.intent(this)
-                            .mPicturePath(imageFile.getPath())
-                            .startForResult(CROPPER_ACTIVITY_RESULT_CODE);
-                    break;
+                case cCHOOSE_IMAGE_REQUEST_CODE:
                 case cSELECT_FILE_RQ:
-                    Uri selectedImageUri = data.getData();
-                    CropperActivity_.intent(this)
-                            .mPicturePath(Util.getPath(selectedImageUri))
-                            .startForResult(CROPPER_ACTIVITY_RESULT_CODE);
+                    Uri selectedImageUri = Util.getSelectedImage(data, picFromCam, mOutputFileUri);
+                    if(selectedImageUri != null) {
+                        CropperActivity_.intent(this)
+                                .pictureUri(selectedImageUri)
+                                .startForResult(CROPPER_ACTIVITY_RESULT_CODE);
+                    }else{
+                        log.d("uri null");
+                    }
                     break;
                 case CROPPER_ACTIVITY_RESULT_CODE:
                     mGeneratedImageID = data.getLongExtra(CropperActivity.GENERATED_IMAGE_ID, 0);
@@ -151,8 +163,8 @@ public class MainActivity extends Base implements
     public void onGeneratePictureClick() {
         if (!mIsCameraInit) {
             mIsCameraInit = true;
-            PictureChooserDialog chooserDialog = new PictureChooserDialog();
-            chooserDialog.show(getSupportFragmentManager(), cPICTURE_POST_CHOOSER_FRAGMENT_TAG);
+            mOutputFileUri = openImageChooserIntent(cCHOOSE_IMAGE_REQUEST_CODE,
+                    cCAMERA_PICTURE_TEMP_NAME);
         }
     }
 
@@ -274,7 +286,6 @@ public class MainActivity extends Base implements
     }
 
     private void initCamera() {
-        Logger.d("f  " + imageFile);
         try {
             startActivityForResult(new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
                             .putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile)),
