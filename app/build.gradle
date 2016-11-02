@@ -14,6 +14,10 @@ android {
         applicationId "com.dulcerefugio.app.entunombre"
         minSdkVersion 14
         targetSdkVersion 18
+        versionCode 169
+        versionName "1.6.9"
+        resValue "string", "app_name", "En Tu Nombre"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {

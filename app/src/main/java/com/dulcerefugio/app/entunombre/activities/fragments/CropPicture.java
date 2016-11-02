@@ -103,8 +103,10 @@ public class CropPicture extends Fragment {
         super.onDestroy();
         if(mCropImageView!=null){
             mCropImageView.setImageBitmap(null);
-            mBitmap.recycle();
-            mBitmap = null;
+            if(mBitmap != null) {
+                mBitmap.recycle();
+                mBitmap = null;
+            }
             System.gc();
         }
     }

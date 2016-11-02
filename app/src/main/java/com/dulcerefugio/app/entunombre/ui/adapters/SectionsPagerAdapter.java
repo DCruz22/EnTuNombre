@@ -34,10 +34,8 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
 	@Override
 	public Fragment getItem(int position) {
-        Logger.d(position + "");
 		TabFragments tabFragment = TabFragments.values()[position];
         Fragment fragment = fragments[position];
-        Logger.d(tabFragment.name() + "");
 
 		if(fragment != null)
 			return fragment;

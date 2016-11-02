@@ -190,7 +190,7 @@ public class MainActivity extends Base implements
         if (!mIsPreviewShown) {
             mIsPreviewShown = true;
             mAppMessageImagePreview = Util.getAppMessageDialog(AppMessageDialog.MessageType.IMAGE_PREVIEW,
-                    generatedImages.getPath(), false);
+                    generatedImages.getPath(), true);
 
             mAppMessageImagePreview.show(mFragmentManager, PICTURE_PREVIEW_DIALOG);
 
@@ -273,7 +273,7 @@ public class MainActivity extends Base implements
                                 getResources().getDrawable(R.drawable.etn_bg_app));
                     case 1:
                         return HeaderDesign.fromColorResAndDrawable(
-                                android.R.color.holo_orange_light,
+                                android.R.color.holo_orange_dark,
                                 getResources().getDrawable(R.drawable.etn_bg_app));
                 }
 

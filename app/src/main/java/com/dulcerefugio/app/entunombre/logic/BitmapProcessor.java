@@ -12,7 +12,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Bitmap.Config;
+import android.media.MediaScannerConnection;
 import android.media.ThumbnailUtils;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -20,14 +22,13 @@ import android.util.Log;
 
 import com.dulcerefugio.app.entunombre.EnTuNombre;
 
+import static com.dulcerefugio.app.entunombre.EnTuNombre.context;
+
 public class BitmapProcessor {
 
     private final String TAG = "BitmapProcessor";
 
     public Bitmap mergeImages(Bitmap bottomImage, Bitmap topImage) {
-        Log.d(TAG, "bottom image height: " + bottomImage.getHeight());
-        Log.d(TAG, "bottom image width: " + bottomImage.getWidth());
-
         Bitmap resizedbitmap = Bitmap.createScaledBitmap(bottomImage, topImage.getWidth(), topImage.getHeight(), true);
 
         if (!bottomImage.isRecycled()) {
@@ -43,7 +44,7 @@ public class BitmapProcessor {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
 
-        canvas.drawBitmap(resizedbitmap, 26, 10, paint);
+        canvas.drawBitmap(resizedbitmap, 0, 0, paint);
         canvas.drawBitmap(topImage, 0, 0, paint);
 
         if (!resizedbitmap.isRecycled()) {
@@ -228,7 +229,7 @@ public class BitmapProcessor {
                 MediaStore.Images.ImageColumns.DATE_TAKEN,
                 MediaStore.Images.ImageColumns.MIME_TYPE };
 
-        final Cursor cursor = EnTuNombre.context.getContentResolver().query(
+        final Cursor cursor = context.getContentResolver().query(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection,
                 null,null, MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC");
 
@@ -245,6 +246,29 @@ public class BitmapProcessor {
                 file.delete();
             }
             cursor.close();
+        }
+    }
+    public void saveImageToExternal(String imgName, Bitmap bm) throws IOException {
+        File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "entunombre");
+        path.mkdirs();
+        File imageFile = new File(path, imgName + ".jpg");
+        FileOutputStream out = new FileOutputStream(imageFile);
+        try {
+            bm.compress(Bitmap.CompressFormat.JPEG, 90, out); // Compress Image
+            out.flush();
+            out.close();
+
+            // Tell the media scanner about the new file so that it is
+            // immediately available to the user.
+            MediaScannerConnection.scanFile(context, new String[]{imageFile.getAbsolutePath()}, null,
+                    new MediaScannerConnection.OnScanCompletedListener() {
+                public void onScanCompleted(String path, Uri uri) {
+                    Log.i("ExternalStorage", "Scanned " + path + ":");
+                    Log.i("ExternalStorage", "-> uri=" + uri);
+                }
+            });
+        } catch (Exception e) {
+            throw new IOException();
         }
     }
     public interface OnImageProcess {

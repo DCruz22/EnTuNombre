@@ -78,10 +78,12 @@ public class CropperActivity extends Base
     private Bitmap mCroppedImage;
     private Target mTargetCroppedImage;
     private Target mTargetFrame;
+    private BitmapProcessor mBitmapProcessor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mBitmapProcessor = new BitmapProcessor();
         showCropFragment();
     }
 
@@ -93,6 +95,7 @@ public class CropperActivity extends Base
         mLastResult = null;
         //mCroppedImage.recycle();
         mCroppedImage = null;
+        mBitmapProcessor = null;
 
         Picasso.with(this).cancelRequest(mTargetFrame);
         Picasso.with(this).cancelRequest(mTargetCroppedImage);
@@ -103,7 +106,6 @@ public class CropperActivity extends Base
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Logger.d("0");
                 Util.getAppMessageDialog(AppMessageDialog.MessageType.ASK_TO_EXIT, "", true)
                         .show(mFragmentManager, ASK_EXIT_DIALOG);
                 return true;
@@ -259,8 +261,12 @@ public class CropperActivity extends Base
     public void onFinishEditing() {
         if (mIsFrameSelected) {
             onShowWaitDialog();
-            File finalImage = new BitmapProcessor().storeImage(mLastResult);
-
+            File finalImage = mBitmapProcessor.storeImage(mLastResult);
+            try {
+                mBitmapProcessor.saveImageToExternal("etn"+System.currentTimeMillis(), mLastResult);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             //persisting picture path
             GeneratedImages generatedImage = new GeneratedImages();
             generatedImage.setPath(finalImage.getAbsolutePath());
@@ -281,7 +287,6 @@ public class CropperActivity extends Base
 
     @UiThread
     public void finishActivity(Long id, int result) {
-        Logger.d("0");
         deleteLastPicture();
         switch (result) {
             case RESULT_OK:
@@ -292,7 +297,6 @@ public class CropperActivity extends Base
             case RESULT_CANCELED:
                 setResult(result, new Intent());
         }
-
         finish();
     }
 
@@ -334,6 +338,6 @@ public class CropperActivity extends Base
 
     @Background
     public void deleteLastPicture() {
-        BitmapProcessor.deleteLastPhotoTaken();
+        //BitmapProcessor.deleteLastPhotoTaken();
     }
 }
