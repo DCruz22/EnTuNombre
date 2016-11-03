@@ -5,11 +5,13 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.crashlytics.android.Crashlytics;
 import com.dulcerefugio.app.entunombre.data.dao.DaoMaster;
 import com.dulcerefugio.app.entunombre.data.dao.DaoSession;
 import com.dulcerefugio.app.entunombre.data.dao.openhelpers.EnTuNombreOpenHelper;
 import com.dulcerefugio.app.entunombre.logic.Preferences;
 
+import io.fabric.sdk.android.Fabric;
 import java.io.File;
 import java.util.logging.Handler;
 
@@ -29,6 +31,7 @@ public class EnTuNombre extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
 
         context = getApplicationContext();
         mPreferences = Preferences.getInstance();

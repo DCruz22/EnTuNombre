@@ -1,4 +1,19 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 apply plugin: 'android-apt'
 
 android {
@@ -14,8 +29,8 @@ android {
         applicationId "com.dulcerefugio.app.entunombre"
         minSdkVersion 14
         targetSdkVersion 18
-        versionCode 169
-        versionName "1.6.9"
+        versionCode 170
+        versionName "1.7"
         resValue "string", "app_name", "En Tu Nombre"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -54,6 +69,9 @@ dependencies {
     }
     compile files('libs/lib-simplesharedpreferences.jar')
     compile files('libs/YouTubeAndroidPlayerApi.jar')
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
+        transitive = true;
+    }
 }
 
 

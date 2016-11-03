@@ -58,6 +58,9 @@
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Black.NoTitleBar">
         </activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="ee228f26ba829e5fbcf79da3f936b6b623717955" />
     </application>
 
 </manifest>
