@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -36,6 +37,10 @@ import android.view.Menu;
 
 import com.dulcerefugio.app.entunombre.util.Loggable;
 import com.dulcerefugio.app.entunombre.util.Util;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ActionItemTarget;
+import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
 import com.orhanobut.logger.Logger;
@@ -45,8 +50,6 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import java.io.File;
-
-import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 @EActivity(R.layout.a_main)
 public class MainActivity extends Base implements
@@ -66,7 +69,7 @@ public class MainActivity extends Base implements
     private static final String TAG = "MAIN_ACTIVITY";
     private static final String PICTURE_PREVIEW_DIALOG = "PICTURE_PREVIEW_DIALOG";
     private static final String APP_ABOUT_DIALOG = "APP_ABOUT_DIALOG";
-    private static final String SHOWCASE_ID = "1234cx.";
+    private static final long SHOWCASE_ID = 1234L;
     private String cPICTURE_POST_CHOOSER_FRAGMENT_TAG = "cPICTURE_POST_CHOOSER_FRAGMENT_TAG";
     private String cCAMERA_PICTURE_TEMP_NAME = "temp.jpg";
 
@@ -199,12 +202,16 @@ public class MainActivity extends Base implements
 
     @Override
     public void onPictureListLoaded(View view) {
-        new MaterialShowcaseView.Builder(this)
-                .setTarget(view.findViewById(R.id.materialButton))
-                .setDismissText(R.string.entendido)
-                .setContentText(R.string.create_image_showcase)
-                .singleUse(SHOWCASE_ID)
-                .show();
+        Button btnShow = new Button(this);
+        btnShow.setVisibility(View.GONE);
+
+        new ShowcaseView.Builder(this)
+                .setTarget(new ViewTarget(findViewById(R.id.materialButton)))
+                .hideOnTouchOutside()
+                .replaceEndButton(btnShow)
+                .setContentText(getString(R.string.create_image_showcase))
+                .singleShot(SHOWCASE_ID)
+                .build();
     }
 
     @Override

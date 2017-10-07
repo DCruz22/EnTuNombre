@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.2'
+        classpath 'com.android.tools.build:gradle:2.3.3'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.7'
     }
 }
@@ -17,7 +17,8 @@ allprojects {
         mavenLocal()
         maven {
             url {
-                'https://github.com/tvbarthel/maven/raw/master/'; 'https://jitpack.io'
+                'https://github.com/tvbarthel/maven/raw/master/'; 'https://jitpack.io';
+                'https://maven.google.com'
             }
         }
     }

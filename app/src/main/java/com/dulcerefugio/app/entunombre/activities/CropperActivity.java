@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -15,6 +16,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.dulcerefugio.app.entunombre.EnTuNombre;
@@ -258,10 +260,14 @@ public class CropperActivity extends Base
 
     @Background
     @Override
-    public void onFinishEditing() {
+    public void onFinishEditing(ViewGroup vgFinalPicture) {
         if (mIsFrameSelected) {
             onShowWaitDialog();
-            File finalImage = mBitmapProcessor.storeImage(mLastResult);
+            Bitmap bitmap = Bitmap.createBitmap(vgFinalPicture.getWidth(), vgFinalPicture.getHeight(),
+                    Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            vgFinalPicture.draw(canvas);
+            File finalImage = mBitmapProcessor.storeImage(bitmap);
             try {
                 mBitmapProcessor.saveImageToExternal("etn"+System.currentTimeMillis(), mLastResult);
             } catch (IOException e) {
