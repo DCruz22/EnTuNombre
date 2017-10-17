@@ -13,7 +13,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.dulcerefugio.app.entunombre.R;
 import com.dulcerefugio.app.entunombre.activities.fragments.listeners.RecyclerItemClickListener;
@@ -48,8 +50,12 @@ public class EditPicture extends Fragment
 
     @ViewById(R.id.f_edit_picture_iv_picture)
     public ImageView mIvPicture;
+    @ViewById(R.id.f_edit_picture_iv_frame)
+    public ImageView mIvFrame;
     @ViewById(R.id.f_edit_picture_rv_frames)
     RecyclerView mRecyclerFrames;
+    @ViewById(R.id.f_edit_picture_vg_picture)
+    RelativeLayout mRelativeFinalPicture;
     private PictureFramesAdapter mAdapter;
     private onEditPictureListener mListener;
     private Bitmap mPictureBitmap;
@@ -97,7 +103,7 @@ public class EditPicture extends Fragment
         switch (item.getItemId()) {
             case R.id.action_send:
                 Logger.d("0");
-                mListener.onFinishEditing();
+                mListener.onFinishEditing(mRelativeFinalPicture);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -166,8 +172,9 @@ public class EditPicture extends Fragment
 
     @Override
     public void onRecyclerItemClick(View view, int position) {
-        mListener.onShowWaitDialog();
+        //mListener.onShowWaitDialog();
         Log.d("EditPicture", "showed");
+        mIvFrame.setImageResource(mAdapter.getItem(position));
         mListener.onFrameSelected(mPicturePath, mAdapter.getItem(position));
     }
 
@@ -191,6 +198,6 @@ public class EditPicture extends Fragment
 
         void onFrameSelected(String croppedImage, final int frame);
 
-        void onFinishEditing();
+        void onFinishEditing(ViewGroup vgFinalPicture);
     }
 }
