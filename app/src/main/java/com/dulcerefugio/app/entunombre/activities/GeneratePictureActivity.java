@@ -34,24 +34,19 @@ public class GeneratePictureActivity extends Activity {
 
     //=============================FIELDS======================================
     static String cameraPhotoImagePath = "";
-    //static String cameraCropImagePath = "";
     private static String randomNumber = "";
-    //private static String cropRandomNumber = "";
     public static String saveFolderName;
     private static boolean mImageIsGenerated=false;
     private static boolean isTablet = false;
 
     //=============================OBJECTS======================================
     private static File imageFile;
-    //private static File cropImageFile;
     private static File wallpaperDirectory;
     private static Uri picUri;
     private static BitmapProcessor mBitmapProcessor;
     private static Bitmap picture;
-    //private static Bitmap result;
     private static ImageView mImageResult;
     private static ProgressBar mProgressBar;
-    //private File finalImage;
     private Button btnShare;
     private Button btnAgain;
 
@@ -63,19 +58,6 @@ public class GeneratePictureActivity extends Activity {
 		setContentView(R.layout.a_generate_picture);
 
         initialize();
-
-        //if(!mImageIsGenerated) {
-            //initCamera();
-        //}
-        /*else {
-            if (result != null) {
-                mImageResult.setImageBitmap(result);
-                mImageResult.setVisibility(View.VISIBLE);
-                mProgressBar.setVisibility(View.GONE);
-            }else{
-                initCamera();
-            }
-        }*/
 	}
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -95,8 +77,6 @@ public class GeneratePictureActivity extends Activity {
                 Bundle extras = data.getExtras();
 
                 //get the cropped bitmap
-                //picture = extras.getParcelable("data");
-                //picture = mBitmapProcessor.decodeSampledBitmapFromFile(cropImageFile, frame.getWidth(), frame.getHeight() - 200);
             }
         }
     }
@@ -140,12 +120,8 @@ public class GeneratePictureActivity extends Activity {
                 .getAbsolutePath()
                 + "/entunombre";
 
-        //randomNumber = String.valueOf(nextSessionId());
-        //cropRandomNumber = String.valueOf(nextSessionId());
         cameraPhotoImagePath = saveFolderName + "/" + randomNumber + ".jpg";
-        //cameraCropImagePath = saveFolderName + "/" + cropRandomNumber + ".jpg";
         imageFile = new File(cameraPhotoImagePath);
-        //cropImageFile = new File(cameraCropImagePath);
         isTablet = getResources().getBoolean(R.bool.isLargeScreen);
 
         wallpaperDirectory = new File(saveFolderName);
@@ -158,11 +134,9 @@ public class GeneratePictureActivity extends Activity {
         mImageResult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //final Uri path = Uri.fromFile(finalImage);
 
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
-                //intent.setDataAndType(path, "image/*");
                 startActivity(intent);
             }
         });
@@ -177,16 +151,6 @@ public class GeneratePictureActivity extends Activity {
                 startActivity(Intent.createChooser(share, "Share Image"));
             }
         });
-
-        /*btnAgain= (Button) findViewById(R.id.doAgain);
-        btnAgain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(GeneratePictureActivity.this, MainActivity.class);
-                startActivity(i);
-                GeneratePictureActivity.this.finish();
-            }
-        });*/
 	}
 
 }

@@ -3,30 +3,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash_bg"
+    android:background="@drawable/stars"
     android:orientation="vertical">
 
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical">
+        <ImageView
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ic_etn_circle_logo"/>
 
         <ProgressBar
             android:id="@+id/pbSplash"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
             android:layout_width="@dimen/splash_progressbar_width"
             android:layout_height="@dimen/splash_progressbar_height"
+            android:layout_marginBottom="15dp"
             android:layout_gravity="center_horizontal" />
-
-        <TextView
-            android:id="@+id/tvSplashStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/splash_status_text"
-            android:textSize="@dimen/splash_status_text_size" />
-
-    </LinearLayout>
 
 </RelativeLayout>
