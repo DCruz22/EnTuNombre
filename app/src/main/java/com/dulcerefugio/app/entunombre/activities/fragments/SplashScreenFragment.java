@@ -20,6 +20,7 @@ public class SplashScreenFragment extends Fragment {
     private OnSplashActions mSplashCallback;
     private ProgressBar mProgressBar;
     private final String TAG = "SplashScreenFragment";
+
     //============================================================
     //OVERRIDEN METHODS
     //============================================================
@@ -48,6 +49,9 @@ public class SplashScreenFragment extends Fragment {
     private void initialize(View v){
 
         mProgressBar = (ProgressBar)v.findViewById(R.id.pbSplash);
+        mProgressBar.getIndeterminateDrawable().setColorFilter(
+                getResources().getColor(android.R.color.white),
+                android.graphics.PorterDuff.Mode.SRC_IN);
 
         /*mProgressBar.setIndeterminateDrawable(new FoldingCirclesDrawable.Builder(getActivity())
                 .build());*/

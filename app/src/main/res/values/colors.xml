@@ -10,4 +10,6 @@
     <color name="link_text">#ff4d83b3</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
+    <color name="dark_gold">#e4ac49</color>
+    <color name="light_gold">#f9e0b1</color>
 </resources>
