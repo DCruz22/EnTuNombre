@@ -163,132 +163,29 @@ public class CropperActivity extends Base
         finishActivity(0L, RESULT_CANCELED);
     }
 
-    @Override
-    public void onFrameSelected(final String picturePath, final int _frame) {
-        if (!mSelectingFrame) {
-            try {
-                mSelectingFrame = true;
-                mTargetFrame = new Target() {
-                    @Override
-                    public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                        if (bitmap == null || bitmap.isRecycled())
-                            return;
-                        new AsyncTask<Void, Void, Bitmap>() {
-                            @Override
-                            protected Bitmap doInBackground(Void... params) {
-                                try {
-                                    mLastResult = new BitmapProcessor().mergeImages(mCroppedImage, bitmap);
-                                } catch (Exception ex) {
-                                    ex.printStackTrace();
-                                    Toast.makeText(CropperActivity.this, "Ha ocurrido un error, por favor intente luego", Toast.LENGTH_LONG).show();
-                                    finish();
-                                }
-                                System.gc();
-                                return mLastResult;
-                            }
-
-                            @Override
-                            protected void onPostExecute(Bitmap bitmap) {
-                                super.onPostExecute(bitmap);
-                                if (bitmap != null) {
-                                    if (mEditPicture != null) {
-                                        mEditPicture.setImageBitmap(null);
-                                        System.gc();
-                                        mEditPicture.showFramedImage(bitmap);
-
-                                    }
-                                    mSelectingFrame = false;
-                                    mIsFrameSelected = true;
-                                } else {
-                                    finish();
-                                    Toast.makeText(CropperActivity.this,
-                                            "Ha ocurrido un error, por favor intente luego", Toast.LENGTH_LONG).show();
-                                }
-                                dismissWaitDialog();
-                            }
-                        }.execute();
-
-                        if (mTargetFrame != null) {
-                            mTargetFrame.onBitmapFailed(null);
-                            Picasso.with(CropperActivity.this).cancelRequest(mTargetFrame);
-                        }
-                        if (mTargetCroppedImage != null) {
-                            mTargetCroppedImage.onBitmapFailed(null);
-                            Picasso.with(CropperActivity.this).cancelRequest(mTargetCroppedImage);
-                        }
-                    }
-
-                    @Override
-                    public void onBitmapFailed(Drawable errorDrawable) {
-                    }
-
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                    }
-                };
-                mTargetCroppedImage = new Target() {
-                    @Override
-                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                        if (bitmap == null || bitmap.isRecycled())
-                            return;
-
-                        mCroppedImage = bitmap;
-                        Picasso.with(EnTuNombre.context).load(_frame).memoryPolicy(MemoryPolicy.NO_CACHE).into(mTargetFrame);
-                    }
-
-                    @Override
-                    public void onBitmapFailed(Drawable errorDrawable) {
-
-                    }
-
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                    }
-
-                };
-                Picasso.with(EnTuNombre.context).load(new File(picturePath))
-                        .memoryPolicy(MemoryPolicy.NO_CACHE).into(mTargetCroppedImage);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                Toast.makeText(this, "Ha ocurrido un error, por favor intente luego", Toast.LENGTH_LONG).show();
-                finish();
-            }
-        }
-    }
-
     @Background
     @Override
     public void onFinishEditing(ViewGroup vgFinalPicture) {
-        if (mIsFrameSelected) {
-            onShowWaitDialog();
-            Bitmap bitmap = Bitmap.createBitmap(vgFinalPicture.getWidth(), vgFinalPicture.getHeight(),
-                    Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(bitmap);
-            vgFinalPicture.draw(canvas);
-            File finalImage = mBitmapProcessor.storeImage(bitmap);
-            try {
-                mBitmapProcessor.saveImageToExternal("etn"+System.currentTimeMillis(), mLastResult);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            //persisting picture path
-            GeneratedImages generatedImage = new GeneratedImages();
-            generatedImage.setPath(finalImage.getAbsolutePath());
-            generatedImage.setDate(Util.parseDateString(new Date()));
-            EnTuNombre.getInstance()
-                    .getDaoSession()
-                    .getGeneratedImagesDao()
-                    .insertOrReplaceInTx(generatedImage);
-            finishActivity(generatedImage.getId(), RESULT_OK);
-        } else {
-            if (mAppMessageMustSelectFrame == null)
-                mAppMessageMustSelectFrame = Util.getAppMessageDialog(AppMessageDialog.MessageType.MUST_SELECT_FRAME,
-                        null, false);
-
-            mAppMessageMustSelectFrame.show(mFragmentManager, MUST_SELECT_FRAME_DIALOG);
+        onShowWaitDialog();
+        Bitmap bitmap = Bitmap.createBitmap(vgFinalPicture.getWidth(), vgFinalPicture.getHeight(),
+                Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        vgFinalPicture.draw(canvas);
+        File finalImage = mBitmapProcessor.storeImage(bitmap);
+        try {
+            mBitmapProcessor.saveImageToExternal("etn" + System.currentTimeMillis(), mLastResult);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        //persisting picture path
+        GeneratedImages generatedImage = new GeneratedImages();
+        generatedImage.setPath(finalImage.getAbsolutePath());
+        generatedImage.setDate(Util.parseDateString(new Date()));
+        EnTuNombre.getInstance()
+                .getDaoSession()
+                .getGeneratedImagesDao()
+                .insertOrReplaceInTx(generatedImage);
+        finishActivity(generatedImage.getId(), RESULT_OK);
     }
 
     @UiThread
@@ -306,7 +203,7 @@ public class CropperActivity extends Base
         finish();
     }
 
-    public File compressImage(File imageFile){
+    public File compressImage(File imageFile) {
         File cachedImage = new File(getFilesDir(), imageFile.getName());
         try {
 
@@ -317,7 +214,7 @@ public class CropperActivity extends Base
 
             float afterSize = cachedImage.length();
 
-            if(afterSize > beforeSize){
+            if (afterSize > beforeSize) {
                 Util.copyFile(imageFile, cachedImage);
             }
         } catch (IOException e) {

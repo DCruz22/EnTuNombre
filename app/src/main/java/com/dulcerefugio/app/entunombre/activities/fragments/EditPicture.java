@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,9 +19,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.dulcerefugio.app.entunombre.R;
+import com.dulcerefugio.app.entunombre.activities.fragments.dialog.AppMessageDialog;
 import com.dulcerefugio.app.entunombre.activities.fragments.listeners.RecyclerItemClickListener;
 import com.dulcerefugio.app.entunombre.data.pojos.PictureFrame;
 import com.dulcerefugio.app.entunombre.ui.adapters.PictureFramesAdapter;
+import com.dulcerefugio.app.entunombre.util.Util;
 import com.orhanobut.logger.Logger;
 import com.squareup.picasso.Picasso;
 
@@ -44,6 +47,7 @@ public class EditPicture extends Fragment
         implements RecyclerItemClickListener.OnItemClickListener {
 
     public static final String PICTURE_PATH_EXTRA = "PICTURE_PATH_EXTRA";
+    private static final String MUST_SELECT_FRAME_DIALOG = "mAppMessageMustSelectFrame";
 
     @FragmentArg(PICTURE_PATH_EXTRA)
     public String mPicturePath;
@@ -59,6 +63,9 @@ public class EditPicture extends Fragment
     private PictureFramesAdapter mAdapter;
     private onEditPictureListener mListener;
     private Bitmap mPictureBitmap;
+    private boolean mIsFrameSelected;
+
+    private DialogFragment mAppMessageMustSelectFrame;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,6 +110,14 @@ public class EditPicture extends Fragment
         switch (item.getItemId()) {
             case R.id.action_send:
                 Logger.d("0");
+                if(!mIsFrameSelected) {
+                    if (mAppMessageMustSelectFrame == null)
+                        mAppMessageMustSelectFrame = Util.getAppMessageDialog(AppMessageDialog.MessageType.MUST_SELECT_FRAME,
+                                null, false);
+
+                    mAppMessageMustSelectFrame.show(getChildFragmentManager(), MUST_SELECT_FRAME_DIALOG);
+                    return true;
+                }
                 mListener.onFinishEditing(mRelativeFinalPicture);
                 return true;
         }
@@ -180,8 +195,9 @@ public class EditPicture extends Fragment
     public void onRecyclerItemClick(View view, int position) {
         //mListener.onShowWaitDialog();
         Log.d("EditPicture", "showed");
+        mIsFrameSelected = true;
         mIvFrame.setImageResource(mAdapter.getItem(position));
-        mListener.onFrameSelected(mPicturePath, mAdapter.getItem(position));
+        //mListener.onFrameSelected(mPicturePath, mAdapter.getItem(position));
     }
 
     public void showFramedImage(Bitmap bitmap) {
@@ -201,8 +217,6 @@ public class EditPicture extends Fragment
 
     public interface onEditPictureListener {
         void onShowWaitDialog();
-
-        void onFrameSelected(String croppedImage, final int frame);
 
         void onFinishEditing(ViewGroup vgFinalPicture);
     }
