@@ -9,12 +9,22 @@
     android:orientation="vertical"
     tools:background="@android:color/black">
 
-    <ImageView
-        android:id="@+id/row_frame_iv_frame"
+    <RelativeLayout
+        android:id="@+id/f_edit_picture_vg_picture"
         android:layout_width="@dimen/row_frame_iv_width_height"
-        android:layout_height="@dimen/row_frame_iv_width_height"
-        android:scaleType="centerCrop"
-        tools:src="@drawable/frame1_show"/>
+        android:layout_height="@dimen/row_frame_iv_width_height">
+        <ImageView
+            android:id="@+id/row_frame_iv_picture"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"/>
+
+        <ImageView
+            android:id="@+id/row_frame_iv_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"/>
+    </RelativeLayout>
     <TextView
         android:id="@+id/row_frame_tv_name"
         android:layout_width="wrap_content"

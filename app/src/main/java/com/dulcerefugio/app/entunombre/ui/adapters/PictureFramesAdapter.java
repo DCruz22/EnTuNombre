@@ -13,6 +13,7 @@ import com.dulcerefugio.app.entunombre.data.pojos.PictureFrame;
 import com.squareup.picasso.Picasso;
 
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -21,9 +22,11 @@ import java.util.List;
 public class PictureFramesAdapter extends RecyclerView.Adapter<PictureFramesAdapter.ViewHolder> {
 
     private List<PictureFrame> pictureFrames;
+    private String mPicturePath;
 
-    public PictureFramesAdapter(List<PictureFrame> drawables) {
+    public PictureFramesAdapter(List<PictureFrame> drawables, String picturePath) {
         this.pictureFrames = drawables;
+        this.mPicturePath = picturePath;
     }
 
     @Override
@@ -31,14 +34,16 @@ public class PictureFramesAdapter extends RecyclerView.Adapter<PictureFramesAdap
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.row_frame, parent, false);
         ImageView ivFrame = ((ImageView) itemView.findViewById(R.id.row_frame_iv_frame));
+        ImageView ivPicture = ((ImageView) itemView.findViewById(R.id.row_frame_iv_picture));
         TextView tvName = ((TextView)itemView.findViewById(R.id.row_frame_tv_name));
-        return new ViewHolder(itemView, ivFrame, tvName);
+        return new ViewHolder(itemView, ivFrame, ivPicture, tvName);
     }
 
     @Override
     public void onBindViewHolder(PictureFramesAdapter.ViewHolder holder, int position) {
-        Integer drawable = pictureFrames.get(position).resToShow;
+        Integer drawable = pictureFrames.get(position).resToUse;
         Picasso.with(EnTuNombre.context).load(drawable).resize(300,300).into(holder.ivPicture);
+        Picasso.with(EnTuNombre.context).load(new File(mPicturePath)).into(holder.ivFrame);
         //holder.ivPicture.setImageDrawable(EnTuNombre.context.getResources().getDrawable(drawable));
         holder.tvName.setText(pictureFrames.get(position).name);
     }
@@ -54,12 +59,14 @@ public class PictureFramesAdapter extends RecyclerView.Adapter<PictureFramesAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView ivPicture;
+        public ImageView ivFrame;
         public TextView tvName;
 
-        public ViewHolder(View itemView, ImageView ivPicture, TextView tvName) {
+        public ViewHolder(View itemView, ImageView ivPicture, ImageView ivFrame, TextView tvName) {
             super(itemView);
             this.ivPicture = ivPicture;
             this.tvName = tvName;
+            this.ivFrame = ivFrame;
         }
     }
 }
