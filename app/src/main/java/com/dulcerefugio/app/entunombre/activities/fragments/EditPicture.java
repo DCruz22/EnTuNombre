@@ -126,13 +126,19 @@ public class EditPicture extends Fragment
             pictureFrames.add(new PictureFrame(R.drawable.frame4_show, R.drawable.frame4, "Modern"));
             pictureFrames.add(new PictureFrame(R.drawable.frame5_show, R.drawable.frame5, "Waves"));
             pictureFrames.add(new PictureFrame(R.drawable.frame6_show, R.drawable.frame6, "Points"));
+            pictureFrames.add(new PictureFrame(R.drawable.frame1_show, R.drawable.frame7, "Circular"));
+            pictureFrames.add(new PictureFrame(R.drawable.frame2_show, R.drawable.frame8, "Pentagon"));
+            pictureFrames.add(new PictureFrame(R.drawable.frame3_show, R.drawable.frame9, "Classic"));
+            pictureFrames.add(new PictureFrame(R.drawable.frame4_show, R.drawable.frame10, "Modern"));
+            pictureFrames.add(new PictureFrame(R.drawable.frame5_show, R.drawable.frame11, "Waves"));
+            pictureFrames.add(new PictureFrame(R.drawable.frame6_show, R.drawable.frame12, "Points"));
 
             Calendar calendar = Calendar.getInstance();
             int currentYear = calendar.get(Calendar.YEAR);
             int currentMonth = calendar.get(Calendar.MONTH) + 1;
             int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
 
-            Calendar eventDayCal = new GregorianCalendar(2016, Calendar.NOVEMBER, 6);
+            Calendar eventDayCal = new GregorianCalendar(2017, Calendar.NOVEMBER, 5);
             int eventYear = eventDayCal.get(Calendar.YEAR);
             int eventMonth = eventDayCal.get(Calendar.MONTH) + 1;
             int eventDay = eventDayCal.get(Calendar.DAY_OF_MONTH);
@@ -159,7 +165,7 @@ public class EditPicture extends Fragment
                 }
             }
 
-            mAdapter = new PictureFramesAdapter(pictureFrames);
+            mAdapter = new PictureFramesAdapter(pictureFrames, mPicturePath);
             LinearLayoutManager layoutManager
                     = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
             mRecyclerFrames.setLayoutManager(layoutManager);
