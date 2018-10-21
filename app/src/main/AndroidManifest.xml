@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dulcerefugio.app.entunombre" >
+    package="com.dulcerefugio.app.entunombre"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -61,6 +62,11 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="ee228f26ba829e5fbcf79da3f936b6b623717955" />
+        <meta-data
+            tools:replace="android:value"
+            android:name="android.support.VERSION"
+            android:value="26.1.0"
+        />
     </application>
 
 </manifest>
