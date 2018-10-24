@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:viewpager_logoMarginTop="100dp"
-        app:viewpager_color="@android:color/holo_orange_dark"
+        app:viewpager_color="@android:color/holo_purple"
         app:viewpager_headerHeight="200dp"
         app:viewpager_headerAlpha="0.5"
         app:viewpager_pagerTitleStrip="@layout/mytabs"

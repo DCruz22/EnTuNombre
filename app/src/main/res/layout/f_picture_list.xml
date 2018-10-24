@@ -28,6 +28,6 @@
         android:layout_marginRight="25dp"
         android:elevation="4dp"
         android:src="@drawable/ic_camera_alt_white_24dp"
-        custom:colorm="@android:color/holo_orange_dark"
+        custom:colorm="@color/dark_pink"
         custom:transitionTime="1200" />
 </FrameLayout>

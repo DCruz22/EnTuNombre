@@ -1,10 +1,15 @@
 package com.dulcerefugio.app.entunombre.activities;
 
+import android.Manifest;
 import android.content.ActivityNotFoundException;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -50,6 +55,8 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 @EActivity(R.layout.a_main)
 public class MainActivity extends Base implements
@@ -72,6 +79,12 @@ public class MainActivity extends Base implements
     private static final long SHOWCASE_ID = 1234L;
     private String cPICTURE_POST_CHOOSER_FRAGMENT_TAG = "cPICTURE_POST_CHOOSER_FRAGMENT_TAG";
     private String cCAMERA_PICTURE_TEMP_NAME = "temp.jpg";
+    public static final int MULTIPLE_PERMISSIONS = 10;
+
+    private static final String[] PERMISSIONS = {
+            //android.Manifest.permission.READ_EXTERNAL_STORAGE,
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+    };
 
     //=============================FIELDS======================================
     @ViewById(R.id.drawer_layout)
@@ -175,8 +188,23 @@ public class MainActivity extends Base implements
     public void onGeneratePictureClick() {
         if (!mIsCameraInit) {
             mIsCameraInit = true;
-            mOutputFileUri = openImageChooserIntent(cCHOOSE_IMAGE_REQUEST_CODE,
-                    cCAMERA_PICTURE_TEMP_NAME);
+            if(arePermissionsGranted()) {
+                mOutputFileUri = openImageChooserIntent(cCHOOSE_IMAGE_REQUEST_CODE,
+                        cCAMERA_PICTURE_TEMP_NAME);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case MULTIPLE_PERMISSIONS:
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    mOutputFileUri = openImageChooserIntent(cCHOOSE_IMAGE_REQUEST_CODE,
+                            cCAMERA_PICTURE_TEMP_NAME);
+                }
+                break;
         }
     }
 
@@ -276,11 +304,11 @@ public class MainActivity extends Base implements
                 switch (page) {
                     case 0:
                         return HeaderDesign.fromColorResAndDrawable(
-                                R.color.light_gold,
+                                R.color.light_pink,
                                 getResources().getDrawable(R.drawable.ic_etn_wide_logo));
                     case 1:
                         return HeaderDesign.fromColorResAndDrawable(
-                                R.color.dark_gold,
+                                R.color.dark_pink,
                                 getResources().getDrawable(R.drawable.ic_etn_wide_logo));
                 }
 
@@ -357,7 +385,6 @@ public class MainActivity extends Base implements
     @Override
     public void onPicturePostCancel() {
         mIsCameraInit = false;
-
     }
 
     @Override
@@ -400,4 +427,24 @@ public class MainActivity extends Base implements
             }
         }
     }
+
+    private boolean arePermissionsGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            int result;
+            List<String> permissionsNeeded = new ArrayList<>();
+            for(String p : PERMISSIONS){
+                result = checkSelfPermission(p);
+                if(result != PackageManager.PERMISSION_GRANTED){
+                    permissionsNeeded.add(p);
+                }
+            }
+            if (!permissionsNeeded.isEmpty()){
+                ActivityCompat.requestPermissions(this, permissionsNeeded.toArray(new String[permissionsNeeded.size()]), MULTIPLE_PERMISSIONS);
+                mIsCameraInit = false;
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

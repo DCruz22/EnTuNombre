@@ -20,7 +20,7 @@ import com.dulcerefugio.app.entunombre.EnTuNombre;
 import com.dulcerefugio.app.entunombre.R;
 import com.dulcerefugio.app.entunombre.logic.BitmapProcessor;
 import com.dulcerefugio.app.entunombre.util.Util;
-import com.edmodo.cropper.CropImageView;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
