@@ -25,6 +25,8 @@ import com.dulcerefugio.app.entunombre.activities.fragments.CropPicture;
 import com.dulcerefugio.app.entunombre.activities.fragments.CropPicture_;
 import com.dulcerefugio.app.entunombre.activities.fragments.EditPicture;
 import com.dulcerefugio.app.entunombre.activities.fragments.EditPicture_;
+import com.dulcerefugio.app.entunombre.activities.fragments.FilterPicture;
+import com.dulcerefugio.app.entunombre.activities.fragments.FilterPicture_;
 import com.dulcerefugio.app.entunombre.activities.fragments.dialog.AppMessageDialog;
 import com.dulcerefugio.app.entunombre.data.dao.GeneratedImages;
 import com.dulcerefugio.app.entunombre.logic.BitmapProcessor;
@@ -33,6 +35,7 @@ import com.orhanobut.logger.Logger;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+import com.zomato.photofilters.imageprocessors.Filter;
 
 import org.androidannotations.annotations.AfterExtras;
 import org.androidannotations.annotations.Background;
@@ -54,11 +57,13 @@ import java.util.Date;
 public class CropperActivity extends Base
         implements CropPicture.onCropPictureListener,
         EditPicture.onEditPictureListener,
+        FilterPicture.onFilterPictureListener,
         AppMessageDialog.OnAppMessageDialogListener {
 
     public static final String PICTURE_PATH_EXTRA = "PICTURE_PATH_EXTRA";
     private static final String CROP_PICTURE_FRAGMENT = "CropPictureTag";
     private static final String EDIT_PICTURE_FRAGMENT = "EditPictureTag";
+    private static final String FILTER_PICTURE_FRAGMENT = "FilterPictureTag";
     private static final String MUST_SELECT_FRAME_DIALOG = "mAppMessageMustSelectFrame";
     public static final String GENERATED_IMAGE_ID = "GENERATED_IMAGE_ID";
     private static final String ASK_EXIT_DIALOG = "ASK_EXIT_DIALOG";
@@ -72,6 +77,10 @@ public class CropperActivity extends Base
 
     @FragmentByTag(EDIT_PICTURE_FRAGMENT)
     EditPicture mEditPicture;
+
+    @FragmentByTag(FILTER_PICTURE_FRAGMENT)
+    FilterPicture mFilterPicture;
+
     private Bitmap mLastResult;
     private boolean mSelectingFrame;
     private boolean mIsFrameSelected;
@@ -146,6 +155,15 @@ public class CropperActivity extends Base
         fragmentTransaction.commit();
     }
 
+    @UiThread
+    private void showFilterFragment() {
+        dismissWaitDialog();
+        mFilterPicture = FilterPicture_.builder().mPicturePath(mCroppedPicturePath).build();
+        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.a_cropper_fl_container, mFilterPicture, FILTER_PICTURE_FRAGMENT);
+        fragmentTransaction.commit();
+    }
+
     @Override
     @Background
     public void onCropImage(final Bitmap croppedImage) {
@@ -155,7 +173,24 @@ public class CropperActivity extends Base
             croppedImage.recycle();
         }
         mCroppedPicturePath = file.getPath();
+        showFilterFragment();
+    }
+
+    @Override
+    @Background
+    public void onFilterImage(final Bitmap filteredImage) {
+        onShowWaitDialog();
+        File file = new BitmapProcessor().storeImage(filteredImage);
+        if (!filteredImage.isRecycled()) {
+            filteredImage.recycle();
+        }
+        mCroppedPicturePath = file.getPath();
         showEditFragment();
+    }
+
+    @Override
+    public void onFilterCancel() {
+        finishActivity(0L, RESULT_CANCELED);
     }
 
     @Override
@@ -171,6 +206,7 @@ public class CropperActivity extends Base
                 Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         vgFinalPicture.draw(canvas);
+        mLastResult = bitmap.copy(Bitmap.Config.ARGB_8888, true);
         File finalImage = mBitmapProcessor.storeImage(bitmap);
         try {
             mBitmapProcessor.saveImageToExternal("etn" + System.currentTimeMillis(), mLastResult);

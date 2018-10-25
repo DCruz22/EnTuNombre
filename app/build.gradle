@@ -25,7 +25,7 @@ android {
 
     defaultConfig {
         applicationId "com.dulcerefugio.app.entunombre"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 26
         versionCode 170
         versionName "1.7"
@@ -70,6 +70,7 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:0.9.4.7'
     implementation 'org.ocpsoft.prettytime:prettytime:3.2.7.Final'
     implementation 'com.flaviofaria:kenburnsview:1.0.7'
+    implementation 'com.github.zomato:androidphotofilters:1.0.1'
     implementation 'com.jpardogo.materialtabstrip:library:1.1.0'
     implementation ('com.github.bumptech.glide:glide:4.7.1'){
         exclude group: 'com.android.support'
