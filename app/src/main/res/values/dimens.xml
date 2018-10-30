@@ -28,5 +28,8 @@
     <dimen name="df_picture_chooser_lv_margin_bottom">10dp</dimen>
     <dimen name="item_picture_chooser_tv_textsize">22sp</dimen>
     <dimen name="item_picture_chooser_tv_padding">10dp</dimen>
-
+    <dimen name="thumbnail_size">80dp</dimen>
+    <dimen name="recycler_size">100dp</dimen>
+    <dimen name="thumbnail_horizontal_padding">8dp</dimen>
+    <dimen name="thumbnail_vertical_padding">10dp</dimen>
 </resources>

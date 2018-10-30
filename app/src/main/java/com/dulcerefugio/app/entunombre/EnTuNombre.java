@@ -25,6 +25,11 @@ public class EnTuNombre extends Application{
     public static volatile Context context;
     private Preferences mPreferences;
 
+    static
+    {
+        System.loadLibrary("NativeImageProcessor");
+    }
+
     //======================================================================================
     //OVERRIDEN METHODS
     //======================================================================================

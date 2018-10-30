@@ -141,12 +141,6 @@ public class EditPicture extends Fragment
             pictureFrames.add(new PictureFrame(R.drawable.frame4, "Modern"));
             pictureFrames.add(new PictureFrame(R.drawable.frame5, "Waves"));
             pictureFrames.add(new PictureFrame(R.drawable.frame6, "Points"));
-            pictureFrames.add(new PictureFrame(R.drawable.frame7, "Circular"));
-            pictureFrames.add(new PictureFrame(R.drawable.frame8, "Pentagon"));
-            pictureFrames.add(new PictureFrame(R.drawable.frame9, "Classic"));
-            pictureFrames.add(new PictureFrame(R.drawable.frame10, "Modern"));
-            pictureFrames.add(new PictureFrame(R.drawable.frame11, "Waves"));
-            pictureFrames.add(new PictureFrame(R.drawable.frame12, "Points"));
 
 //            Calendar calendar = Calendar.getInstance();
 //            int currentYear = calendar.get(Calendar.YEAR);
