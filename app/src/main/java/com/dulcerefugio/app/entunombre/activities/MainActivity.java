@@ -304,11 +304,11 @@ public class MainActivity extends Base implements
                 switch (page) {
                     case 0:
                         return HeaderDesign.fromColorResAndDrawable(
-                                R.color.light_pink,
+                                R.color.light_blue,
                                 getResources().getDrawable(R.drawable.ic_etn_wide_logo));
                     case 1:
                         return HeaderDesign.fromColorResAndDrawable(
-                                R.color.dark_pink,
+                                R.color.dark_blue,
                                 getResources().getDrawable(R.drawable.ic_etn_wide_logo));
                 }
 
