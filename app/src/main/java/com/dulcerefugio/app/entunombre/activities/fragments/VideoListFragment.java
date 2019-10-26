@@ -101,8 +101,8 @@ public class VideoListFragment extends Base
                 .getDaoSession()
                 .getYoutubeVideoDao()
                 .queryBuilder()
-//                .orderAsc(YoutubeVideoDao.Properties.Created_at)
                 .list();
+
         mAdapter = new RecyclerViewMaterialAdapter(new VideosAdapter(mYoutubeVideos));
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),
