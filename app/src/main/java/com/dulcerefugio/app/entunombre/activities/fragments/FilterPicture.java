@@ -141,12 +141,12 @@ public class FilterPicture extends Fragment
         Runnable r = new Runnable() {
             public void run() {
                 Bitmap thumbImage = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(mPicturePath), 640, 640, false);
-                ThumbnailItem t1 = new ThumbnailItem();
-                ThumbnailItem t2 = new ThumbnailItem();
-                ThumbnailItem t3 = new ThumbnailItem();
-                ThumbnailItem t4 = new ThumbnailItem();
-                ThumbnailItem t5 = new ThumbnailItem();
-                ThumbnailItem t6 = new ThumbnailItem();
+                ThumbnailItem t1 = new ThumbnailItem("Original");
+                ThumbnailItem t2 = new ThumbnailItem("StartLit");
+                ThumbnailItem t3 = new ThumbnailItem("BlueMess");
+                ThumbnailItem t4 = new ThumbnailItem("AweStruck");
+                ThumbnailItem t5 = new ThumbnailItem("LimeStutter");
+                ThumbnailItem t6 = new ThumbnailItem("NightWhisper");
 
                 t1.image = thumbImage;
                 t2.image = thumbImage;

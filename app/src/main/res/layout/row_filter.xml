@@ -20,7 +20,7 @@
             android:scaleType="fitXY"/>
     </RelativeLayout>
     <TextView
-        android:id="@+id/row_frame_tv_name"
+        android:id="@+id/row_filter_tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"

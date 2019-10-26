@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.dulcerefugio.app.entunombre.R;
 import com.dulcerefugio.app.entunombre.data.callbacks.ThumbnailCallback;
@@ -45,6 +46,7 @@ public class ThumbnailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         final ThumbnailItem thumbnailItem = dataSet.get(i);
         Log.v(TAG, "On Bind View Called");
         ThumbnailsViewHolder thumbnailsViewHolder = (ThumbnailsViewHolder) holder;
+        thumbnailsViewHolder.name.setText(thumbnailItem.name);
         thumbnailsViewHolder.thumbnail.setImageBitmap(thumbnailItem.image);
         thumbnailsViewHolder.thumbnail.setScaleType(ImageView.ScaleType.FIT_START);
         setAnimation(thumbnailsViewHolder.thumbnail, i);
@@ -74,11 +76,13 @@ public class ThumbnailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public static class ThumbnailsViewHolder extends RecyclerView.ViewHolder {
-        public ImageView thumbnail;
+        ImageView thumbnail;
+        TextView name;
 
-        public ThumbnailsViewHolder(View v) {
+        ThumbnailsViewHolder(View v) {
             super(v);
-            this.thumbnail = (ImageView) v.findViewById(R.id.row_filter_iv_picture);
+            this.thumbnail = v.findViewById(R.id.row_filter_iv_picture);
+            this.name = v.findViewById(R.id.row_filter_tv_name);
         }
     }
 }
