@@ -67,6 +67,17 @@
             android:name="android.support.VERSION"
             android:value="26.1.0"
         />
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.dulcerefugio.app.entunombre.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <!-- ressource file to create -->
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths">
+            </meta-data>
+        </provider>
     </application>
 
 </manifest>

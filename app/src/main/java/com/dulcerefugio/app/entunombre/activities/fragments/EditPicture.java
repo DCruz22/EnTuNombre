@@ -136,11 +136,11 @@ public class EditPicture extends Fragment
             }
             List<PictureFrame> pictureFrames = new ArrayList<>();
             pictureFrames.add(new PictureFrame(R.drawable.frame1, "Circular"));
-            pictureFrames.add(new PictureFrame(R.drawable.frame2, "Pentagon"));
+            pictureFrames.add(new PictureFrame(R.drawable.frame2, "Rectangular"));
             pictureFrames.add(new PictureFrame(R.drawable.frame3, "Classic"));
             pictureFrames.add(new PictureFrame(R.drawable.frame4, "Modern"));
             pictureFrames.add(new PictureFrame(R.drawable.frame5, "Waves"));
-            pictureFrames.add(new PictureFrame(R.drawable.frame6, "Points"));
+            pictureFrames.add(new PictureFrame(R.drawable.frame6, "Square"));
 
 //            Calendar calendar = Calendar.getInstance();
 //            int currentYear = calendar.get(Calendar.YEAR);

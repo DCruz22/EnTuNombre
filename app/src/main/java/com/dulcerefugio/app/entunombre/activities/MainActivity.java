@@ -12,6 +12,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -304,11 +305,11 @@ public class MainActivity extends Base implements
                 switch (page) {
                     case 0:
                         return HeaderDesign.fromColorResAndDrawable(
-                                R.color.light_pink,
+                                R.color.light_blue,
                                 getResources().getDrawable(R.drawable.ic_etn_wide_logo));
                     case 1:
                         return HeaderDesign.fromColorResAndDrawable(
-                                R.color.dark_pink,
+                                R.color.dark_blue,
                                 getResources().getDrawable(R.drawable.ic_etn_wide_logo));
                 }
 
@@ -323,7 +324,7 @@ public class MainActivity extends Base implements
         saveFolderName = BitmapProcessor.getSavePath();
         Log.d(TAG, saveFolderName);
 
-        randomNumber = String.valueOf(Util.nextSessionId());
+        randomNumber = Util.nextSessionId();
         cameraPhotoImagePath = saveFolderName + "/" + randomNumber + ".jpg";
         Log.d(TAG, cameraPhotoImagePath);
         imageFile = new File(cameraPhotoImagePath);
@@ -344,9 +345,13 @@ public class MainActivity extends Base implements
 
     private void openShareIntent(String imageUri) {
         Intent share = new Intent(Intent.ACTION_SEND);
+        Uri intentUri = FileProvider.getUriForFile(
+                MainActivity.this,
+                "com.dulcerefugio.app.entunombre.provider",
+                new File(imageUri));
         share.setType("image/jpeg");
         share.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-        share.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageUri)));
+        share.putExtra(Intent.EXTRA_STREAM, intentUri);
         startActivity(Intent.createChooser(share, "Compartir Imagen"));
         mIsSharedShown = false;
     }
