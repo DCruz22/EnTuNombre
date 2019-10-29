@@ -20,7 +20,7 @@
     </layouts>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="debug" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
   <component name="CMakeSettings">
@@ -30,12 +30,73 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0e986a10-0387-4726-adff-025c59d02cec" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/xml/file_paths.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DaoGenerator/DaoGenerator.iml" beforeDir="false" afterPath="$PROJECT_DIR$/DaoGenerator/DaoGenerator.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DaoGenerator/src/main/java/com/dulcerefugio/entunombre/generator/DaoGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/DaoGenerator/src/main/java/com/dulcerefugio/entunombre/generator/DaoGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/androidTest/java/com/dulcerefugio/app/entunombre/ApplicationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/androidTest/java/com/dulcerefugio/app/etn/ApplicationTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/fragments/VideoListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/fragments/VideoListFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/EnTuNombre.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/EnTuNombre.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/AuthActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/AuthActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/Base.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/Base.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/CropperActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/CropperActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/GeneratePictureActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/GeneratePictureActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/VideoPlayerActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/VideoPlayerActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/fragments/Base.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/fragments/Base.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/fragments/CropPicture.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/fragments/CropPicture.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/fragments/EditPicture.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/fragments/EditPicture.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/fragments/FilterPicture.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/fragments/FilterPicture.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/fragments/PictureListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/fragments/PictureListFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/fragments/SplashScreenFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/fragments/SplashScreenFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/fragments/VideoListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/fragments/VideoListFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/fragments/dialog/AppMessageDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/fragments/dialog/AppMessageDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/fragments/dialog/PictureChooserDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/fragments/dialog/PictureChooserDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/fragments/dialog/WelcomeDialogFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/fragments/dialog/WelcomeDialogFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/fragments/listeners/RecyclerItemClickListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/fragments/listeners/RecyclerItemClickListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/data/callbacks/ThumbnailCallback.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/data/callbacks/ThumbnailCallback.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/data/dao/DaoMaster.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/data/dao/DaoMaster.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/data/dao/DaoSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/data/dao/DaoSession.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/data/dao/GeneratedImages.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/data/dao/GeneratedImages.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/data/dao/GeneratedImagesDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/data/dao/GeneratedImagesDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/data/dao/YoutubeVideo.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/data/dao/YoutubeVideo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/data/dao/YoutubeVideoDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/data/dao/YoutubeVideoDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/data/dao/openhelpers/EnTuNombreOpenHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/data/dao/openhelpers/EnTuNombreOpenHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/data/pojos/PictureFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/data/pojos/PictureFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/data/pojos/ThumbnailItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/data/pojos/ThumbnailItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/logic/AsyncTaskEx.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/logic/AsyncTaskEx.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/logic/BitmapProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/logic/BitmapProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/logic/CustomAsyncHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/logic/CustomAsyncHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/logic/CustomAsyncQueryHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/logic/CustomAsyncQueryHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/logic/Preferences.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/logic/Preferences.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/logic/YouTubeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/logic/YouTubeManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/ui/adapters/PictureChooserOptionsAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/ui/adapters/PictureChooserOptionsAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/ui/adapters/PictureFramesAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/ui/adapters/PictureFramesAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/ui/adapters/PictureListAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/ui/adapters/PictureListAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/ui/adapters/RecyclerViewDividerItemDecorator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/ui/adapters/RecyclerViewDividerItemDecorator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/ui/adapters/SectionsPagerAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/ui/adapters/SectionsPagerAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/ui/adapters/ThumbnailsAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/ui/adapters/ThumbnailsAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/ui/adapters/VideosAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/ui/adapters/VideosAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/ui/widgets/CustomShareButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/ui/widgets/CustomShareButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/ui/widgets/MaterialButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/ui/widgets/MaterialButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/ui/widgets/MaterialButtonDrawable.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/ui/widgets/MaterialButtonDrawable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/util/ConfigProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/util/ConfigProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/util/Loggable.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/util/Loggable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/util/Logger.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/util/Logger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/util/ThumbnailsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/util/ThumbnailsManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/util/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/util/Util.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/a_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/a_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/dialog_preview_image.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/dialog_preview_image.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/f_edit_picture.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/f_edit_picture.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/f_filter_picture.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/f_filter_picture.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/f_picture_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/f_picture_list.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/f_video_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/f_video_list.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/row_picture.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/row_picture.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/row_video.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/row_video.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/toolbar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/toolbar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
     </list>
     <ignored path="EnTuNombre.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -48,6 +109,10 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Galaxy_S10_API_28" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -59,50 +124,36 @@
         <task path="$PROJECT_DIR$/DaoGenerator">
           <activation />
         </task>
+        <task path="$PROJECT_DIR$/app">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
-            <PATH>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="entunombre" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value=":DaoGenerator" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ModuleNode" />
-              </PATH_ELEMENT>
-            </PATH>
-            <PATH>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="entunombre" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value=":DaoGenerator" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ModuleNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="Tasks" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.TasksNode" />
-              </PATH_ELEMENT>
-            </PATH>
-            <PATH>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="entunombre" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
-              </PATH_ELEMENT>
-            </PATH>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="EnTuNombre" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="EnTuNombre" type="f1a62948:ProjectNode" />
+                <item name="app" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="EnTuNombre" type="f1a62948:ProjectNode" />
+                <item name="app" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="EnTuNombre" type="f1a62948:ProjectNode" />
+                <item name="app" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
           </tree_state>
         </projects_view>
       </state>
@@ -114,32 +165,38 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/MainActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="128">
-              <caret line="93" column="24" selection-start-line="93" selection-start-column="24" selection-end-line="93" selection-end-column="24" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/a_main.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
+            <state relative-caret-position="90">
+              <caret line="5" selection-start-line="5" selection-end-line="5" />
             </state>
           </provider>
           <provider editor-type-id="android-designer2" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/EnTuNombre.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="33">
-              <caret line="36" selection-start-line="36" selection-end-line="37" />
+            <state relative-caret-position="174">
+              <caret line="29" column="21" lean-forward="true" selection-start-line="29" selection-start-column="21" selection-end-line="29" selection-end-column="21" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.florent37/materialviewpager/1.1.0/fbefcb55eabf84566a6b1b904974b5ea5b48268b/materialviewpager-1.1.0-sources.jar!/com/github/florent37/materialviewpager/MaterialViewPagerAnimator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="293">
+              <caret line="249" selection-start-line="249" selection-end-line="249" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/fragments/PictureListFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="201">
+              <caret line="98" column="29" selection-start-line="98" selection-start-column="29" selection-end-line="98" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -148,36 +205,58 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/data/dao/YoutubeVideoDao.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="58">
-              <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+            <state relative-caret-position="1134">
+              <caret line="63" column="71" selection-start-line="63" selection-start-column="71" selection-end-line="63" selection-end-column="71" />
+            </state>
+          </provider>
+          <provider editor-type-id="android-manifest" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/EnTuNombre.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="414">
+              <caret line="34" selection-start-line="34" selection-end-line="35" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/fragments/VideoListFragment.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/data/dao/YoutubeVideoDao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="104" selection-start-line="104" selection-end-line="104" />
+            <state relative-caret-position="144">
+              <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/fragments/FilterPicture.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/fragments/VideoListFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="218">
-              <caret line="142" column="104" selection-start-line="142" selection-start-column="104" selection-end-line="142" selection-end-column="104" />
+            <state relative-caret-position="1332">
+              <caret line="93" selection-start-line="93" selection-end-line="93" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/ui/adapters/ThumbnailsAdapter.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/fragments/FilterPicture.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="143">
+            <state relative-caret-position="1764">
+              <caret line="132" column="104" selection-start-line="132" selection-start-column="104" selection-end-line="132" selection-end-column="104" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/ui/adapters/ThumbnailsAdapter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="774">
               <caret line="56" selection-start-line="56" selection-end-line="56" />
             </state>
           </provider>
@@ -198,14 +277,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>mCropPicture</find>
-      <find>onActivityResult</find>
-      <find>onGeneratePictureClick</find>
-      <find>requestPermissions</find>
-      <find>choose</find>
-      <find>MaterialViewPager</find>
-      <find>mViewPager</find>
-      <find>arePermissionsGranted</find>
       <find>showFramedImage</find>
       <find>f_edit_picture_rv_frames</find>
       <find>mIsCameraInit</find>
@@ -228,12 +299,21 @@
       <find>init</find>
       <find>onCropCancel</find>
       <find>mPicturePath</find>
+      <find>com.dulcerefugio.app.entu</find>
+      <find>commons-logging</find>
+      <find>commo</find>
+      <find>http</find>
+      <find>retrofit</find>
+      <find>configurations</find>
+      <find>MAterialViewPAger</find>
+      <find>material</find>
     </findStrings>
   </component>
   <component name="GenerateSignedApkSettings">
-    <option name="KEY_STORE_PATH" value="$PROJECT_DIR$/../key/production.keystore.jks" />
-    <option name="KEY_ALIAS" value="entunombre" />
+    <option name="KEY_STORE_PATH" value="$PROJECT_DIR$/../key/etn/production.keystore.jks" />
+    <option name="KEY_ALIAS" value="EnTuNombre2019" />
     <option name="REMEMBER_PASSWORDS" value="true" />
+    <option name="BUILD_TARGET_KEY" value="apk" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -241,10 +321,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/fragments/listeners/CustomImageLoadingListener.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/ui/adapters/PictureListAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/ui/adapters/VideosAdapter.java" />
-        <option value="$PROJECT_DIR$/DaoGenerator/src/main/java/com/dulcerefugio/entunombre/generator/DaoGenerator.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/util/Logger.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/Base.java" />
         <option value="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout/f_splash.xml" />
@@ -266,7 +344,6 @@
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/fragments/PictureListFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/fragments/CropPicture.java" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/EnTuNombre.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/fragments/FIlterPicture.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/util/Util.java" />
@@ -286,12 +363,15 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/fragments/EditPicture.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/row_filter.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/ui/adapters/ThumbnailsAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/file_paths.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/logic/YouTubeManager.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/fragments/VideoListFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/a_main.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/MainActivity.java" />
+        <option value="$PROJECT_DIR$/DaoGenerator/src/main/java/com/dulcerefugio/entunombre/generator/DaoGenerator.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
       </list>
     </option>
   </component>
@@ -303,8 +383,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="width" value="1280" />
-    <option name="height" value="800" />
+    <option name="width" value="1440" />
+    <option name="height" value="900" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -385,32 +465,21 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
       <pane id="Scope" />
-      <pane id="Course" />
+      <pane id="ProjectPane" />
       <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
           <expand>
             <path>
               <item name="EnTuNombre" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-            </path>
-            <path>
-              <item name="EnTuNombre" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-            </path>
-            <path>
-              <item name="EnTuNombre" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="layout" type="ddeffd01:AndroidResFolderTypeNode" />
+              <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Course" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -419,9 +488,14 @@
     <property name="DEBUGGABLE_DEVICE" value="lge-lg_d690-N789SCJF8LLB49SK" />
     <property name="DEBUGGABLE_PROCESS" value="com.dulcerefugio.app.entunombre" />
     <property name="DEBUGGER_ID" value="Auto" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Galaxy_S10_API_28" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2019-10-28T18:55:35.516Z" />
     <property name="ExportApk.ApkPath" value="$PROJECT_DIR$/app/build/outputs/apk" />
     <property name="ExportApk.BuildType" value="release" />
+    <property name="ExportApk.BuildVariants" value="release" />
     <property name="ExportApk.Flavors" value="" />
+    <property name="ExportApk.SignV1" value="true" />
+    <property name="ExportApk.SignV2" value="true" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
@@ -438,6 +512,7 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="113" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="116" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="910" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
     <property name="ScreenshotViewer.SavePath" value="/MAC SSD/Users/eperez/Downloads" />
     <property name="UI_DESIGNER_EDITOR_MODE.NlPaletteManager-NlPreviewForm.SHOW" value="false" />
@@ -481,7 +556,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Android App.app">
+  <component name="RunManager" selected="Gradle.EnTuNombre:app [assembleRelease]">
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
       <module name="" />
       <option name="ACTIVITY_CLASS" value="" />
@@ -554,15 +629,6 @@
         <option name="INSTRUMENTATION_ENABLED" value="true" />
       </Profilers>
       <method />
-    </configuration>
-    <configuration name="&lt;template&gt;" type="Applet" default="true" selected="false">
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
@@ -678,11 +744,36 @@
       <option name="CLOUD_DEVICE_SERIAL_NUMBER" value="" />
       <method />
     </configuration>
+    <configuration default="true" type="Applet">
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
+    </configuration>
+    <configuration name="EnTuNombre:app [assembleRelease]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/app" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="assembleRelease" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
     </configuration>
     <configuration name="entunombre:DaoGenerator [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -762,9 +853,11 @@
     <list>
       <item itemvalue="Android App.app" />
       <item itemvalue="Gradle.entunombre:DaoGenerator [run]" />
+      <item itemvalue="Gradle.EnTuNombre:app [assembleRelease]" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.EnTuNombre:app [assembleRelease]" />
         <item itemvalue="Gradle.entunombre:DaoGenerator [run]" />
       </list>
     </recent_temporary>
@@ -792,10 +885,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1280" height="800" extended-state="0" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4985755" visible="true" weight="0.18174475" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4985755" visible="true" weight="0.13519314" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Build Variants" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" sideWeight="0.5014245" side_tool="true" weight="0.23182553" />
@@ -806,23 +899,23 @@
       <window_info id="Palette&#9;" order="8" />
       <window_info id="Resources Explorer" order="9" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" auto_hide="true" id="Find" order="1" sideWeight="0.5015625" weight="0.31966054" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49676898" weight="0.28335625" />
+      <window_info anchor="bottom" auto_hide="true" id="Find" order="1" sideWeight="0.5015625" weight="0.31846344" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49676898" weight="0.2825279" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.37749287" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.3281471" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50080776" side_tool="true" weight="0.3281471" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3272543" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50106496" side_tool="true" weight="0.2674772" />
       <window_info anchor="bottom" id="Application Servers" order="8" />
       <window_info anchor="bottom" auto_hide="true" x="26" y="157" width="1280" height="751" id="Android" order="9" sideWeight="0.4875" weight="0.6782178" />
       <window_info anchor="bottom" id="Android Monitor" order="10" sideWeight="0.49676898" weight="0.22804533" />
-      <window_info anchor="bottom" id="Logcat" order="11" sideWeight="0.49919224" visible="true" weight="0.3281471" />
-      <window_info anchor="bottom" id="Version Control" order="12" sideWeight="0.49353796" weight="0.32621083" />
+      <window_info anchor="bottom" id="Logcat" order="11" sideWeight="0.49919224" weight="0.69268894" />
+      <window_info anchor="bottom" id="Version Control" order="12" sideWeight="0.49353796" weight="0.32522798" />
       <window_info anchor="bottom" auto_hide="true" id="Messages" order="13" sideWeight="0.4717286" weight="0.305949" />
-      <window_info anchor="bottom" id="Terminal" order="14" weight="0.32531825" />
+      <window_info anchor="bottom" id="Terminal" order="14" weight="0.32522798" />
       <window_info anchor="bottom" id="Gradle Console" order="15" side_tool="true" />
-      <window_info anchor="bottom" id="Build" order="16" weight="0.3281471" />
-      <window_info anchor="bottom" id="Android Profiler" order="17" weight="0.32905984" />
+      <window_info anchor="bottom" id="Build" order="16" sideWeight="0.49893504" weight="0.61833954" />
+      <window_info anchor="bottom" id="Android Profiler" order="17" weight="0.32826748" />
       <window_info anchor="bottom" id="Educational.CheckDetails" order="18" />
       <window_info anchor="right" id="Assistant" order="0" weight="0.32956383" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
@@ -832,12 +925,12 @@
       <window_info anchor="right" id="Properties" order="5" />
       <window_info anchor="right" id="Device File Explorer" order="6" side_tool="true" />
       <window_info anchor="right" id="Android Model" order="7" side_tool="true" />
-      <window_info anchor="right" id="Gradle" order="8" weight="0.3279483" />
+      <window_info anchor="right" id="Gradle" order="8" visible="true" weight="0.32689556" />
       <window_info anchor="right" id="Maven Projects" order="9" />
       <window_info anchor="right" id="Theme Preview" order="10" />
-      <window_info active="true" anchor="right" id="Fabric" order="11" visible="true" weight="0.32928678" />
+      <window_info anchor="right" id="Fabric" order="11" weight="0.32904148" />
       <window_info anchor="right" id="Dynamic Properties" order="12" />
-      <window_info anchor="right" id="Preview" order="13" visible="true" weight="0.32956383" />
+      <window_info anchor="right" id="Preview" order="13" weight="0.24494143" />
       <window_info anchor="right" id="Capture Analysis" order="14" />
     </layout>
   </component>
@@ -863,19 +956,19 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/util/Util.java</url>
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/util/Util.java</url>
           <line>359</line>
           <properties />
           <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/util/Util.java</url>
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/util/Util.java</url>
           <line>332</line>
           <properties />
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/fragments/PictureListFragment.java</url>
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/fragments/PictureListFragment.java</url>
           <line>93</line>
           <properties />
           <option name="timeStamp" value="54" />
@@ -884,27 +977,7 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/data/dao/GeneratedImages.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="34" selection-start-line="34" selection-end-line="34" />
-          <folding>
-            <element signature="e#723#724#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/AuthActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="705">
-          <caret line="60" column="47" selection-start-line="60" selection-start-column="47" selection-end-line="60" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/pic.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/fragments/SplashScreenFragment.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/fragments/SplashScreenFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="336">
           <caret line="42" column="48" selection-start-line="42" selection-start-column="48" selection-end-line="42" selection-end-column="48" />
@@ -928,13 +1001,7 @@
       </provider>
       <provider editor-type-id="android-designer2" />
     </entry>
-    <entry file="file://$USER_HOME$/Library/Android/sdk/platforms/android-26/data/res/values/colors_holo.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="433">
-          <caret line="67" column="17" selection-start-line="67" selection-start-column="17" selection-end-line="67" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$USER_HOME$/Library/Android/sdk/platforms/android-26/data/res/values/colors_holo.xml" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/row_picture.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-721" />
@@ -993,28 +1060,28 @@
       </provider>
       <provider editor-type-id="android-designer2" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/data/pojos/PictureFrame.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/data/pojos/PictureFrame.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/ui/adapters/PictureFramesAdapter.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/ui/adapters/PictureFramesAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-59">
           <caret line="26" column="11" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/fragments/EditPicture.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/fragments/EditPicture.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="138" column="82" selection-start-line="138" selection-start-column="82" selection-end-line="138" selection-end-column="82" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/data/pojos/ThumbnailItem.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/data/pojos/ThumbnailItem.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="12" column="11" selection-start-line="12" selection-start-column="11" selection-end-line="12" selection-end-column="11" />
@@ -1039,13 +1106,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-26/android/graphics/Bitmap.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="1877" selection-start-line="1877" selection-end-line="1877" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-26/android/graphics/Bitmap.java" />
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.zomato/androidphotofilters/1.0.1/a13c9136e71f24ebbeed1fed7a3c06e8402d961c/androidphotofilters-1.0.1-sources.jar!/com/zomato/photofilters/imageprocessors/Filter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -1053,32 +1114,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/VideoPlayerActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/VideoPlayerActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="71" column="64" selection-start-line="71" selection-start-column="64" selection-end-line="71" selection-end-column="64" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-manifest" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/file_paths.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="4" selection-start-line="1" selection-start-column="4" selection-end-line="1" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/fragments/FilterPicture.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="142" column="104" selection-start-line="142" selection-start-column="104" selection-end-line="142" selection-end-column="104" />
         </state>
       </provider>
     </entry>
@@ -1089,14 +1135,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/data/dao/YoutubeVideoDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="58">
-          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/logic/YouTubeManager.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/logic/YouTubeManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="129">
           <caret line="125" lean-forward="true" selection-start-line="125" selection-end-line="125" />
@@ -1119,44 +1158,10 @@
       </provider>
       <provider editor-type-id="android-designer2" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/ui/adapters/ThumbnailsAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="56" selection-start-line="56" selection-end-line="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/fragments/VideoListFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="104" selection-start-line="104" selection-end-line="104" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/activities/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="93" column="24" selection-start-line="93" selection-start-column="24" selection-end-line="93" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.florent37/materialviewpager/1.1.0/fbefcb55eabf84566a6b1b904974b5ea5b48268b/materialviewpager-1.1.0-sources.jar!/com/github/florent37/materialviewpager/MaterialViewPager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/entunombre/EnTuNombre.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="33">
-          <caret line="36" selection-start-line="36" selection-end-line="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1204,13 +1209,93 @@
       </provider>
       <provider editor-type-id="android-designer2" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="648">
+          <caret line="90" column="24" selection-start-line="90" selection-start-column="24" selection-end-line="90" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/a_main.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
+        <state relative-caret-position="90">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
         </state>
       </provider>
       <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1134">
+          <caret line="63" column="71" selection-start-line="63" selection-start-column="71" selection-end-line="63" selection-end-column="71" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/EnTuNombre.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="34" selection-start-line="34" selection-end-line="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/data/dao/YoutubeVideoDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/fragments/VideoListFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1332">
+          <caret line="93" selection-start-line="93" selection-end-line="93" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/fragments/FilterPicture.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1764">
+          <caret line="132" column="104" selection-start-line="132" selection-start-column="104" selection-end-line="132" selection-end-column="104" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/ui/adapters/ThumbnailsAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="774">
+          <caret line="56" selection-start-line="56" selection-end-line="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dulcerefugio/app/etn/activities/fragments/PictureListFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="201">
+          <caret line="98" column="29" selection-start-line="98" selection-start-column="29" selection-end-line="98" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.florent37/materialviewpager/1.1.0/fbefcb55eabf84566a6b1b904974b5ea5b48268b/materialviewpager-1.1.0-sources.jar!/com/github/florent37/materialviewpager/MaterialViewPagerAnimator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="293">
+          <caret line="249" selection-start-line="249" selection-end-line="249" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="29" column="21" lean-forward="true" selection-start-line="29" selection-start-column="21" selection-end-line="29" selection-end-column="21" />
+        </state>
+      </provider>
     </entry>
   </component>
 </project>

@@ -8,7 +8,7 @@ public class DaoGenerator {
     public static void main(String args[]) throws Exception {
 
         //Schema will be the version of the database and the package name where all the DAO's will be placed
-        Schema schema = new Schema(1, "com.dulcerefugio.app.entunombre.data.dao");
+        Schema schema = new Schema(1, "com.dulcerefugio.app.etn.data.dao");
 
         //=======================  Entities  ============================
 

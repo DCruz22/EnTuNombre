@@ -10,10 +10,10 @@
         android:id="@+id/dialog_preview_iv_image"
         />
 
-    <com.dulcerefugio.app.entunombre.ui.widgets.CustomShareButton
+    <com.dulcerefugio.app.etn.ui.widgets.CustomShareButton
         android:id="@+id/dialog_preview_csb_picture_share"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:paddingTop="10dp"> </com.dulcerefugio.app.entunombre.ui.widgets.CustomShareButton>
+        android:paddingTop="10dp"> </com.dulcerefugio.app.etn.ui.widgets.CustomShareButton>
 </LinearLayout>

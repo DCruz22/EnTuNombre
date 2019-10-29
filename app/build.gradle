@@ -20,23 +20,23 @@ android {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE'
     }
-    compileSdkVersion 26
+    compileSdkVersion 28
     buildToolsVersion '28.0.3'
 
     defaultConfig {
-        applicationId "com.dulcerefugio.app.entunombre"
+        applicationId "com.dulcerefugio.app.etn"
         minSdkVersion 15
-        targetSdkVersion 26
-        versionCode 170
-        versionName "1.7"
+        targetSdkVersion 27
+        versionCode 2
+        versionName "1.0.1"
         resValue "string", "app_name", "En Tu Nombre"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
             annotationProcessorOptions{
             arguments = [
                 //androidManifestFile : 'variant.outputs[0].processResources.manifestFile',
-                resourcePackageName : 'com.dulcerefugio.app.entunombre'
+                resourcePackageName : 'com.dulcerefugio.app.etn'
             ]
         }}
     }
@@ -52,11 +52,11 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:design:27.1.1'
-    implementation 'com.android.support:cardview-v7:26.1.0'
-    implementation 'com.android.support:recyclerview-v7:26.1.0'
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support:design:26.1.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.google.apis:google-api-services-youtube:v3-rev142-1.20.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
@@ -82,8 +82,11 @@ dependencies {
     implementation files('libs/lib-simplesharedpreferences.jar')
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
-        transitive = true;
+        transitive = true
     }
 }
 
-configurations.all {exclude group: 'com.android.support', module: 'support-v13'}
+configurations.all {
+    exclude group: 'com.android.support', module: 'support-v13'
+    exclude module: 'httpclient'
+}

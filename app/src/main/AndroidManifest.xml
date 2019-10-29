@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dulcerefugio.app.entunombre"
+    package="com.dulcerefugio.app.etn"
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -17,7 +17,7 @@
         android:anyDensity="true" />
 
     <application
-        android:name="com.dulcerefugio.app.entunombre.EnTuNombre"
+        android:name="com.dulcerefugio.app.etn.EnTuNombre"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -25,29 +25,29 @@
         android:largeHeap="true">
 
         <activity
-            android:name="com.dulcerefugio.app.entunombre.activities.MainActivity_"
+            android:name="com.dulcerefugio.app.etn.activities.MainActivity_"
             android:theme="@style/AppTheme.Main"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="com.dulcerefugio.app.entunombre.activities.GeneratePictureActivity"
+            android:name="com.dulcerefugio.app.etn.activities.GeneratePictureActivity"
             android:theme="@style/AppTheme"
             android:label="@string/title_activity_generate_picture"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dulcerefugio.app.entunombre.activities.MainActivity" />
+                android:value="com.dulcerefugio.app.etn.activities.MainActivity" />
         </activity>
         <activity
-            android:name="com.dulcerefugio.app.entunombre.activities.CropperActivity_"
+            android:name="com.dulcerefugio.app.etn.activities.CropperActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:label="@string/title_activity_generate_picture">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dulcerefugio.app.entuntombre.activities.MainActivity_" />
+                android:value="com.dulcerefugio.app.etn.activities.MainActivity_" />
         </activity>
-        <activity android:name=".activities.AuthActivity"
+        <activity android:name="com.dulcerefugio.app.etn.activities.AuthActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -55,21 +55,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.VideoPlayerActivity"
+        <activity android:name="com.dulcerefugio.app.etn.activities.VideoPlayerActivity"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Black.NoTitleBar">
         </activity>
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="ee228f26ba829e5fbcf79da3f936b6b623717955" />
-        <meta-data
-            tools:replace="android:value"
-            android:name="android.support.VERSION"
-            android:value="26.1.0"
-        />
         <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.dulcerefugio.app.entunombre.provider"
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.dulcerefugio.app.etn.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <!-- ressource file to create -->

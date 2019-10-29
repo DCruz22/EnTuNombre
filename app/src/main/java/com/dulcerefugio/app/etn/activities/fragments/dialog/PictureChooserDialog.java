@@ -1,0 +1,158 @@
+package com.dulcerefugio.app.etn.activities.fragments.dialog;
+
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ListView;
+
+import com.dulcerefugio.app.etn.R;
+import com.dulcerefugio.app.etn.ui.adapters.PictureChooserOptionsAdapter;
+
+/**
+ * Created by euriperez16 on 9/2/2015.
+ */
+public class PictureChooserDialog extends DialogFragment {
+
+    //======================================================
+    //                      FIELDS
+    //======================================================
+    private OnPictureChooserListeners mListeners;
+    private LayoutInflater mLayoutInflater;
+
+    //======================================================
+    //                    CONSTRUCTORS
+    //======================================================
+
+    //======================================================
+    //                  OVERRIDDEN METHODS
+    //======================================================
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        initialize();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListeners = (OnPictureChooserListeners) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnPicturePostChooserListeners");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = new Dialog(getActivity());
+        View view = mLayoutInflater.inflate(R.layout.df_picture_chooser, null);
+
+        dialog.setContentView(view);
+        dialog.setTitle(getActivity().getString(R.string.f_picture_chooser_title));
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                return keyCode == KeyEvent.KEYCODE_BACK;
+            }
+        });
+
+        String[] options = getActivity().getResources().getStringArray(R.array.picture_chooser_items);
+        ListView lvOptions = (ListView) view.findViewById(R.id.df_lv_picture_chooser);
+        PictureChooserOptionsAdapter pictureChooserOptionsAdapter =
+                new PictureChooserOptionsAdapter(getActivity(), R.layout.item_picture_chooser, options);
+        lvOptions.setAdapter(pictureChooserOptionsAdapter);
+        lvOptions.setClickable(true);
+        lvOptions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0: //CAMERA
+                        try {
+                            PictureChooserDialog.this.dismiss();
+                            mListeners.onTakePicture(PictureChooserDialog.this);
+                        } catch (IllegalStateException ise) {
+                            ise.printStackTrace();
+                        }
+                        break;
+                    case 1:
+                        try {
+                            PictureChooserDialog.this.dismiss();
+                            mListeners.onChooseFromGallery(PictureChooserDialog.this);
+                        } catch (IllegalStateException ise) {
+                            ise.printStackTrace();
+                        }
+
+                        break;
+                }
+            }
+        });
+        Button btnCancel = (Button) view.findViewById(R.id.df_btn_cancel);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                PictureChooserDialog.this.dismiss();
+                mListeners.onPicturePostCancel();
+            }
+        });
+
+        return dialog;
+    }
+
+    @Override
+    public void show(FragmentManager manager, String tag) {
+        super.show(manager, tag);
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        mListeners.onPictureChooserDismiss();
+    }
+
+    //======================================================
+    //                      METHODS
+    //======================================================
+
+    private void initialize() {
+
+        mLayoutInflater = getActivity().getLayoutInflater();
+    }
+
+    //======================================================
+    //              INNER CLASSES/INTERFACES
+    //======================================================
+
+    public interface OnPictureChooserListeners {
+        void onTakePicture(Fragment fragment);
+
+        void onChooseFromGallery(Fragment fragment);
+
+        void onPicturePostCancel();
+
+        void onPictureChooserDismiss();
+    }
+
+    //======================================================
+    //                  GETTERS/SETTERS
+    //======================================================
+}

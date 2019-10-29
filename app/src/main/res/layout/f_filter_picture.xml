@@ -27,7 +27,7 @@
 
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/f_filter_picture_rv_frames"
         android:background="@color/gray"
         android:layout_width="match_parent"

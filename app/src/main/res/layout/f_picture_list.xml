@@ -13,13 +13,13 @@
         android:padding="30dp"
         android:text="@string/no_picture_created" />
 
-    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/f_picture_list_rv_pictures"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone" />
 
-    <com.dulcerefugio.app.entunombre.ui.widgets.MaterialButton
+    <com.dulcerefugio.app.etn.ui.widgets.MaterialButton
         android:id="@+id/materialButton"
         android:layout_width="@dimen/a_main_material_button_width_height"
         android:layout_height="@dimen/a_main_material_button_width_height"
