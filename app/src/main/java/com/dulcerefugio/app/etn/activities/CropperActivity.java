@@ -90,7 +90,7 @@ public class CropperActivity extends Base
         if (mLastResult != null)
             mLastResult.recycle();
         mLastResult = null;
-        //mCroppedImage.recycle();
+        mCroppedPicturePath = null;
         mCroppedImage = null;
         mBitmapProcessor = null;
 

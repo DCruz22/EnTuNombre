@@ -95,7 +95,7 @@ public class VideoListFragment extends Base
         mAdapter = new RecyclerViewMaterialAdapter(new VideosAdapter(mYoutubeVideos));
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),
-                LinearLayoutManager.VERTICAL, false);
+                RecyclerView.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
         RecyclerItemClickListener listener = new RecyclerItemClickListener(getActivity());
         listener.addOnItemClickListener(this);
